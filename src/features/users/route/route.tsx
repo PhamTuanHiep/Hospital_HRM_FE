@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import CreateUserScreen from "../screens/CreateUserScreen";
-import ListUserScreen from "../screens/ListUserScreen copy";
+import ListUserScreen from "../screens/ListUserScreen";
 import EditUserScreen from "../screens/EditUserScreen";
 import InfoUserScreen from "../screens/InfoUserScreen";
 

@@ -1,4 +1,5 @@
 run: npm run dev
+http://localhost:5173/
 
 # React + TypeScript + Vite
 
@@ -50,4 +51,5 @@ export default tseslint.config({
   },
 });
 ```
+
 # Hospital_HRM_FE
