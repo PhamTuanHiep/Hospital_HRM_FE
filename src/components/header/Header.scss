@@ -1,0 +1,34 @@
+.header {
+  width: 100%;
+  background-color: black;
+  // position: relative;
+  // left: 0;
+  // top: 0;
+  // z-index: 3;
+  .ant-typography {
+    color: white;
+  }
+  .ant-flex {
+    #header-info {
+      height: 30px;
+    }
+    #header-nav {
+      background-color: #e0e4e7;
+    }
+  }
+  .nav {
+    background-color: #e0e4e7;
+    color: white;
+    font-size: 16px;
+    min-width: 720px;
+    display: flex;
+    justify-content: flex-start;
+    .navBtn {
+      margin: 8px 16px 0 0;
+    }
+  }
+  .nav-setting {
+    margin: 10px 45px 0 0;
+    padding: 2px;
+  }
+}
