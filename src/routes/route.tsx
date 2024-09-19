@@ -9,6 +9,7 @@ import { INTRO_ROUTES } from "../features/introduction/route/route";
 import { NEWS_AND_EVENTS_ROUTES } from "../features/newsAndEvents/route/route";
 import { CONTACT_ROUTES } from "../features/contact/route/route";
 import { RECRUITMENT_ROUTES } from "../features/recruitment/route/route";
+import { AuthPaths } from "../features/auth/constants/constant.path";
 
 const PRIVATE_ROUTE = [...USER_ROUTES];
 const PUBLICH_ROUTE = [
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
     children: [...PRIVATE_ROUTE, ...PUBLICH_ROUTE],
   },
   {
-    path: "/login",
+    path: AuthPaths.LOGIN,
     element: <Login />,
     errorElement: <ErrorPage />,
   },

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: "http://localhost:3000",
   timeout: 8000,
   headers: {
     Accept: "application/json",
@@ -16,6 +16,8 @@ instance.interceptors.request.use(
     // Kiểm tra xem token đã tồn tại hay không
     const token = localStorage.getItem("token");
     // console.log("ckeck token:",token)
+    console.log("ckeck config:", config);
+
     // Nếu token tồn tại, thêm nó vào header của yêu cầu
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;

@@ -1,8 +1,12 @@
 import { Card, Carousel, Col, Flex, Row, Statistic } from "antd";
 
 import "./HomePage.scss";
+import { useAppSelector } from "../../../app/hooks";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const acc = useAppSelector((state) => state.account_user);
+  console.log("acc:", acc);
   return (
     <>
       <Flex id="homepage" vertical>

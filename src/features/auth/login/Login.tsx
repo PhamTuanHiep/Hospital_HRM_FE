@@ -2,53 +2,58 @@ import { Button, Form, Input } from "antd";
 import "./Login.scss";
 import { useEffect, useState } from "react";
 import instance from "../../../api/api";
-
-interface Account {
-  email: string;
-  password: string;
-  roleId: string;
-  userId: number;
-}
+import { Account, doLogin } from "../constants/accountSlice";
+import { AccountApis } from "../constants/constant.endpoint";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const [account, setAccount] = useState<Account>({
-    email: "",
-    password: "",
-    roleId: "",
-    userId: 0,
-  });
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [accounts, setAccounts] = useState<Account[]>([
+    {
+      accountId: 0,
+      email: "",
+      password: "",
+      roleId: "",
+      userId: 0,
+    },
+  ]);
   useEffect(() => {
-    getUsers();
+    getAccounts();
   }, []);
 
-  const getUsers = async () => {
-    const res = await instance.get(`accounts`, {});
-    const dataUsers = res;
-    console.log("res account:", res);
-    // setUsers(dataUsers)
-    // console.log("res:",res);
-    // console.log("dataUsers:",dataUsers)
+  const getAccounts = async () => {
+    const res = await instance.get(`${AccountApis.ACCOUNTS}`, {});
+    console.log("res:", res);
+    if (res.status === 200) {
+      const accountsData = res.data.data;
+      console.log("accountsData:", accountsData);
+      setAccounts(accountsData);
+    }
   };
-  // const onFinish = async (values: any) => {
-  //   const res = users.find((user) => {
-  //     return user.email === email && user.password === password;
-  //     // return user.email === values.user.email && user.password === values.user.password;
-  //   },);
+  const onFinish = async (values: any) => {
+    const currentAccount = accounts.find((account) => {
+      return account.email === email && account.password === password;
+      // return user.email === values.user.email && user.password === values.user.password;
+    });
 
-  //   if (res == undefined) {
-  //     toast.error("account login failed")
-  //   } else {
-  //     console.log(res)
-  //     const currentIdUser=res.id
-  //       localStorage.setItem("currentIdUser", currentIdUser);
-  //       // localStorage.setItem("currentUser", res);
-
-  //     // console.log("values:",values)
-  //     dispatch(doLogin(res))
-  //     toast.success("successful account login");
-  //     navigate("/list-tasks");
-  //   }
-  // };
+    if (currentAccount == undefined) {
+      toast.error("Account Login Failed");
+    } else {
+      console.log(currentAccount);
+      const currentAccountId = currentAccount.accountId;
+      localStorage.setItem("currentAccountId", currentAccountId.toString());
+      dispatch(doLogin(currentAccount));
+      toast.success("successful account login");
+      navigate("/");
+    }
+  };
   return (
     <>
       <div id="login">
@@ -59,13 +64,22 @@ const Login = () => {
           style={{ maxWidth: 600 }}
           size="large"
           scrollToFirstError
-          className="login-form "
+          className="login-form"
+          onFinish={onFinish}
         >
           <Form.Item label="Email" hasFeedback>
-            <Input placeholder="Enter your email" id="email" />
+            <Input
+              placeholder="Enter your email"
+              id="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </Form.Item>
           <Form.Item label="Password" hasFeedback>
-            <Input placeholder="Enter your password" id="password" />
+            <Input.Password
+              placeholder="Enter your password"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </Form.Item>
           <div className="forgot-password">Forgot password ?</div>
 
@@ -98,6 +112,18 @@ const Login = () => {
           </Form.Item> */}
         </Form>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </>
   );
 };
