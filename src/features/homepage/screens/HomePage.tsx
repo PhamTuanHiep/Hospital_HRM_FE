@@ -16,6 +16,7 @@ const HomePage = () => {
           slidesToShow={1}
           slidesToScroll={1}
           autoplay
+          autoplaySpeed={2000}
         >
           <div>
             <img src="https://wallpapers.com/images/high/beautiful-husky-dog-with-tongue-out-uu6gzwkw0uytavi0.webp" />

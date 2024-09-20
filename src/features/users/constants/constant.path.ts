@@ -1,7 +1,11 @@
 //conenct paths
 export const UserPaths = {
-  LIST_USERS: "/list-users",
-  CREATE_USER: "/create-user",
-  EDIT_USER: "/edit-user",
-  INFO_USER: "/info-user",
+  ACCOUNT_INFO: "/user/account-info",
+  BENEFITS: "/user/account-info",
+  CONTRACT: "/user/contract",
+  NOTIFICATION: "/user/notification",
+  RECORD: "/user/record",
+  SCHEDULE: "/user/schedule",
+  TRAINING_RESULTS: "/user/training-results",
+  WORK_PERFORMANCE_SCREEN: "/user/work-performance",
 };

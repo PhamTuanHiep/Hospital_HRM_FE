@@ -19,8 +19,12 @@
     padding-top: 0;
     .ant-list {
       .ant-list-item {
-        padding: 8px 0;
-        cursor: pointer;
+        padding: 8px 0 8px 8px;
+        &:hover {
+          background-color: rgb(97, 133, 148);
+          cursor: pointer;
+          color: white;
+        }
         .ant-flex {
           font-size: 14px;
           font-weight: 400;

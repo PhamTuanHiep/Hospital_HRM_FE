@@ -1,31 +1,61 @@
 import { RouteObject } from "react-router-dom";
-import CreateUserScreen from "../screens/CreateUserScreen";
-import ListUserScreen from "../screens/ListUserScreen";
-import EditUserScreen from "../screens/EditUserScreen";
-import InfoUserScreen from "../screens/InfoUserScreen";
-
 import { UserPaths } from "../constants/constant.path";
+import AccountInfoScreen from "../screens/accountInfoScreen/AccountInfoScreen";
+import BenefitsScreen from "../screens/benefitsScreen/BenefitsScreen";
+import NotificationScreen from "../screens/notificationScreen/NotificationScreen";
+import RecordScreen from "../screens/recordScreen/RecordScreen";
+import ScheduleScreen from "../screens/scheduleScreen/ScheduleScreen";
+import TrainingResulsScreen from "../screens/trainingResulsScreen/TrainingResulsScreen";
+import WorkPerformanceScreen from "../screens/workPerformanceScreen/WorkPerformanceScreen";
+import ContractScreen from "../screens/contractScreen/ContractScreen";
 
-const LIST_USERS_ROUTE: RouteObject = {
-  path: UserPaths.LIST_USERS,
-  element: <ListUserScreen />,
+const ACCOUNT_INFO: RouteObject = {
+  path: UserPaths.ACCOUNT_INFO,
+  element: <AccountInfoScreen />,
 };
-const CREATE_USER_ROUTE: RouteObject = {
-  path: UserPaths.CREATE_USER,
-  element: <CreateUserScreen />,
+
+const BENEFITS_ROUTE: RouteObject = {
+  path: UserPaths.BENEFITS,
+  element: <BenefitsScreen />,
 };
-const EDIT_USER_ROUTE: RouteObject = {
-  path: UserPaths.EDIT_USER,
-  element: <EditUserScreen />,
+
+const CONTRACT_ROUTE: RouteObject = {
+  path: UserPaths.CONTRACT,
+  element: <ContractScreen />,
 };
-const INFO_USER_ROUTE: RouteObject = {
-  path: UserPaths.INFO_USER,
-  element: <InfoUserScreen />,
+
+const NOTIFICATION_ROUTE: RouteObject = {
+  path: UserPaths.NOTIFICATION,
+  element: <NotificationScreen />,
+};
+
+const RECORD_ROUTE: RouteObject = {
+  path: UserPaths.RECORD,
+  element: <RecordScreen />,
+};
+
+const SCHEDULE_ROUTE: RouteObject = {
+  path: UserPaths.SCHEDULE,
+  element: <ScheduleScreen />,
+};
+
+const TRAINING_RESULTS_ROUTE: RouteObject = {
+  path: UserPaths.TRAINING_RESULTS,
+  element: <TrainingResulsScreen />,
+};
+
+const WORK_PERFORMANCE_SCREEN_ROUTE: RouteObject = {
+  path: UserPaths.WORK_PERFORMANCE_SCREEN,
+  element: <WorkPerformanceScreen />,
 };
 
 export const USER_ROUTES = [
-  LIST_USERS_ROUTE,
-  CREATE_USER_ROUTE,
-  EDIT_USER_ROUTE,
-  INFO_USER_ROUTE,
+  ACCOUNT_INFO,
+  BENEFITS_ROUTE,
+  CONTRACT_ROUTE,
+  NOTIFICATION_ROUTE,
+  RECORD_ROUTE,
+  SCHEDULE_ROUTE,
+  TRAINING_RESULTS_ROUTE,
+  WORK_PERFORMANCE_SCREEN_ROUTE,
 ];
