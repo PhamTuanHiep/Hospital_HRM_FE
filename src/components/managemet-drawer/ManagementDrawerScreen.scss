@@ -1,0 +1,35 @@
+#management-drawer {
+  .ant-drawer-header {
+    .avatar-box {
+      width: 35px;
+      height: 35px;
+      &:hover {
+        cursor: pointer;
+      }
+      .avatar {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+  .ant-drawer-body {
+    padding-top: 0;
+    .ant-list {
+      .ant-list-item {
+        padding: 8px 0;
+        .ant-flex {
+          font-size: 14px;
+          font-weight: 400;
+          .item-icon {
+            padding: 0 12px 0 0;
+          }
+          .item-content {
+          }
+        }
+      }
+    }
+  }
+}

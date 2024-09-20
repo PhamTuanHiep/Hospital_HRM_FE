@@ -1,24 +1,26 @@
 import { Anchor, Flex, Typography } from "antd";
 import { Menu, Button, Dropdown, Space } from "antd";
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-// import { store } from "../redux/store";
-import {
-  HomeOutlined,
-  UserSwitchOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import { NavLink } from "react-router-dom";
+
+import { HomeOutlined } from "@ant-design/icons";
 import "./Header.scss";
-// import { TaskPaths } from "../../features/tasks/constants/constant.path";
-import { UserPaths } from "../../features/users/constants/constant.path";
+
 import { ContactPaths } from "../../features/contact/constants/constant.path";
 import { RecruitmentPaths } from "../../features/recruitment/constants/constant.path";
 import { IntroPaths } from "../../features/introduction/constants/constant.path";
 import { NewsAndEventsPaths } from "../../features/newsAndEvents/constants/constant.path";
-// import { useDispatch } from "react-redux";
-// import { doLogout } from "../redux/action/userAction";
+import { useAppSelector } from "../../app/hooks";
+import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
+
 const HeaderComponent = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const { account: currentAccount, isAuthen } = useAppSelector(
+    (state) => state.account_user
+  );
+
+  console.log("currentAccount:", currentAccount);
+  console.log("isAuthen:", isAuthen);
 
   const items = [
     {
@@ -143,6 +145,11 @@ const HeaderComponent = () => {
     },
   ];
 
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
   return (
     <div id="header">
       <Flex vertical>
@@ -163,14 +170,23 @@ const HeaderComponent = () => {
             items={items}
             defaultSelectedKeys={["1"]}
           />
-
-          <Button type="primary">
-            <NavLink to="/login" className="nav-link">
-              Login
-            </NavLink>
-          </Button>
+          {!isAuthen ? (
+            <Button type="primary">
+              <NavLink to="/login" className="nav-link">
+                Login
+              </NavLink>
+            </Button>
+          ) : (
+            <div className="avatar-box" onClick={showDrawer}>
+              <img
+                className="avatar"
+                src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
+              ></img>
+            </div>
+          )}
         </Flex>
       </Flex>
+      <ManagementDrawerScreen open={open} setOpen={setOpen} />
     </div>
   );
 };
