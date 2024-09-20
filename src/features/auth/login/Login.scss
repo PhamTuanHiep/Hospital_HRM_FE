@@ -10,6 +10,20 @@
   .login-form {
     margin: 4px auto;
     font-size: 16px;
+    .ant-row {
+      .ant-form-item-label {
+      }
+      .ant-form-item-control {
+        .ant-form-item-explain-error {
+          text-align: start;
+        }
+      }
+    }
+    #error-submit {
+      color: red;
+      font-size: 14px;
+      text-align: start;
+    }
   }
   .submit-form {
     margin: 4px auto;

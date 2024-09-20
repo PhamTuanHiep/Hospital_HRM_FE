@@ -7,11 +7,17 @@ import { AccountApis } from "../constants/constant.endpoint";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import {
+  errMessageSubmit,
+  validateMessages,
+} from "../constants/login.constant";
 
 const Login = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+
+  const [isErrSubmit, setIsErrSubmit] = useState<Boolean>(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +50,7 @@ const Login = () => {
     });
 
     if (currentAccount == undefined) {
+      setIsErrSubmit(true);
       toast.error("Account Login Failed");
     } else {
       console.log(currentAccount);
@@ -54,6 +61,7 @@ const Login = () => {
       navigate("/");
     }
   };
+
   return (
     <>
       <div id="login">
@@ -66,21 +74,53 @@ const Login = () => {
           scrollToFirstError
           className="login-form"
           onFinish={onFinish}
+          validateMessages={validateMessages}
+          layout="vertical"
         >
-          <Form.Item label="Email" hasFeedback>
+          <Form.Item
+            className="val-item"
+            label="Email"
+            name={["account", "email"]}
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Email is valid",
+                pattern:
+                  /^(([^<>()\[\]\\.,;:\s@"]{2,}(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              },
+            ]}
+          >
             <Input
+              className="val-input"
               placeholder="Enter your email"
               id="email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="Password" hasFeedback>
+          <Form.Item
+            className="val-item"
+            label="Password"
+            hasFeedback
+            name={["account", "password"]}
+            rules={[
+              {
+                required: true,
+                message:
+                  "The password must have 8-32 characters, at least 1 capital and 1 normal word !",
+                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/g,
+              },
+            ]}
+          >
             <Input.Password
+              className="val-input"
               placeholder="Enter your password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
+          <div id="error-submit">{isErrSubmit ? errMessageSubmit : ""}</div>
+
           <div className="forgot-password">Forgot password ?</div>
 
           <Form.Item className="submit-form">
