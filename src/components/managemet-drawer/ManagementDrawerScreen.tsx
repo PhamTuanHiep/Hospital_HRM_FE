@@ -18,6 +18,9 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { FeatureName, RoleId } from "./type";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { doLogout } from "../../features/auth/constants/accountSlice";
 
 interface ManagementDrawerProps {
   open: boolean;
@@ -25,6 +28,10 @@ interface ManagementDrawerProps {
 }
 
 const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const onClose = () => {
     setOpen(false);
   };
@@ -37,46 +44,80 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <UserOutlined />,
       text: " Thông tin tài khoản",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <AccountBookOutlined />,
       text: "Quản lý tài khoản",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <UsergroupAddOutlined />,
       text: "Quản lý nhân viên",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileOutlined />,
       text: "Quản lý hồ sơ",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileTextOutlined />,
       text: "Quản lý hợp đồng",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <ApartmentOutlined />,
       text: "Quản lý phòng ban",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <InsertRowAboveOutlined />,
       text: "Quản lý công việc ",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <MoneyCollectOutlined />,
       text: "Quản lý phúc lợi",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileSearchOutlined />,
       text: "Quản lý tuyển dụng",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <SnippetsOutlined />,
       text: "Đào tạo",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <LogoutOutlined />,
       text: "Đăng xuất",
+      fn: (e: any) => {
+        dispatch(doLogout(currentAccount));
+        navigate("/");
+      },
     },
   ];
 
@@ -84,38 +125,66 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <UserOutlined />,
       text: " Thông tin tài khoản",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileOutlined />,
       text: "Hồ sơ",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileTextOutlined />,
       text: "Hợp đồng",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <MoneyCollectOutlined />,
       text: "Bảo hiểm",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <InsertRowAboveOutlined />,
       text: "Lịch phân công tuần, Lịch trực",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <BellOutlined />,
       text: "Thông báo",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <FileDoneOutlined />,
       text: "Kết quả đào tạo",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <ProfileOutlined />,
       text: "Hiệu suất công việc",
+      fn: (e: any) => {
+        // dispatch(doLogout());
+      },
     },
     {
       icon: <LogoutOutlined />,
       text: "Đăng xuất",
+      fn: (e: any) => {
+        dispatch(doLogout(currentAccount));
+        navigate("/login");
+      },
     },
   ];
 
@@ -123,7 +192,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;
   const featureList = featureNames.map((featureName) => (
     <>
-      <Flex>
+      <Flex onClick={(e) => featureName.fn(e)}>
         <div className="item-icon">{featureName.icon}</div>
         <div className="item-content">{featureName.text}</div>
       </Flex>

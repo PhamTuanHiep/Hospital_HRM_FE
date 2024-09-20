@@ -1,6 +1,7 @@
 export interface FeatureName {
   icon: React.ReactNode;
   text: string;
+  fn: Function;
 }
 
 export const enum RoleId {

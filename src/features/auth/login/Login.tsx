@@ -128,28 +128,14 @@ const Login = () => {
               Login
             </Button>
           </Form.Item>
-          <div className="back-home">Go to Home Page</div>
-
-          {/* <Form.Item label="Email" hasFeedback>
-            <Input placeholder="I'm the content" id="email" />
-          </Form.Item>
-
-          <Form.Item label="Success" hasFeedback validateStatus="success">
-            <Input placeholder="I'm the content" id="success" />
-          </Form.Item>
-
-          <Form.Item label="Warning" hasFeedback validateStatus="warning">
-            <Input placeholder="Warning" id="warning2" />
-          </Form.Item> */}
-
-          {/* <Form.Item
-            label="Fail"
-            hasFeedback
-            validateStatus="error"
-            help="Should be combination of numbers & alphabets"
+          <div
+            className="back-home"
+            onClick={() => {
+              navigate("/");
+            }}
           >
-            <Input placeholder="unavailable choice" id="error2" />
-          </Form.Item> */}
+            Go to Home Page
+          </div>
         </Form>
       </div>
       <ToastContainer

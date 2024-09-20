@@ -1,8 +1,8 @@
 import "./App.scss";
 import { Outlet } from "react-router-dom";
 import { Flex } from "antd";
-import HeaderComponent from "./components/header/HeaderComponent";
-import FooterComponent from "./components/footer/FooterComponent";
+import HeaderComponent from "./components/header/Header";
+import FooterComponent from "./components/footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,9 +12,11 @@ function App() {
   return (
     <div>
       <>
-        <Flex vertical>
+        <Flex vertical id="hhrm-ui">
           <HeaderComponent />
-          <Outlet />
+          <div id="content">
+            <Outlet />
+          </div>
           <ToastContainer
             position="top-center"
             autoClose={5000}

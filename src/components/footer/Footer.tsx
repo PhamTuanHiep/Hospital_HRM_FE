@@ -1,14 +1,7 @@
-import { Col, List, Row, Typography } from "antd";
+import { Col, Row } from "antd";
 import "./Footer.scss";
 
-const style: React.CSSProperties = { background: "#0092ff", padding: "8px 0" };
 const FooterComponent = () => {
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-  ];
-
   return (
     <div id="footer">
       <Row gutter={16}>

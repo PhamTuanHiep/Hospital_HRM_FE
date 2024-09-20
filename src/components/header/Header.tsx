@@ -1,6 +1,6 @@
-import { Anchor, Flex, Typography } from "antd";
-import { Menu, Button, Dropdown, Space } from "antd";
-import { useEffect, useState } from "react";
+import { Flex, Typography } from "antd";
+import { Menu, Button } from "antd";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { HomeOutlined } from "@ant-design/icons";
@@ -159,9 +159,9 @@ const HeaderComponent = () => {
           justify="space-between"
           id="header-info"
         >
-          <Typography> 0123456789</Typography>
-          <Typography> 128 Pham Hung, Tuw Liem, Ha Noi</Typography>
-          <Typography>8h-11h</Typography>
+          <Typography>Liên hệ: 0123456789</Typography>
+          <Typography>Số 8 đường Phạm Hùng, Cầu Giấy, Hà Nội</Typography>
+          <Typography>Sáng (07:00 - 12:00) - Chiều (13:30 - 17:30)</Typography>
         </Flex>
         <Flex vertical={false} justify="space-around" id="header-nav">
           <Menu

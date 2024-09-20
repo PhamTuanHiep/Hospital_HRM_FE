@@ -33,11 +33,16 @@ export const accountSlice = createSlice({
       state.account = action.payload;
       state.isAuthen = true;
     },
+    doLogout: (state, action: PayloadAction<Account>) => {
+      state.account = initialState.account;
+      state.isAuthen = false;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { doLogin } = accountSlice.actions;
+export const { doLogin, doLogout } = accountSlice.actions;
+// console.log("accountSlice.actions:", accountSlice.actions);
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value
 export default accountSlice.reducer;

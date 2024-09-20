@@ -11,6 +11,7 @@
   .ant-flex {
     #header-info {
       height: 30px;
+      padding: 0 12px;
     }
     #header-nav {
       position: sticky;
@@ -26,7 +27,7 @@
         background-color: #e0e4e7;
         // color: white;
         font-size: 16px;
-        width: 100%;
+        width: 70%;
         min-width: 720px;
         display: flex;
         justify-content: flex-start;
