@@ -5,8 +5,9 @@ import { useAppSelector } from "../../../app/hooks";
 import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  const acc = useAppSelector((state) => state.account_user);
-  console.log("acc:", acc);
+  const currentAccout = useAppSelector((state) => state.account_user);
+  console.log("currentAccout:", currentAccout);
+
   return (
     <>
       <Flex id="homepage" vertical>

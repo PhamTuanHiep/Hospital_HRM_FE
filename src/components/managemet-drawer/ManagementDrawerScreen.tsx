@@ -284,7 +284,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       fn: (e: any) => {
         dispatch(doLogout(currentAccount));
         setOpen(false);
-
         navigate("/");
       },
     },
