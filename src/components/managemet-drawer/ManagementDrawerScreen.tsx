@@ -45,7 +45,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const adminFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
-      text: " Thông tin tài khoản",
+      text: "Thông tin tài khoản",
       fn: (e: any) => {
         // dispatch(doLogout());
       },

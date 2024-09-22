@@ -1,0 +1,44 @@
+{
+    "homepage": {
+        "Homepage": "Home Page",
+        "Login": "Login",
+        "Logout": "Logout"
+    },
+    "content": {
+        "feature": {
+            "account info": "Thông tin tài khoản",
+            "account management": "Quản lý tài khoản",
+            "record": "Hồ sơ",
+            "record management": "Quản lý hồ sơ",
+            "contract": "Hợp đồng",
+            "contract management": "Quản lý hợp đồng",
+            "department management": "Quản lý phòng ban",
+            "work schedule": "Lịch phân công tuần, Lịch trực",
+            "work management": "Quản lý công việc ",
+            "work performance": "Hiệu suất công việc",
+            "benefits management": "Quản lý phúc lợi",
+            "benefits": "Bảo hiểm & Trợ cấp",
+            "recruitment management": "Quản lý phúc lợi",
+            "train": "Đào tạo",
+            "training results": "Kết quả đào tạo",
+            "notification": "Thông báo"
+        },
+        "info": {
+            "Email": "Email",
+            "role": "Vai tro",
+            "user name": "Tên người dùng",
+            "gender": "Giới tính",
+            "phone number": "Số điện thoại",
+            "birthday": "Ngày sinh ",
+            "hometown": "Quê quán",
+            "Address": "Nơi ở hiện tại",
+            "Nation": "Quốc tịch",
+            "Nationality": "Dân tộc ",
+            "Father name": "Họ tên cha ",
+            "Mother name": "Họ tên mẹ",
+            "Father birthday": "Ngày sinh cha",
+            "Mother birthday": "Ngày sinh mẹ"
+        }
+    },
+    "footer": {}
+}

@@ -12,13 +12,15 @@ import { IntroPaths } from "../../features/introduction/constants/constant.path"
 import { NewsAndEventsPaths } from "../../features/newsAndEvents/constants/constant.path";
 import { useAppSelector } from "../../app/hooks";
 import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
+import { useTranslation } from "react-i18next";
+import Language from "./Language";
 
 const HeaderComponent = () => {
   // const navigate = useNavigate();
   const { account: currentAccount, isAuthen } = useAppSelector(
     (state) => state.account_user
   );
-
+  const { t } = useTranslation();
   console.log("currentAccount:", currentAccount);
   console.log("isAuthen:", isAuthen);
 
@@ -27,7 +29,7 @@ const HeaderComponent = () => {
       key: "1",
       label: (
         <NavLink to="/" className="nav-link">
-          Trang chủ
+          {t("homepage.Homepage")}
         </NavLink>
       ),
       icon: <HomeOutlined />,
@@ -170,20 +172,24 @@ const HeaderComponent = () => {
             items={items}
             defaultSelectedKeys={["1"]}
           />
-          {!isAuthen ? (
-            <Button type="primary">
-              <NavLink to="/login" className="nav-link">
-                Login
-              </NavLink>
-            </Button>
-          ) : (
-            <div className="avatar-box" onClick={showDrawer}>
-              <img
-                className="avatar"
-                src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
-              ></img>
-            </div>
-          )}
+          <>
+            <Language />
+
+            {!isAuthen ? (
+              <Button type="primary">
+                <NavLink to="/login" className="nav-link">
+                  Login
+                </NavLink>
+              </Button>
+            ) : (
+              <div className="avatar-box" onClick={showDrawer}>
+                <img
+                  className="avatar"
+                  src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
+                ></img>
+              </div>
+            )}
+          </>
         </Flex>
       </Flex>
       <ManagementDrawerScreen open={open} setOpen={setOpen} />
