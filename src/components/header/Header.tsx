@@ -38,7 +38,7 @@ const HeaderComponent = () => {
       key: "2",
       label: (
         <NavLink to="#" className="nav-link">
-          Giới thiệu
+          {t("homepage.Intro")}
         </NavLink>
       ),
       children: [
@@ -46,7 +46,7 @@ const HeaderComponent = () => {
           key: "2-sub-1",
           label: (
             <NavLink to={IntroPaths.VISION} className="nav-link">
-              Tầm nhìn - sứ mệnh
+              {t("homepage.Vision")}
             </NavLink>
           ),
         },
@@ -54,15 +54,15 @@ const HeaderComponent = () => {
           key: "2-sub-2",
           label: (
             <NavLink to={IntroPaths.ORGANIZATION} className="nav-link">
-              Cơ cấu tổ chức
+              {t("homepage.Origanization")}
             </NavLink>
           ),
         },
         {
           key: "2-sub-3",
           label: (
-            <NavLink to={IntroPaths.MANAGEMENT} className="nav-link">
-              Ban lãnh đạo bệnh viện
+            <NavLink to={IntroPaths.BOARDOFDIRECTORS} className="nav-link">
+              {t("homepage.BoardOfDirectors")}
             </NavLink>
           ),
         },
@@ -70,7 +70,7 @@ const HeaderComponent = () => {
           key: "2-sub-4",
           label: (
             <NavLink to={IntroPaths.DEPARTMENT} className="nav-link">
-              Đơn vị - khoa phòng
+              {t("homepage.Department")}
             </NavLink>
           ),
         },
@@ -80,7 +80,7 @@ const HeaderComponent = () => {
       key: "3",
       label: (
         <NavLink to="/" className="nav-link">
-          Tin tức và sự kiện
+          {t("homepage.NewsAndEvents")}
         </NavLink>
       ),
 
@@ -89,7 +89,7 @@ const HeaderComponent = () => {
           key: "3-sub-1",
           label: (
             <NavLink to={NewsAndEventsPaths.NEWS} className="nav-link">
-              Tin tức bệnh viện
+              {t("homepage.News")}
             </NavLink>
           ),
         },
@@ -97,7 +97,7 @@ const HeaderComponent = () => {
           key: "3-sub-2",
           label: (
             <NavLink to={NewsAndEventsPaths.RESEARCH} className="nav-link">
-              Nghiên cứu
+              {t("homepage.Reserch")}
             </NavLink>
           ),
         },
@@ -105,7 +105,7 @@ const HeaderComponent = () => {
           key: "3-sub-3",
           label: (
             <NavLink to={NewsAndEventsPaths.NUTRITION} className="nav-link">
-              Góc dinh dưỡng
+              {t("homepage.Nutrition")}
             </NavLink>
           ),
         },
@@ -115,7 +115,7 @@ const HeaderComponent = () => {
       key: "4",
       label: (
         <NavLink to={ContactPaths.CONTACT} className="nav-link">
-          Liên hệ
+          {t("homepage.Contact")}
         </NavLink>
       ),
     },
@@ -123,7 +123,7 @@ const HeaderComponent = () => {
       key: "5",
       label: (
         <NavLink to={"#"} className="nav-link">
-          Tuyển dụng
+          {t("homepage.Recruitment")}
         </NavLink>
       ),
       children: [
@@ -131,7 +131,7 @@ const HeaderComponent = () => {
           key: "5-sub-1",
           label: (
             <NavLink to={RecruitmentPaths.RECRUITMENT} className="nav-link">
-              Tuyển dụng
+              {t("homepage.Recruitment")}
             </NavLink>
           ),
         },
@@ -139,7 +139,7 @@ const HeaderComponent = () => {
           key: "5-sub-2",
           label: (
             <NavLink to={RecruitmentPaths.TRAIN} className="nav-link">
-              Đào tạo
+              {t("homepage.Train")}
             </NavLink>
           ),
         },
@@ -172,7 +172,7 @@ const HeaderComponent = () => {
             items={items}
             defaultSelectedKeys={["1"]}
           />
-          <>
+          <div className="right-header">
             <Language />
 
             {!isAuthen ? (
@@ -189,7 +189,7 @@ const HeaderComponent = () => {
                 ></img>
               </div>
             )}
-          </>
+          </div>
         </Flex>
       </Flex>
       <ManagementDrawerScreen open={open} setOpen={setOpen} />

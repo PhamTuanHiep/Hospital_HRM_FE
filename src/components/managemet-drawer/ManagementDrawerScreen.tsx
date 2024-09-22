@@ -18,11 +18,12 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { FeatureName, RoleId } from "./type";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { doLogout } from "../../features/auth/constants/accountSlice";
 import { UserPaths } from "../../features/users/constants/constant.path";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ManagementDrawerProps {
   open: boolean;
@@ -38,6 +39,8 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     setOpen(false);
   };
 
+  const { t } = useTranslation();
+
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
@@ -45,7 +48,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const adminFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
-      text: "Thông tin tài khoản",
+      text: t("content.feature.AccountInfo"),
       fn: (e: any) => {
         // dispatch(doLogout());
       },
@@ -128,7 +131,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const userFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
-      text: " Thông tin tài khoản",
+      text: t("content.feature.AccountInfo"),
       path: UserPaths.ACCOUNT_INFO,
       fn: (e: any) => {
         setOpen(false);
@@ -136,7 +139,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <FileOutlined />,
-      text: "Hồ sơ",
+      text: t("content.feature.Record"),
       path: UserPaths.RECORD,
       fn: (e: any) => {
         setOpen(false);
@@ -144,25 +147,23 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <FileTextOutlined />,
+      text: t("content.feature.Contract"),
       path: UserPaths.CONTRACT,
-
-      text: "Hợp đồng",
       fn: (e: any) => {
         setOpen(false);
       },
     },
     {
       icon: <MoneyCollectOutlined />,
+      text: t("content.feature.Benefits"),
       path: UserPaths.BENEFITS,
-
-      text: "Bảo hiểm & Trợ cấp",
       fn: (e: any) => {
         setOpen(false);
       },
     },
     {
       icon: <InsertRowAboveOutlined />,
-      text: "Lịch phân công tuần, Lịch trực",
+      text: t("content.feature.WorkSchedule"),
       path: UserPaths.SCHEDULE,
 
       fn: (e: any) => {
@@ -172,8 +173,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <BellOutlined />,
       path: UserPaths.NOTIFICATION,
-
-      text: "Thông báo",
+      text: t("content.feature.Notification"),
       fn: (e: any) => {
         setOpen(false);
       },
@@ -181,8 +181,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <FileDoneOutlined />,
       path: UserPaths.TRAINING_RESULTS,
-
-      text: "Kết quả đào tạo",
+      text: t("content.feature.TrainingResults"),
       fn: (e: any) => {
         setOpen(false);
       },
@@ -190,15 +189,14 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <ProfileOutlined />,
       path: UserPaths.WORK_PERFORMANCE_SCREEN,
-
-      text: "Hiệu suất công việc",
+      text: t("content.feature.WorkPerformance"),
       fn: (e: any) => {
         setOpen(false);
       },
     },
     {
       icon: <LogoutOutlined />,
-      text: "Đăng xuất",
+      text: t("homepage.Logout"),
       fn: (e: any) => {
         dispatch(doLogout(currentAccount));
         setOpen(false);

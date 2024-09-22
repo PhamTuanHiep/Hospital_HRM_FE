@@ -22,7 +22,14 @@
       display: flex;
       align-items: center;
       width: 100%;
-
+      .ant-menu-item-icon {
+        color: rgb(59 70 108);
+      }
+      .ant-menu-title-content {
+        a {
+          color: rgb(59 70 108);
+        }
+      }
       .nav {
         background-color: #e0e4e7;
         // color: white;
@@ -32,18 +39,24 @@
         display: flex;
         justify-content: flex-start;
       }
-      .avatar-box {
-        width: 35px;
-        height: 35px;
-        &:hover {
-          cursor: pointer;
-        }
-        .avatar {
-          width: 100%;
-          height: 100%;
+      .right-header {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 150px;
+        .avatar-box {
+          width: 35px;
+          height: 35px;
+          &:hover {
+            cursor: pointer;
+          }
+          .avatar {
+            width: 100%;
+            height: 100%;
 
-          object-fit: cover;
-          border-radius: 50%;
+            object-fit: cover;
+            border-radius: 50%;
+          }
         }
       }
     }
