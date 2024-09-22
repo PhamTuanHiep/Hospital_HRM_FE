@@ -1,9 +1,9 @@
-import { Flex, Typography } from "antd";
+import { Avatar, Flex, Typography } from "antd";
 import { Menu, Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import "./Header.scss";
 
 import { ContactPaths } from "../../features/contact/constants/constant.path";
@@ -14,6 +14,8 @@ import { useAppSelector } from "../../app/hooks";
 import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
 import { useTranslation } from "react-i18next";
 import Language from "./Language";
+import instance from "../../api/api";
+import { UserApis } from "../../features/users/constants/constant.endpoint";
 
 const HeaderComponent = () => {
   // const navigate = useNavigate();
@@ -148,9 +150,24 @@ const HeaderComponent = () => {
   ];
 
   const [open, setOpen] = useState(false);
+  const [avatar, setAvatar] = useState<string>("");
+
+  useEffect(() => {
+    getUser();
+  }, [currentAccount]);
 
   const showDrawer = () => {
     setOpen(true);
+  };
+
+  const getUser = async () => {
+    const res = await instance.get(
+      `${UserApis.USERS}/${currentAccount.userId}`
+    );
+    if (res.status === 200) {
+      const user = res.data.data;
+      setAvatar(user.image);
+    }
   };
   return (
     <div id="header">
@@ -183,10 +200,18 @@ const HeaderComponent = () => {
               </Button>
             ) : (
               <div className="avatar-box" onClick={showDrawer}>
-                <img
+                {/* <img
                   className="avatar"
-                  src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
-                ></img>
+                  src={avatar}
+                  // src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
+                ></img> */}
+                <Avatar
+                  size="large"
+                  src={avatar}
+                  icon={<UserOutlined style={{ fontSize: "100%" }} />}
+                  shape="circle"
+                  className="avatar"
+                />
               </div>
             )}
           </div>

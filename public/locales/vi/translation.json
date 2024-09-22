@@ -49,7 +49,8 @@
             "FatherName": "Họ tên cha ",
             "MotherName": "Họ tên mẹ",
             "FatherBirthday": "Ngày sinh cha",
-            "MotherBirthday": "Ngày sinh mẹ"
+            "MotherBirthday": "Ngày sinh mẹ",
+            "DateOfJoining": "Ngày tham gia"
         }
     },
     "footer": {}

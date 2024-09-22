@@ -6,51 +6,80 @@ import { useEffect, useState } from "react";
 import instance from "../../../../api/api";
 import { UserApis } from "../../constants/constant.endpoint";
 import { UserInfo } from "./type";
+import { Account, Role, User } from "../../../common.type";
+import { useTranslation } from "react-i18next";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
   console.log("currentAccount:", currentAccount);
 
-  const [role, setRole] = useState<string>("user");
-  const [userName, setUserName] = useState<string>("");
+  const [role, setRole] = useState<Role>({
+    roleId: "user",
+    roleName: "User",
+  });
+  const [user, setUser] = useState<User>({
+    userId: 1,
+    fullName: "-",
+    gender: "-",
+    address: "-",
+    phoneNumber: "-",
+    nation: "-",
+    nationality: "-",
+    hometown: "-",
+    positionId: "-",
+    birthday: "-",
+    image: "-",
+    fatherFullName: "-",
+    fatherBirthday: "-",
+    motherFullName: "-",
+    motherBirthday: "-",
+    departmentId: "-",
+    insuranceId: "-",
+    evaluateId: 1,
+    description: "-",
+    status: "-",
+  });
   const [avatar, setAvatar] = useState<string>("");
 
+  const { t } = useTranslation();
   useEffect(() => {
     getRole();
     getUser();
   }, [currentAccount]);
 
   const userData: UserInfo[] = [
-    { lable: "Email", content: currentAccount.email },
-    { lable: "Role", content: role },
-    { lable: "User name", content: userName },
-    { lable: "Gender", content: userName },
-    { lable: "Phone number", content: userName },
-    { lable: "Birthday", content: userName },
+    { lable: t("content.info.Email"), content: currentAccount.email },
+    { lable: t("content.info.Role"), content: role.roleName },
+    { lable: t("content.info.UserName"), content: user.fullName },
+    {
+      lable: t("content.info.Gender"),
+      content: user.gender === "1" ? "Nam" : "Nu",
+    },
+    { lable: t("content.info.PhoneNumber"), content: user.phoneNumber },
+    { lable: t("content.info.Birthday"), content: user.birthday },
   ];
 
   const addUserData1: UserInfo[] = [
-    { lable: "Hometown", content: currentAccount.email },
-    { lable: "Address", content: role },
-    { lable: "Nation", content: userName },
-    { lable: "Nationality", content: userName },
+    { lable: t("content.info.Hometown"), content: user.hometown },
+    { lable: t("content.info.Address"), content: user.address },
+    { lable: t("content.info.Nation"), content: user.nation },
+    { lable: t("content.info.Nationality"), content: user.nationality },
   ];
 
   const addUserData2: UserInfo[] = [
-    { lable: "Father name", content: currentAccount.email },
-    { lable: "Father birthday", content: role },
-    { lable: "Mother name", content: userName },
-    { lable: "Mother birthday", content: userName },
+    { lable: t("content.info.FatherName"), content: user.fatherFullName },
+    { lable: t("content.info.FatherBirthday"), content: user.fatherBirthday },
+    { lable: t("content.info.MotherName"), content: user.motherFullName },
+    { lable: t("content.info.MotherBirthday"), content: user.motherBirthday },
   ];
 
   const getRole = async () => {
     const res = await instance.get(
       `${UserApis.ROLES}/${currentAccount.roleId}`
     );
-    console.log("res:", res);
     if (res.status === 200) {
       const role = res.data.data;
-      setRole(role.roleName);
+      setRole(role);
     }
   };
 
@@ -60,24 +89,28 @@ const RecordScreen = () => {
     );
     if (res.status === 200) {
       const user = res.data.data;
-      setUserName(user.fullName);
+      setUser(user);
       setAvatar(user.image);
     }
   };
   return (
-    <Flex vertical id="record-screen">
-      <Flex vertical={false} justify="space-between">
-        <Space wrap size={16} className="avatar-wrap">
+    <Flex vertical={false} id="record-screen">
+      <Flex vertical className="user-info" justify="space-between">
+        <Space size={16} className="avatar-wrap">
           <Avatar
             size="large"
             src={avatar}
-            icon={<UserOutlined style={{ fontSize: "300%" }} />}
+            icon={<UserOutlined style={{ fontSize: "100%" }} />}
             shape="circle"
             className="avater-item"
           />
         </Space>
+        <span>
+          {t("content.info.DateOfJoining")}:{" "}
+          {new Date(user.createdAt).toLocaleDateString()}
+        </span>
         <div className="account-descriptions">
-          <h1 className="title-info">Recor d Info</h1>
+          {/* <h3 className="title-info">Recor d Info</h3> */}
 
           <List
             dataSource={userData}
@@ -92,7 +125,7 @@ const RecordScreen = () => {
           />
         </div>
       </Flex>
-      <Flex vertical={false} className="add-info" justify="space-between">
+      <Flex vertical={false} className="add-info" justify="space-around">
         <List
           dataSource={addUserData1}
           renderItem={(item) => (

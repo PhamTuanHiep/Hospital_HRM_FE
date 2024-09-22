@@ -48,7 +48,7 @@ const AccountInfoScreen = () => {
     }
   };
   return (
-    <Flex vertical={false} justify="space-between">
+    <Flex className="account-info" vertical={false} justify="space-between">
       <Space wrap size={16} className="avatar-wrap">
         <Avatar
           size="large"
