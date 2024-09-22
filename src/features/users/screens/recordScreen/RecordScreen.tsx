@@ -1,11 +1,11 @@
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Flex, List, Space } from "antd";
 import "./RecordScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";
 import { useEffect, useState } from "react";
 import instance from "../../../../api/api";
 import { UserApis } from "../../constants/constant.endpoint";
-import { AccountInfo } from "./type";
+import { UserInfo } from "./type";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
@@ -20,10 +20,27 @@ const RecordScreen = () => {
     getUser();
   }, [currentAccount]);
 
-  const accountData: AccountInfo[] = [
-    { lable: "email", content: currentAccount.email },
-    { lable: "role", content: role },
-    { lable: "UserName", content: userName },
+  const userData: UserInfo[] = [
+    { lable: "Email", content: currentAccount.email },
+    { lable: "Role", content: role },
+    { lable: "User name", content: userName },
+    { lable: "Gender", content: userName },
+    { lable: "Phone number", content: userName },
+    { lable: "Birthday", content: userName },
+  ];
+
+  const addUserData1: UserInfo[] = [
+    { lable: "Hometown", content: currentAccount.email },
+    { lable: "Address", content: role },
+    { lable: "Nation", content: userName },
+    { lable: "Nationality", content: userName },
+  ];
+
+  const addUserData2: UserInfo[] = [
+    { lable: "Father name", content: currentAccount.email },
+    { lable: "Father birthday", content: role },
+    { lable: "Mother name", content: userName },
+    { lable: "Mother birthday", content: userName },
   ];
 
   const getRole = async () => {
@@ -48,21 +65,36 @@ const RecordScreen = () => {
     }
   };
   return (
-    <Flex vertical={false} justify="space-between">
-      <Space wrap size={16} className="avatar-wrap">
-        <Avatar
-          size="large"
-          src={avatar}
-          icon={<UserOutlined style={{ fontSize: "300%" }} />}
-          shape="circle"
-          className="avater-item"
-        />
-      </Space>
-      <div className="account-descriptions">
-        <h1 className="title-info">Account Info</h1>
+    <Flex vertical id="record-screen">
+      <Flex vertical={false} justify="space-between">
+        <Space wrap size={16} className="avatar-wrap">
+          <Avatar
+            size="large"
+            src={avatar}
+            icon={<UserOutlined style={{ fontSize: "300%" }} />}
+            shape="circle"
+            className="avater-item"
+          />
+        </Space>
+        <div className="account-descriptions">
+          <h1 className="title-info">Recor d Info</h1>
 
+          <List
+            dataSource={userData}
+            renderItem={(item) => (
+              <List.Item>
+                <li className="info-item">
+                  <div className="lable-item">{item.lable}:</div>
+                  <div className="content-item">{item.content}</div>
+                </li>
+              </List.Item>
+            )}
+          />
+        </div>
+      </Flex>
+      <Flex vertical={false} className="add-info" justify="space-between">
         <List
-          dataSource={accountData}
+          dataSource={addUserData1}
           renderItem={(item) => (
             <List.Item>
               <li className="info-item">
@@ -72,7 +104,18 @@ const RecordScreen = () => {
             </List.Item>
           )}
         />
-      </div>
+        <List
+          dataSource={addUserData2}
+          renderItem={(item) => (
+            <List.Item>
+              <li className="info-item">
+                <div className="lable-item">{item.lable}:</div>
+                <div className="content-item">{item.content}</div>
+              </li>
+            </List.Item>
+          )}
+        />
+      </Flex>
     </Flex>
   );
 };

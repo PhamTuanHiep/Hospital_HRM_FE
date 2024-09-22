@@ -18,7 +18,7 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { FeatureName, RoleId } from "./type";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { doLogout } from "../../features/auth/constants/accountSlice";
 import { UserPaths } from "../../features/users/constants/constant.path";
@@ -125,88 +125,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
   ];
 
-  // const [userFeature, setUserFeature] = useState<FeatureName[]>([
-  //   {
-  //     icon: <UserOutlined />,
-  //     text: " Thông tin tài khoản",
-  //     path: UserPaths.ACCOUNT_INFO,
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <FileOutlined />,
-  //     text: "Hồ sơ",
-  //     path: UserPaths.RECORD,
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <FileTextOutlined />,
-  //     path: UserPaths.CONTRACT,
-
-  //     text: "Hợp đồng",
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <MoneyCollectOutlined />,
-  //     path: UserPaths.BENEFITS,
-
-  //     text: "Bảo hiểm & Trợ cấp",
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <InsertRowAboveOutlined />,
-  //     text: "Lịch phân công tuần, Lịch trực",
-  //     path: UserPaths.SCHEDULE,
-
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <BellOutlined />,
-  //     path: UserPaths.NOTIFICATION,
-
-  //     text: "Thông báo",
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <FileDoneOutlined />,
-  //     path: UserPaths.TRAINING_RESULTS,
-
-  //     text: "Kết quả đào tạo",
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <ProfileOutlined />,
-  //     path: UserPaths.WORKPERFORMANCESCREEN,
-
-  //     text: "Hiệu suất công việc",
-  //     fn: (e: any) => {
-  //       navigate(this.path);
-  //     },
-  //   },
-  //   {
-  //     icon: <LogoutOutlined />,
-  //     text: "Đăng xuất",
-  //     fn: (e: any) => {
-  //       dispatch(doLogout(currentAccount));
-  //       setOpen(false);
-
-  //       navigate("/");
-  //     },
-  //   },
-  // ]);
   const userFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
@@ -316,12 +234,12 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const featureNames =
     currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;
   const featureList = featureNames.map((featureName) => (
-    <Link to={featureName.path}>
+    <NavLink to={featureName.path}>
       <Flex onClick={(e) => featureName.fn(e)}>
         <div className="item-icon">{featureName.icon}</div>
         <div className="item-content">{featureName.text}</div>
       </Flex>
-    </Link>
+    </NavLink>
   ));
 
   return (
@@ -341,8 +259,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
         }
       >
         <List
-          // header={<div>Header</div>}
-          // footer={<div>Footer</div>}
           dataSource={featureList}
           renderItem={(item) => <List.Item>{item}</List.Item>}
         />

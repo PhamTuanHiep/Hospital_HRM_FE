@@ -1,4 +1,4 @@
-export interface AccountInfo {
+export interface UserInfo {
   lable: string;
   content: string;
 }

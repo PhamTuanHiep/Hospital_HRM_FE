@@ -1,7 +1,7 @@
 //conenct paths
 export const UserPaths = {
   ACCOUNT_INFO: "/user/account-info",
-  BENEFITS: "/user/account-info",
+  BENEFITS: "/user/benefits",
   CONTRACT: "/user/contract",
   NOTIFICATION: "/user/notification",
   RECORD: "/user/record",
