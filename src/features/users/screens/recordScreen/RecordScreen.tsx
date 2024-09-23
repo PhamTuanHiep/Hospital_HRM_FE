@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import instance from "../../../../api/api";
 import { UserApis } from "../../constants/constant.endpoint";
 import { UserInfo } from "./type";
-import { Account, Role, User } from "../../../common.type";
+import { Gender, Role, User } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
 
 const RecordScreen = () => {
@@ -34,7 +34,8 @@ const RecordScreen = () => {
     motherFullName: "-",
     motherBirthday: "-",
     departmentId: "-",
-    insuranceId: "-",
+    insuranceIds: ["-"],
+    allowanceIds: [0],
     evaluateId: 1,
     description: "-",
     status: "-",
@@ -53,7 +54,10 @@ const RecordScreen = () => {
     { lable: t("content.info.UserName"), content: user.fullName },
     {
       lable: t("content.info.Gender"),
-      content: user.gender === "1" ? "Nam" : "Nu",
+      content:
+        user.gender === Gender.MALE.toString()
+          ? t("content.other.Male")
+          : t("content.other.Female"),
     },
     { lable: t("content.info.PhoneNumber"), content: user.phoneNumber },
     { lable: t("content.info.Birthday"), content: user.birthday },
@@ -100,7 +104,7 @@ const RecordScreen = () => {
           <Avatar
             size="large"
             src={avatar}
-            icon={<UserOutlined style={{ fontSize: "100%" }} />}
+            icon={<UserOutlined style={{ fontSize: "150%" }} />}
             shape="circle"
             className="avater-item"
           />

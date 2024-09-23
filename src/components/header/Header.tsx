@@ -23,8 +23,6 @@ const HeaderComponent = () => {
     (state) => state.account_user
   );
   const { t } = useTranslation();
-  console.log("currentAccount:", currentAccount);
-  console.log("isAuthen:", isAuthen);
 
   const items = [
     {
@@ -200,15 +198,10 @@ const HeaderComponent = () => {
               </Button>
             ) : (
               <div className="avatar-box" onClick={showDrawer}>
-                {/* <img
-                  className="avatar"
-                  src={avatar}
-                  // src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
-                ></img> */}
                 <Avatar
                   size="large"
                   src={avatar}
-                  icon={<UserOutlined style={{ fontSize: "100%" }} />}
+                  icon={<UserOutlined style={{ fontSize: "80%" }} />}
                   shape="circle"
                   className="avatar"
                 />

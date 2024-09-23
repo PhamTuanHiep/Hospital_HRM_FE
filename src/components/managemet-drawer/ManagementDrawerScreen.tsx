@@ -216,7 +216,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       name: "John",
       age: 30,
       getDetails: function () {
-        console.log("this.name:", this.name);
         return `Name: ${this.name}, Age: ${this.age}`;
       },
     },
@@ -228,7 +227,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       },
     },
   ]);
-  console.log("users:", users);
+
   const featureNames =
     currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;
   const featureList = featureNames.map((featureName) => (

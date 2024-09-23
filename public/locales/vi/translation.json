@@ -51,6 +51,25 @@
             "FatherBirthday": "Ngày sinh cha",
             "MotherBirthday": "Ngày sinh mẹ",
             "DateOfJoining": "Ngày tham gia"
+        },
+        "allowance": {
+            "TypesOfInsurance": "Các loại bảo hiểm",
+            "Benefits": "Các khoản trợ cấp",
+            "Participated": "Đã tham gia",
+            "NotParticipated": "Chưa tham gia",
+            "InsuranceCode": "Mã bảo hiểm",
+            "InsuranceName": "Tên bảo hiểm",
+            "Type": "Loại",
+            "PercentageOfSalary": "Phần trăm lương",
+            "Status": "Trạng thái",
+            "BenefitCode": "Mã trợ cấp",
+            "BenefitName": "Tên trợ cấp",
+            "ByRate": "Theo tỷ lệ",
+            "ByLevel": "Theo mức"
+        },
+        "other": {
+            "Male": "Nam",
+            "Female": "Nữ"
         }
     },
     "footer": {}

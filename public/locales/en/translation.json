@@ -51,6 +51,25 @@
             "FatherBirthday": "Father Birthday",
             "MotherBirthday": "Mother Birthday",
             "DateOfJoining": "Date of Joining"
+        },
+        "allowance": {
+            "TypesOfInsurance": "Types of Insurance",
+            "Benefits": "Benefits",
+            "Participated": "Participated",
+            "NotParticipated": "Not Participated",
+            "InsuranceCode": "Insurance Code",
+            "InsuranceName": "Insurance Name",
+            "Type": "Type",
+            "PercentageOfSalary": "Percentage of Salary",
+            "Status": "Status",
+            "BenefitCode": "Benefit Code",
+            "BenefitName": "Benefit Name",
+            "ByRate": "By Rate",
+            "ByLevel": "By Level"
+        },
+        "other": {
+            "Male": "Male",
+            "Female": "Female"
         }
     },
     "footer": {}

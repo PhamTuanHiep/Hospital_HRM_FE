@@ -15,7 +15,8 @@ export interface User {
   motherFullName: string;
   motherBirthday: string;
   departmentId: string;
-  insuranceId: string;
+  insuranceIds: string[];
+  allowanceIds: number[];
   evaluateId: number;
   description: string;
   createdAt?: Date;
@@ -51,8 +52,9 @@ export interface Leave {
 export interface Insurance {
   insuranceId: string;
   insuranceName: string;
-  monthlyPrice: number;
-  price: number;
+  insuranceType: string;
+  monthlyPercentage: number;
+  note: string;
 }
 
 export interface Evaluate {
@@ -77,7 +79,15 @@ export interface Department {
 }
 
 export interface Allowance {
-  allowanceId: string;
+  allowanceId: number;
+  allowanceAcronym: string;
+  allowanceType: string;
   allowanceName: string;
+  allowanceRate: number;
   allowanceFee: number;
+  note: string;
+}
+export enum Gender {
+  FEMALE = 0,
+  MALE,
 }
