@@ -1,7 +1,8 @@
 import axios from "axios";
+import { APIHHRM } from "./api.constant";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: APIHHRM,
   timeout: 8000,
   headers: {
     Accept: "application/json",

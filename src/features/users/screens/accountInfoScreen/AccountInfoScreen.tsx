@@ -1,46 +1,40 @@
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Flex, List, Space } from "antd";
 import "./AccountInfoScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";
 import { useEffect, useState } from "react";
-import instance from "../../../../api/api";
-import { UserApis } from "../../constants/constant.endpoint";
+
 import { AccountInfo } from "./type";
+import { getRole, getUser } from "../../../../api/apiServices";
 
 const AccountInfoScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
-  console.log("currentAccount:", currentAccount);
 
-  const [role, setRole] = useState<string>("user");
+  const [roleName, setRoleName] = useState<string>("User");
   const [userName, setUserName] = useState<string>("");
   const [avatar, setAvatar] = useState<string>("");
 
   useEffect(() => {
-    getRole();
-    getUser();
+    fetchRole();
+    fetchUser();
   }, [currentAccount]);
 
   const accountData: AccountInfo[] = [
     { lable: "email", content: currentAccount.email },
-    { lable: "role", content: role },
+    { lable: "role", content: roleName },
     { lable: "UserName", content: userName },
   ];
 
-  const getRole = async () => {
-    const res = await instance.get(
-      `${UserApis.ROLES}/${currentAccount.roleId}`
-    );
-    console.log("res:", res);
+  const fetchRole = async () => {
+    const res = await getRole(currentAccount.roleId);
     if (res.status === 200) {
       const role = res.data.data;
-      setRole(role.roleName);
+      setRoleName(role.roleName);
     }
   };
 
-  const getUser = async () => {
-    const res = await instance.get(
-      `${UserApis.USERS}/${currentAccount.userId}`
-    );
+  const fetchUser = async () => {
+    const res = await getUser(currentAccount.userId);
     if (res.status === 200) {
       const user = res.data.data;
       setUserName(user.fullName);

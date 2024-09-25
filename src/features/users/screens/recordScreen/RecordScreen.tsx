@@ -9,50 +9,23 @@ import { UserInfo } from "./type";
 import { Gender, Role, User } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
 import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
-import { getRandomRole } from "../../../../api/services";
+import { getRole, getUser } from "../../../../api/apiServices";
+import { INIT_ROLE, INIT_USER } from "../../../../common/common.constant";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
 
-  const [role, setRole] = useState<Role>({
-    roleId: "user",
-    roleName: "User",
-  });
-  const [user, setUser] = useState<User>({
-    userId: 1,
-    fullName: "-",
-    gender: "-",
-    address: "-",
-    phoneNumber: "-",
-    nation: "-",
-    nationality: "-",
-    hometown: "-",
-    positionId: "-",
-    birthday: "-",
-    image: "-",
-    fatherFullName: "-",
-    fatherBirthday: "-",
-    motherFullName: "-",
-    motherBirthday: "-",
-    departmentId: "-",
-    weeklySchedule: [0],
-    insuranceIds: ["-"],
-    allowances: [""],
-    allowanceIds: [0],
-    evaluateId: 1,
-    jobDescription: [""],
-    otherDescription: "-",
-    status: "-",
-  });
+  const [role, setRole] = useState<Role>(INIT_ROLE);
+
+  const [user, setUser] = useState<User>(INIT_USER);
   const [avatar, setAvatar] = useState<string>("");
 
   const { t } = useTranslation();
   useEffect(() => {
-    getRole();
-    getUser();
-    let randomRole = getRandomRole();
+    fetchRole();
+    fetchUser();
   }, [currentAccount]);
-  console.log("randomRole:", randomRole);
+
   const userData: UserInfo[] = [
     { lable: t("content.info.Email"), content: currentAccount.email },
     { lable: t("content.info.Role"), content: role.roleName },
@@ -82,20 +55,16 @@ const RecordScreen = () => {
     { lable: t("content.info.MotherBirthday"), content: user.motherBirthday },
   ];
 
-  const getRole = async () => {
-    const res = await instance.get(
-      `${UserApis.ROLES}/${currentAccount.roleId}`
-    );
+  const fetchRole = async () => {
+    const res = await getRole(currentAccount.roleId);
     if (res.status === 200) {
       const role = res.data.data;
       setRole(role);
     }
   };
 
-  const getUser = async () => {
-    const res = await instance.get(
-      `${UserApis.USERS}/${currentAccount.userId}`
-    );
+  const fetchUser = async () => {
+    const res = await getUser(currentAccount.userId);
     if (res.status === 200) {
       const user = res.data.data;
       setUser(user);

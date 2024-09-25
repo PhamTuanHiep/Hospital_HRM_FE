@@ -10,91 +10,55 @@ import {
   INSURANCES_COLUMNS,
 } from "../../constants/user.constant";
 import { useTranslation } from "react-i18next";
+import {
+  getAllowances,
+  getInsurances,
+  getUser,
+} from "../../../../api/apiServices";
+import {
+  INIT_ALLOWANCE,
+  INIT_INSURANCE,
+  INIT_USER,
+} from "../../../../common/common.constant";
 
 const BenefitsScreen = () => {
-  const [insurances, setInsurances] = useState<Insurance[]>([
-    {
-      insuranceId: "-",
-      insuranceName: "-",
-      insuranceType: "-",
-      monthlyPercentage: 0,
-      note: "-",
-    },
-  ]);
+  const [insurances, setInsurances] = useState<Insurance[]>([INIT_INSURANCE]);
 
-  const [user, setUser] = useState<User>({
-    userId: 1,
-    fullName: "-",
-    gender: "-",
-    address: "-",
-    phoneNumber: "-",
-    nation: "-",
-    nationality: "-",
-    hometown: "-",
-    positionId: "-",
-    birthday: "-",
-    image: "-",
-    fatherFullName: "-",
-    fatherBirthday: "-",
-    motherFullName: "-",
-    motherBirthday: "-",
-    departmentId: "-",
-    weeklySchedule: [0],
-    insuranceIds: ["-"],
-    allowances: [""],
-    allowanceIds: [0],
-    evaluateId: 1,
-    jobDescription: [""],
-    otherDescription: "-",
-    status: "-",
-  });
+  const [user, setUser] = useState<User>(INIT_USER);
 
-  const [allowances, setAllowances] = useState<Allowance[]>([
-    {
-      allowanceId: 0,
-      allowanceAcronym: "-",
-      allowanceName: "-",
-      allowanceType: "-",
-      allowanceRate: 0,
-      allowanceFee: 0,
-      note: "-",
-    },
-  ]);
+  const [allowances, setAllowances] = useState<Allowance[]>([INIT_ALLOWANCE]);
 
   const currentAccount = useAppSelector((state) => state.account_user.account);
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    getUser();
+    fetchUser();
   }, [currentAccount]);
 
   useEffect(() => {
-    getInsurances();
-    getAllowances();
+    fetchInsurances();
+    fetchAllowances();
   }, []);
 
-  const getInsurances = async () => {
-    const res = await instance.get(`${UserApis.INSURANCES}`);
-    console.log("res:", res);
+  const fetchInsurances = async () => {
+    const res = await getInsurances();
     if (res.status === 200) {
       const insuranceData = res.data.data;
       setInsurances(insuranceData);
     }
   };
 
-  const getUser = async () => {
-    const res = await instance.get(
-      `${UserApis.USERS}/${currentAccount.userId}`
-    );
+  const fetchUser = async () => {
+    const res = await getUser(currentAccount.userId);
     if (res.status === 200) {
       const userData = res.data.data;
       setUser(userData);
     }
   };
 
-  const getAllowances = async () => {
-    const res = await instance.get(`${UserApis.ALLOWANCES}`);
+  const fetchAllowances = async () => {
+    const res = await getAllowances();
     if (res.status === 200) {
       const allowanceData = res.data.data;
       setAllowances(allowanceData);
