@@ -1,16 +1,15 @@
 import { Card, List, Table } from "antd";
 import { OVERTIME_SCHEDULE_COLUMNS } from "../../../constants/user.constant";
 import {
+  Dayofweek,
   Department,
   Overtime,
   OvertimeHistory,
   User,
+  dayOfWeek,
 } from "../../../../../common/common.type";
 import { useEffect, useMemo, useState } from "react";
-import instance from "../../../../../api/api";
-import { UserApis } from "../../../constants/constant.endpoint";
 import {
-  getDayToDaysOfOvertime,
   getOvertimeNamefromOvertimeId,
   getUserfromUserId,
 } from "../../../../../common/common.helper";
@@ -26,6 +25,8 @@ import {
   getOvertimes,
   getUsers,
 } from "../../../../../api/apiServices";
+import dayjs from "dayjs";
+import "./OvertimeScheduleTable.scss";
 
 const OvertimeScheduleTable = () => {
   const [departments, setDepartments] = useState<Department[]>([
@@ -58,7 +59,10 @@ const OvertimeScheduleTable = () => {
       }
     );
     let accordingDay = accordingDepartments.filter((accordingDepartment) => {
-      return getDayToDaysOfOvertime(accordingDepartment.days) === `Thu ${day}`;
+      return (
+        dayjs(accordingDepartment.days).format("dddd") ===
+        dayOfWeek[day as Dayofweek]
+      );
     });
 
     return accordingDay.map((accordingDayData) => {
@@ -160,12 +164,13 @@ const OvertimeScheduleTable = () => {
   }, [departments]);
 
   return (
-    <Card title="Lịch trực tuần" bordered={false} className="benefits-card">
+    <Card title="Lịch trực tuần" bordered={false} id="overtime-schedule-card">
       <Table
         columns={OVERTIME_SCHEDULE_COLUMNS}
         dataSource={overtimeSchedule}
         pagination={false}
         bordered={true}
+        scroll={{ x: 1200 }}
       />
     </Card>
   );

@@ -1,4 +1,5 @@
 import "./App.scss";
+import "./common/common.scss";
 import { Outlet } from "react-router-dom";
 import { Flex } from "antd";
 import HeaderComponent from "./components/header/Header";

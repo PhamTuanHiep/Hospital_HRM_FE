@@ -112,14 +112,22 @@ export enum Gender {
   MALE,
 }
 
-export interface OvertimeScheduleIndex {
-  order: string;
-  departmentName: string;
-  monday: string;
-  tuesday: string;
-  wednesday: string;
-  thursday: string;
-  friday: string;
-  saturday: string;
-  sunday: string;
+export enum Dayofweek {
+  MONDAY = 2,
+  TUESDAY = 3,
+  WEDNESDAY = 4,
+  THURSDAY = 5,
+  FRIDAY = 6,
+  SATURDAY = 7,
+  SUNDAY = 8,
 }
+
+export const dayOfWeek = {
+  [Dayofweek.MONDAY]: "Monday",
+  [Dayofweek.TUESDAY]: "Tuesday",
+  [Dayofweek.WEDNESDAY]: "Wednesday",
+  [Dayofweek.THURSDAY]: "Thursday",
+  [Dayofweek.FRIDAY]: "Friday",
+  [Dayofweek.SATURDAY]: "Saturday",
+  [Dayofweek.SUNDAY]: "Sunday",
+};

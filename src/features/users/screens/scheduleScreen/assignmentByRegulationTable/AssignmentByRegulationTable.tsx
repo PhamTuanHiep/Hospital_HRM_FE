@@ -12,6 +12,7 @@ import {
   getUser,
   getUsers,
 } from "../../../../../api/apiServices";
+import "./AssignmentByRegulationTable.scss";
 
 const AssignmentByRegulationTable = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
@@ -73,7 +74,7 @@ const AssignmentByRegulationTable = () => {
     <Card
       title="Bảng phân công theo quy định"
       bordered={false}
-      className="benefits-card"
+      id="assignment-by-regulation-card"
     >
       <Table
         columns={ASSIGNMENT_BY_REGULATION_COLUMNS}

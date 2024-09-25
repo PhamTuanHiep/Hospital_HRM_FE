@@ -88,6 +88,7 @@ export const ASSIGNMENT_BY_REGULATION_COLUMNS = [
     title: "Stt",
     dataIndex: assignmentByRegulationIndex.order,
     key: assignmentByRegulationIndex.order,
+    className: "content-center",
   },
   {
     title: "Ho va ten",
@@ -122,6 +123,7 @@ export const OVERTIME_SCHEDULE_COLUMNS = [
     title: "Stt",
     dataIndex: overtimeScheduleIndex.order,
     key: overtimeScheduleIndex.order,
+    className: "content-center",
   },
   {
     title: "Ten khoa phong",

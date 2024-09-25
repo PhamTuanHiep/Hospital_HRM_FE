@@ -1,0 +1,30 @@
+#overtime-schedule-card {
+  .ant-card-head {
+  }
+  .ant-card-body {
+    .ant-table {
+      .ant-table-thead {
+        .ant-table-cell {
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+      .ant-table-tbody {
+        .ant-table-row {
+          font-size: 14px;
+          //   text-align: ;
+          .ant-table-cell {
+            .ant-list {
+              .ant-list-item {
+                font-size: 14px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
