@@ -1,3 +1,11 @@
+export const INIT_ACCOUNT = {
+  accountId: 0,
+  email: "",
+  password: "",
+  roleId: "",
+  userId: 0,
+};
+
 export const INIT_USER = {
   userId: 1,
   fullName: "-",
@@ -23,14 +31,6 @@ export const INIT_USER = {
   jobDescription: [""],
   otherDescription: "-",
   status: "-",
-};
-
-export const INIT_ACCOUNT = {
-  accountId: 0,
-  email: "",
-  password: "",
-  roleId: "",
-  userId: 0,
 };
 
 export const INIT_ROLE = {

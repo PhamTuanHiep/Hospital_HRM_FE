@@ -1,3 +1,11 @@
+export interface Account {
+  accountId: number;
+  email: string;
+  password: string;
+  roleId: string;
+  userId: number;
+}
+
 export interface User {
   userId: number;
   fullName: string;
@@ -25,14 +33,6 @@ export interface User {
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
-}
-
-export interface Account {
-  accountId: number;
-  email: string;
-  password: string;
-  roleId: string;
-  userId: number;
 }
 
 export interface Role {
