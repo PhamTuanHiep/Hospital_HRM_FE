@@ -8,10 +8,11 @@ import { UserApis } from "../../constants/constant.endpoint";
 import { UserInfo } from "./type";
 import { Gender, Role, User } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
+import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
+import { getRandomRole } from "../../../../api/services";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
-  console.log("currentAccount:", currentAccount);
 
   const [role, setRole] = useState<Role>({
     roleId: "user",
@@ -34,10 +35,13 @@ const RecordScreen = () => {
     motherFullName: "-",
     motherBirthday: "-",
     departmentId: "-",
+    weeklySchedule: [0],
     insuranceIds: ["-"],
+    allowances: [""],
     allowanceIds: [0],
     evaluateId: 1,
-    description: "-",
+    jobDescription: [""],
+    otherDescription: "-",
     status: "-",
   });
   const [avatar, setAvatar] = useState<string>("");
@@ -46,8 +50,9 @@ const RecordScreen = () => {
   useEffect(() => {
     getRole();
     getUser();
+    let randomRole = getRandomRole();
   }, [currentAccount]);
-
+  console.log("randomRole:", randomRole);
   const userData: UserInfo[] = [
     { lable: t("content.info.Email"), content: currentAccount.email },
     { lable: t("content.info.Role"), content: role.roleName },
@@ -97,6 +102,7 @@ const RecordScreen = () => {
       setAvatar(user.image);
     }
   };
+
   return (
     <Flex vertical={false} id="record-screen">
       <Flex vertical className="user-info" justify="space-between">
@@ -111,7 +117,7 @@ const RecordScreen = () => {
         </Space>
         <span>
           {t("content.info.DateOfJoining")}:{" "}
-          {new Date(user.createdAt).toLocaleDateString()}
+          {getDDMMYYYYfromISO8601DateString(user.createdAt)}
         </span>
         <div className="account-descriptions">
           {/* <h3 className="title-info">Recor d Info</h3> */}

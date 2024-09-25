@@ -231,7 +231,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const featureNames =
     currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;
   const featureList = featureNames.map((featureName) => (
-    <NavLink to={featureName.path}>
+    <NavLink to={featureName.path || "#"}>
       <Flex onClick={(e) => featureName.fn(e)}>
         <div className="item-icon">{featureName.icon}</div>
         <div className="item-content">{featureName.text}</div>

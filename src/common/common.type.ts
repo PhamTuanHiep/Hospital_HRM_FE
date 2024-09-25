@@ -15,10 +15,13 @@ export interface User {
   motherFullName: string;
   motherBirthday: string;
   departmentId: string;
+  weeklySchedule: number[];
   insuranceIds: string[];
+  allowances: string[];
   allowanceIds: number[];
   evaluateId: number;
-  description: string;
+  jobDescription: string[];
+  otherDescription: string;
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -87,7 +90,36 @@ export interface Allowance {
   allowanceFee: number;
   note: string;
 }
+
+export interface Overtime {
+  overtimeId: string;
+  overtimeName: string;
+  overtimePay: number;
+  note: string[];
+}
+
+export interface OvertimeHistory {
+  overtimeHistoryId: number;
+  userId: number;
+  overtimeId: string;
+  departmentId: string;
+  days: string;
+  note: string;
+}
+
 export enum Gender {
   FEMALE = 0,
   MALE,
+}
+
+export interface OvertimeScheduleIndex {
+  order: string;
+  departmentName: string;
+  monday: string;
+  tuesday: string;
+  wednesday: string;
+  thursday: string;
+  friday: string;
+  saturday: string;
+  sunday: string;
 }

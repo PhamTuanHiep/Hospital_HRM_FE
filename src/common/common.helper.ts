@@ -6,3 +6,8 @@ export const getFormatNumberToString = (num: number, char: string) => {
 export const addSuffix = (value: number | string, suffix: string) => {
   return value.toString() + suffix;
 };
+
+export const getDDMMYYYYfromISO8601DateString = (date: Date | undefined) => {
+  let newDate = date ? date : "";
+  return new Date(newDate).toLocaleString("vi-VN");
+};

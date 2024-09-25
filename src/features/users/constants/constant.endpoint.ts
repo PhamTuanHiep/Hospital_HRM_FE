@@ -4,4 +4,8 @@ export const UserApis = {
   USERS: "/users",
   INSURANCES: "/insurances",
   ALLOWANCES: "/allowances",
+  POSITIONS: "/positions",
+  OVERTIMES: "/overtimes",
+  OVERTIMEHISTORIES: "/overtime-histories",
+  DEPARTMENTS: "/departments",
 };

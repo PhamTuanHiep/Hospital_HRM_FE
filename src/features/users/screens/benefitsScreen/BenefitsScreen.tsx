@@ -39,10 +39,13 @@ const BenefitsScreen = () => {
     motherFullName: "-",
     motherBirthday: "-",
     departmentId: "-",
+    weeklySchedule: [0],
     insuranceIds: ["-"],
+    allowances: [""],
     allowanceIds: [0],
     evaluateId: 1,
-    description: "-",
+    jobDescription: [""],
+    otherDescription: "-",
     status: "-",
   });
 
