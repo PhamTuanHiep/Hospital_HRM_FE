@@ -11,6 +11,8 @@ import {
   errMessageSubmit,
   validateMessages,
 } from "../constants/login.constant";
+import { INIT_ACCOUNT } from "../../../common/common.constant";
+import { getAccounts } from "../../../api/apiServices";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,28 +23,21 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [accounts, setAccounts] = useState<Account[]>([
-    {
-      accountId: 0,
-      email: "",
-      password: "",
-      roleId: "",
-      userId: 0,
-    },
-  ]);
+  const [accounts, setAccounts] = useState<Account[]>([INIT_ACCOUNT]);
+
   useEffect(() => {
-    getAccounts();
+    fetchAccounts();
   }, []);
 
-  const getAccounts = async () => {
-    const res = await instance.get(`${AccountApis.ACCOUNTS}`, {});
-    console.log("res:", res);
+  const fetchAccounts = async () => {
+    const res = await getAccounts();
     if (res.status === 200) {
       const accountsData = res.data.data;
       console.log("accountsData:", accountsData);
       setAccounts(accountsData);
     }
   };
+
   const onFinish = async (values: any) => {
     const currentAccount = accounts.find((account) => {
       return account.email === email && account.password === password;

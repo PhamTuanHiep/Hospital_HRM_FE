@@ -1,6 +1,10 @@
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
+export const getAccounts = async () => {
+  return instance.get(`${apiPaths.ACCOUNTS}`, {});
+};
+
 export const getRole = (roleId: string) => {
   return instance.get(`${apiPaths.ROLES}/${roleId}`);
 };

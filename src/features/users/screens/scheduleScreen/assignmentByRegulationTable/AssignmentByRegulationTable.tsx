@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Position, User } from "../../../../../common/common.type";
 import { useAppSelector } from "../../../../../app/hooks";
 import {
-  INIT_POSOTION,
+  INIT_POSITION,
   INIT_USER,
 } from "../../../../../common/common.constant";
 import {
@@ -20,7 +20,7 @@ const AssignmentByRegulationTable = () => {
 
   const [user, setUser] = useState<User>(INIT_USER);
 
-  const [positions, setPositions] = useState<Position[]>([INIT_POSOTION]);
+  const [positions, setPositions] = useState<Position[]>([INIT_POSITION]);
 
   useEffect(() => {
     fetchUser();
