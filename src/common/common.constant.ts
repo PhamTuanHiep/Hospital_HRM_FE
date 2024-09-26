@@ -73,6 +73,7 @@ export const INIT_EVALUATE = {
   workAttitude: 0,
   workSpirit: 0,
   workResult: 0,
+  averageScore: 0,
 };
 
 export const INIT_DEPARTMENT = {

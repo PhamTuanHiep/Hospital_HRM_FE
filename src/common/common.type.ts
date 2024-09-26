@@ -74,6 +74,9 @@ export interface Evaluate {
   workAttitude: number;
   workSpirit: number;
   workResult: number;
+  averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Department {
@@ -107,6 +110,13 @@ export interface OvertimeHistory {
   note: string;
 }
 
+export interface CustomDataSets {
+  type?: string;
+  label?: string;
+  backgroundColor?: string[];
+  data?: number[];
+  time?: Date;
+}
 export enum Gender {
   FEMALE = 0,
   MALE,

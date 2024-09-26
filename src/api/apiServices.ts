@@ -36,6 +36,15 @@ export const getInsurances = () => {
 };
 
 //EVALUATE
+
+export const getEvaluates = () => {
+  return instance.get(`${apiPaths.EVALUATES}`);
+};
+
+export const getEvaluate = (evaluateId: number) => {
+  return instance.get(`${apiPaths.EVALUATES}/${evaluateId}`);
+};
+
 //DEPARTMENT
 
 export const getDepartments = async () => {
