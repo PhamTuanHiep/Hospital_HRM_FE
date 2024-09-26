@@ -82,7 +82,7 @@ export const getDataSetsByYear = (
   console.log("dayjs().year():", dayjs().year());
   console.log("year:", year);
 
-  if (now) {
+  if (now && !year) {
     return dataSets.filter((dataSet) => {
       return (
         dayjs(dataSet.time).year() ===
