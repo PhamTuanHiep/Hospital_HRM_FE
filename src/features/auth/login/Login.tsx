@@ -1,9 +1,7 @@
 import { Button, Form, Input } from "antd";
 import "./Login.scss";
 import { useEffect, useState } from "react";
-import instance from "../../../api/api";
 import { Account, doLogin } from "../constants/accountSlice";
-import { AccountApis } from "../constants/constant.endpoint";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -13,11 +11,13 @@ import {
 } from "../constants/login.constant";
 import { INIT_ACCOUNT } from "../../../common/common.constant";
 import { getAccounts } from "../../../api/apiServices";
+import { useAppDispatch } from "../../../app/hooks";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [isErrSubmit, setIsErrSubmit] = useState<Boolean>(false);
 

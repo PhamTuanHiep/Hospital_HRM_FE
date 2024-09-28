@@ -68,7 +68,7 @@ export const increaseMonthToTime = (time: Date, addMonth: number = 3) => {
 };
 
 export const reduceMonthToTime = (
-  time: Date | Dayjs,
+  time?: Date | Dayjs,
   reducedMonth: number = 3
 ) => {
   return dayjs(time).subtract(reducedMonth, "month").toDate();
@@ -76,17 +76,13 @@ export const reduceMonthToTime = (
 
 export const getDataSetsByYear = (
   dataSets: CustomDataSets[],
-  now?: boolean,
   year?: number
 ) => {
-  console.log("dayjs().year():", dayjs().year());
-  console.log("year:", year);
-
-  if (now && !year) {
+  if (!year) {
     return dataSets.filter((dataSet) => {
       return (
-        dayjs(dataSet.time).year() ===
-        dayjs(reduceMonthToTime(dayjs().toDate())).year()
+        dayjs(reduceMonthToTime(dataSet.time)).year() ===
+        dayjs(dayjs().toDate()).year()
       );
     });
   } else {
