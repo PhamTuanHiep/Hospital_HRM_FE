@@ -51,12 +51,12 @@ export const WorkPerformanceScreen = () => {
       };
     });
     // sort dataset by time of field time (Date)
-    const neUserDataSets = userDataSets.sort((a, b) => {
+    const newUserDataSets = userDataSets.sort((a, b) => {
       return dayjs(a.time).isBefore(b.time) ? -1 : 1;
     });
 
     return {
-      userDataSets: getDataSetsByYear(neUserDataSets),
+      userDataSets: getDataSetsByYear(newUserDataSets),
       labels: labels.map((lable) => toPascalCase(lable)),
     };
   }, [evaluates]);

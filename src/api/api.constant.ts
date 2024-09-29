@@ -10,5 +10,7 @@ export const apiPaths = {
   DEPARTMENTS: "/departments",
   ALLOWANCES: "/allowances",
   OVERTIMES: "/overtimes",
-  OVERTIMEHISTORIES: "/overtime-histories",
+  OVERTIME_HISTORIES: "/overtime-histories",
+  MEDICAL_TRAINING_RESULTS: "/medical-training-results",
+  NURSING_TRAINING_RESULTS: "/nursing-training-results",
 };

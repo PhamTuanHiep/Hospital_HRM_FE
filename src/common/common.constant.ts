@@ -1,4 +1,20 @@
-export const INIT_ACCOUNT = {
+import {
+  Account,
+  Allowance,
+  Department,
+  Evaluate,
+  Insurance,
+  Leave,
+  MedicalTrainingResults,
+  NursingTrainingResults,
+  Overtime,
+  OvertimeHistory,
+  Position,
+  Role,
+  User,
+} from "./common.type";
+
+export const INIT_ACCOUNT: Account = {
   accountId: 0,
   email: "",
   password: "",
@@ -6,7 +22,7 @@ export const INIT_ACCOUNT = {
   userId: 0,
 };
 
-export const INIT_USER = {
+export const INIT_USER: User = {
   userId: 1,
   fullName: "-",
   gender: "-",
@@ -33,25 +49,25 @@ export const INIT_USER = {
   status: "-",
 };
 
-export const INIT_ROLE = {
+export const INIT_ROLE: Role = {
   roleId: "user",
   roleName: "User",
 };
 
-export const INIT_POSITION = {
+export const INIT_POSITION: Position = {
   positionId: "",
   positionName: "",
   salaryCoefficient: 0,
   leaveId: "",
 };
 
-export const INIT_LEAVE = {
+export const INIT_LEAVE: Leave = {
   leaveId: "",
   leaveTypes: "",
   MaxLeaveEntitlement: 0,
 };
 
-export const INIT_INSURANCE = {
+export const INIT_INSURANCE: Insurance = {
   insuranceId: "-",
   insuranceName: "-",
   insuranceType: "-",
@@ -59,7 +75,7 @@ export const INIT_INSURANCE = {
   note: "-",
 };
 
-export const INIT_EVALUATE = {
+export const INIT_EVALUATE: Evaluate = {
   evaluateId: 0,
   userId: 0,
   workLoad: 0,
@@ -76,12 +92,12 @@ export const INIT_EVALUATE = {
   averageScore: 0,
 };
 
-export const INIT_DEPARTMENT = {
+export const INIT_DEPARTMENT: Department = {
   departmentId: "",
   departmentName: "",
 };
 
-export const INIT_ALLOWANCE = {
+export const INIT_ALLOWANCE: Allowance = {
   allowanceId: 0,
   allowanceAcronym: "-",
   allowanceName: "-",
@@ -91,18 +107,48 @@ export const INIT_ALLOWANCE = {
   note: "-",
 };
 
-export const INIT_OVERTIME = {
+export const INIT_OVERTIME: Overtime = {
   overtimeId: "",
   overtimeName: "",
   overtimePay: 0,
   note: [""],
 };
 
-export const INIT_OVERTIME_HISTORY = {
+export const INIT_OVERTIME_HISTORY: OvertimeHistory = {
   overtimeHistoryId: 1,
   userId: 0,
   overtimeId: "",
   departmentId: "",
   days: "",
   note: "",
+};
+
+export const INIT_MEDICAL_TRAINING_RESULTS: MedicalTrainingResults = {
+  trainingResultsId: 1,
+  userId: 1,
+  understandingOfMedicalTheory: 1,
+  knowledgeOfTreatmentProtocols: 1,
+  abilityToLearnNewKnowledge: 1,
+  diagnosticSkills: 1,
+  treatmentSkills: 1,
+  decisionMakingSkills: 1,
+  communicationSkillsWithPatientsAndTheirFamilies: 1,
+  communicationSkillsWithColleagues: 1,
+  patientMonitoringAndCare: 1,
+  participationInMedicalResearch: 1,
+  averageScore: 1,
+};
+
+export const INIT_NURSING_TRAINING_RESULTS: NursingTrainingResults = {
+  trainingResultsId: 1,
+  userId: 1,
+  understandingOfNursingTheory: 1,
+  clinicalSkills: 1,
+  medicationAndTreatmentManagementSkills: 1,
+  basicCareSkills: 1,
+  communicationSkillsWithPatientsAndTheirFamilies: 1,
+  patientRecordManagementSkills: 1,
+  patientMonitoringAndAssessmentSkills: 1,
+  abilityToAdaptToTheWorkEnvironment: 1,
+  averageScore: 1,
 };

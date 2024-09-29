@@ -117,6 +117,40 @@ export interface CustomDataSets {
   data?: number[];
   time?: Date;
 }
+
+export interface MedicalTrainingResults {
+  trainingResultsId: number;
+  userId: number;
+  understandingOfMedicalTheory: number;
+  knowledgeOfTreatmentProtocols: number;
+  abilityToLearnNewKnowledge: number;
+  diagnosticSkills: number;
+  treatmentSkills: number;
+  decisionMakingSkills: number;
+  communicationSkillsWithPatientsAndTheirFamilies: number;
+  communicationSkillsWithColleagues: number;
+  patientMonitoringAndCare: number;
+  participationInMedicalResearch: number;
+  averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface NursingTrainingResults {
+  trainingResultsId: number;
+  userId: number;
+  understandingOfNursingTheory: number;
+  clinicalSkills: number;
+  medicationAndTreatmentManagementSkills: number;
+  basicCareSkills: number;
+  communicationSkillsWithPatientsAndTheirFamilies: number;
+  patientRecordManagementSkills: number;
+  patientMonitoringAndAssessmentSkills: number;
+  abilityToAdaptToTheWorkEnvironment: number;
+  averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 export enum Gender {
   FEMALE = 0,
   MALE,

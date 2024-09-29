@@ -1,0 +1,18 @@
+.evaluate-items {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .common-bar-chart {
+    width: 80% !important;
+    height: 80% !important;
+  }
+  .radar-chart {
+    width: 75% !important;
+    height: 75% !important;
+  }
+  //   .evaluate-item {
+  //     width: 50% !important;
+  //     height: 50% !important;
+  //   }
+}

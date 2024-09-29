@@ -66,5 +66,21 @@ export const getOvertimes = async () => {
 //OVERTIMEHITORIE
 
 export const getOvertimeHistories = async () => {
-  return instance.get(`${apiPaths.OVERTIMEHISTORIES}`);
+  return instance.get(`${apiPaths.OVERTIME_HISTORIES}`);
+};
+
+//MedicalTrainingResults
+
+export const getMedicalTrainingResults = async () => {
+  try {
+    return instance.get(`${apiPaths.MEDICAL_TRAINING_RESULTS}`);
+  } catch (error) {
+    console.error("Error calling API:", error);
+  }
+};
+
+//NursingTrainingResults
+
+export const getNursingTrainingResults = async () => {
+  return instance.get(`${apiPaths.NURSING_TRAINING_RESULTS}`);
 };
