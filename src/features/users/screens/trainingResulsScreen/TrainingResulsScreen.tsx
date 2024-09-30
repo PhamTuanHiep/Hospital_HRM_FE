@@ -7,10 +7,13 @@ import { INIT_MEDICAL_TRAINING_RESULTS } from "../../../../common/common.constan
 import dayjs from "dayjs";
 import CommonBarChart from "./CommonBarChart";
 import "./TrainingResulsScreen.scss";
-import { Card } from "antd";
+import { Button, Card, Dropdown, MenuProps, Space } from "antd";
+import { DownOutlined, ScheduleOutlined } from "@ant-design/icons";
 
 const TrainingResulsScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
+
+  const [year, setYear] = useState<number>(dayjs().year());
 
   const [medicalTrainingResults, setMedicalTrainingResults] = useState<
     MedicalTrainingResults[]
@@ -23,7 +26,6 @@ const TrainingResulsScreen = () => {
     const res = await getMedicalTrainingResults();
     if (res) {
       const medicalTrainingResultsData = res.data.data;
-      console.log("res.data.ta:", medicalTrainingResultsData);
       setMedicalTrainingResults(medicalTrainingResultsData);
     }
   };
@@ -56,35 +58,72 @@ const TrainingResulsScreen = () => {
   }, [medicalTrainingResults]);
 
   const listChart = useMemo(() => {
-    return dataRadarChart.customDataSets.map((customDataSet) => {
-      return (
-        <Card>
+    const oneDataChart = dataRadarChart.customDataSets.find((customDataSet) => {
+      return dayjs(customDataSet.time).year() == year;
+    });
+
+    return (
+      <Card>
+        {oneDataChart ? (
           <div className="evaluate-items">
             <CommonBarChart
-              customDataSets={[customDataSet]}
+              customDataSets={[oneDataChart]}
               labels={dataRadarChart.labels}
               className="evaluate-item common-bar-chart"
             />
             <RadarChart
-              customDataSets={[customDataSet]}
+              customDataSets={[oneDataChart]}
               labels={dataRadarChart.labels}
               className="evaluate-item radar-chart"
             />
           </div>
-        </Card>
-      );
-    });
-  }, [dataRadarChart]);
+        ) : (
+          <div>Chưa có thông tin đánh giá kết quả đào tạo</div>
+        )}
+      </Card>
+    );
+  }, [dataRadarChart, year]);
 
-  console.log("dataRadarChart:", dataRadarChart);
+  const handleMenuClick: MenuProps["onClick"] = (e) => {
+    setYear(dayjs().year() + 1 - +e.key);
+  };
+
+  const nowYear = dayjs().year();
+  const items: MenuProps["items"] = [
+    {
+      label: <div>{nowYear}</div>,
+      key: "1",
+      icon: <ScheduleOutlined />,
+    },
+    {
+      label: <div>{nowYear - 1}</div>,
+      key: "2",
+      icon: <ScheduleOutlined />,
+    },
+    {
+      label: <div>{nowYear - 2}</div>,
+      key: "3",
+      icon: <ScheduleOutlined />,
+    },
+  ];
+
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
+
   return (
     <div>
-      <h1>TrainingResulsScreen</h1>
+      <h1>Kết quả đào tạo </h1>
+      <Dropdown menu={menuProps} className="dropdown-year">
+        <Button className="btn-year">
+          <Space>
+            Năm {year}
+            <DownOutlined />
+          </Space>
+        </Button>
+      </Dropdown>
       {listChart}
-      {/* <RadarChart
-        customDataSets={dataRadarChart.customDataSets}
-        labels={dataRadarChart.labels}
-      /> */}
     </div>
   );
 };

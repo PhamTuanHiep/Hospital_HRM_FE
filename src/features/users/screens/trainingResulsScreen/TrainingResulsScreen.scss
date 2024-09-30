@@ -1,18 +1,23 @@
+.dropdown-year {
+  display: block;
+  &.btn-year {
+    margin-right: auto;
+    padding: 4px 18px;
+  }
+}
+
 .evaluate-items {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   .common-bar-chart {
-    width: 80% !important;
-    height: 80% !important;
+    width: 90% !important;
+    height: 90% !important;
+    margin-bottom: 100px;
   }
   .radar-chart {
-    width: 75% !important;
-    height: 75% !important;
+    width: 85% !important;
+    height: 85% !important;
   }
-  //   .evaluate-item {
-  //     width: 50% !important;
-  //     height: 50% !important;
-  //   }
 }
