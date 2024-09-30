@@ -44,6 +44,16 @@
         justify-content: space-around;
         align-items: center;
         width: 150px;
+        .language {
+          padding: 0 8px;
+          .language-space {
+            .ant-space-item:first-child {
+              display: inline;
+              text-align: center;
+              width: 70px;
+            }
+          }
+        }
         .avatar-box {
           width: 35px;
           height: 35px;

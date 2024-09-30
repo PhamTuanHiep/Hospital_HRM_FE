@@ -25,6 +25,7 @@ const Language = () => {
   return (
     <>
       <Dropdown
+        className="language"
         menu={{
           items,
           selectable: true,
@@ -32,7 +33,7 @@ const Language = () => {
         }}
       >
         <a onClick={(e) => e.preventDefault()}>
-          <Space>
+          <Space className="language-space">
             {isVN ? "Việt Nam" : "English"}
             <DownOutlined />
           </Space>

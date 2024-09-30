@@ -24,6 +24,7 @@ import { doLogout } from "../../features/auth/constants/accountSlice";
 import { UserPaths } from "../../features/users/constants/constant.path";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ManagerPaths } from "../../features/manager/constants/constant.path";
 
 interface ManagementDrawerProps {
   open: boolean;
@@ -49,71 +50,81 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <UserOutlined />,
       text: t("content.feature.AccountInfo"),
+      path: UserPaths.ACCOUNT_INFO,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <AccountBookOutlined />,
       text: "Quản lý tài khoản",
+      path: ManagerPaths.ACCOUNT_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <UsergroupAddOutlined />,
       text: "Quản lý nhân viên",
+      path: ManagerPaths.EMPLOYEE_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <FileOutlined />,
       text: "Quản lý hồ sơ",
+      path: ManagerPaths.PROFILE_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <FileTextOutlined />,
       text: "Quản lý hợp đồng",
+      path: ManagerPaths.CONTRACT_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <ApartmentOutlined />,
       text: "Quản lý phòng ban",
+      path: ManagerPaths.DEPARTMENT_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <InsertRowAboveOutlined />,
       text: "Quản lý công việc ",
+      path: ManagerPaths.JOB_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <MoneyCollectOutlined />,
       text: "Quản lý phúc lợi",
+      path: ManagerPaths.BENEFITS_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <FileSearchOutlined />,
       text: "Quản lý tuyển dụng",
+      path: ManagerPaths.RECRUITMENT_MANAGEMENT,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
       icon: <SnippetsOutlined />,
       text: "Đào tạo",
+      path: ManagerPaths.TRAINING,
       fn: (e: any) => {
-        // dispatch(doLogout());
+        setOpen(false);
       },
     },
     {
@@ -122,7 +133,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       fn: (e: any) => {
         dispatch(doLogout(currentAccount));
         setOpen(false);
-
         navigate("/");
       },
     },
@@ -210,23 +220,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     age: number;
     getDetails: () => string;
   };
-
-  const [users, setUsers] = useState<User[]>([
-    {
-      name: "John",
-      age: 30,
-      getDetails: function () {
-        return `Name: ${this.name}, Age: ${this.age}`;
-      },
-    },
-    {
-      name: "Jane",
-      age: 25,
-      getDetails: function () {
-        return `Name: ${this.name}, Age: ${this.age}`;
-      },
-    },
-  ]);
 
   const featureNames =
     currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;

@@ -10,9 +10,10 @@ import { NEWS_AND_EVENTS_ROUTES } from "../features/newsAndEvents/route/route";
 import { CONTACT_ROUTES } from "../features/contact/route/route";
 import { RECRUITMENT_ROUTES } from "../features/recruitment/route/route";
 import { AuthPaths } from "../features/auth/constants/constant.path";
+import { MANAGER_ROUTES } from "../features/manager/route/route";
 
-const PRIVATE_ROUTE = [...USER_ROUTES];
-const PUBLICH_ROUTE = [
+const PRIVATE_ROUTE = [...USER_ROUTES, ...MANAGER_ROUTES];
+const PUBLIC_ROUTE = [
   HOME_ROUTE,
   ...INTRO_ROUTES,
   ...NEWS_AND_EVENTS_ROUTES,
@@ -25,7 +26,7 @@ export const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [...PRIVATE_ROUTE, ...PUBLICH_ROUTE],
+    children: [...PRIVATE_ROUTE, ...PUBLIC_ROUTE],
   },
   {
     path: AuthPaths.LOGIN,
