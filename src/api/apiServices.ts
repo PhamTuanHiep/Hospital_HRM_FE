@@ -19,6 +19,10 @@ export const getUser = (userId: number) => {
 
 //ROLE
 
+export const getRoles = () => {
+  return instance.get(`${apiPaths.ROLES}`);
+};
+
 export const getRole = (roleId: string) => {
   return instance.get(`${apiPaths.ROLES}/${roleId}`);
 };

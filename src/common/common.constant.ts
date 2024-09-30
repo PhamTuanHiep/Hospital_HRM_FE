@@ -20,6 +20,8 @@ export const INIT_ACCOUNT: Account = {
   password: "",
   roleId: "",
   userId: 0,
+  createdById: 0,
+  updatedById: 0,
 };
 
 export const INIT_USER: User = {
@@ -46,12 +48,16 @@ export const INIT_USER: User = {
   evaluateId: 1,
   jobDescription: [""],
   otherDescription: "-",
+  createdById: 0,
+  updatedById: 0,
   status: "-",
 };
 
 export const INIT_ROLE: Role = {
   roleId: "user",
   roleName: "User",
+  createdById: 0,
+  updatedById: 0,
 };
 
 export const INIT_POSITION: Position = {
@@ -59,6 +65,8 @@ export const INIT_POSITION: Position = {
   positionName: "",
   salaryCoefficient: 0,
   leaveId: "",
+  createdById: 0,
+  updatedById: 0,
 };
 
 export const INIT_LEAVE: Leave = {
@@ -95,6 +103,8 @@ export const INIT_EVALUATE: Evaluate = {
 export const INIT_DEPARTMENT: Department = {
   departmentId: "",
   departmentName: "",
+  createdById: 0,
+  updatedById: 0,
 };
 
 export const INIT_ALLOWANCE: Allowance = {

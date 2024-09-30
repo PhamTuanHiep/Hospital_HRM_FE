@@ -4,6 +4,10 @@ export interface Account {
   password: string;
   roleId: string;
   userId: number;
+  createdById: number;
+  updatedById: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface User {
@@ -30,6 +34,8 @@ export interface User {
   evaluateId: number;
   jobDescription: string[];
   otherDescription: string;
+  createdById: number;
+  updatedById: number;
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -38,6 +44,10 @@ export interface User {
 export interface Role {
   roleId: string;
   roleName: string;
+  createdById: number;
+  updatedById: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Position {
@@ -45,7 +55,12 @@ export interface Position {
   positionName: string;
   salaryCoefficient: number;
   leaveId: string;
+  createdById: number;
+  updatedById: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
+
 export interface Leave {
   leaveId: string;
   leaveTypes: string;
@@ -82,6 +97,10 @@ export interface Evaluate {
 export interface Department {
   departmentId: string;
   departmentName: string;
+  createdById: number;
+  updatedById: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Allowance {
