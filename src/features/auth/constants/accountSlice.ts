@@ -1,27 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../../app/store";
-
-export interface Account {
-  accountId: number;
-  email: string;
-  password: string;
-  roleId: string;
-  userId: number;
-}
+import { AccountDetail } from "../../../common/common.type";
+import { INIT_ACCOUNT } from "../../../common/common.constant";
 
 export interface AccountState {
-  account: Account;
+  account: AccountDetail;
   isAuthen: boolean;
 }
 const initialState: AccountState = {
-  account: {
-    accountId: 0,
-    email: "",
-    password: "",
-    roleId: "",
-    userId: 0,
-  },
+  account: INIT_ACCOUNT,
   isAuthen: false,
 };
 
@@ -29,11 +17,11 @@ export const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    doLogin: (state, action: PayloadAction<Account>) => {
+    doLogin: (state, action: PayloadAction<AccountDetail>) => {
       state.account = action.payload;
       state.isAuthen = true;
     },
-    doLogout: (state, action: PayloadAction<Account>) => {
+    doLogout: (state, action: PayloadAction<AccountDetail>) => {
       state.account = initialState.account;
       state.isAuthen = false;
     },

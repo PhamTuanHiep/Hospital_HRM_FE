@@ -1,9 +1,103 @@
+interface AccountShortInfo {
+  accountId: string;
+  email: string;
+  avatar: string;
+}
+
+interface UserShortInfo {
+  userId: string;
+  fullName: string;
+}
+
+interface RoleShortInfo {
+  roleId: string;
+  roleName: string;
+}
+
+interface LeaveHistoryShortInfo {
+  leaveHistoryId: true;
+  leaveId: true;
+  startDay: true;
+  endDay: true;
+}
+interface OvertimeHistoryUserShortInfo {
+  overtimeHistoryId: number;
+  overtimeId: string;
+  startDay: string;
+  endDay: string;
+}
+interface UserInsuranceShortInfo {
+  id: number;
+  insuranceId: string;
+}
+
+interface PositionShortInfo {
+  positionId: string;
+  positionName: string;
+  salaryCoefficient: number;
+}
+
+interface AllowanceShortInfo {
+  allowanceId: number;
+  allowanceAcronym: string;
+  allowanceType: string;
+  allowanceName: string;
+  allowanceRate: number;
+  allowanceFee: number;
+  note: string;
+}
+
+interface PositionAllowanceShortInfo {
+  id: true;
+  positionId: true;
+  allowanceId: true;
+}
+
+interface LeaveShortInfo {
+  leaveId: string;
+  leaveTypes: string;
+  maxLeaveEntitlement: number;
+}
+interface InsuranceShortInfo {
+  insuranceId: string;
+  insuranceName: string;
+  insuranceType: string;
+  monthlyPercentage: number;
+}
+
+interface UserInsuranceShortInfo {
+  id: number;
+  userId: number;
+}
+
+interface DepartmentShortInfo {
+  departmentId: string;
+  departmentName: string;
+}
+
+interface OvertimeShortInfo {
+  overtimeId: string;
+  overtimeName: string;
+  overtimePay: number;
+}
+
+interface OvertimeHistoryDepartmentShortInfo {
+  overtimeHistoryId: true;
+  userId: true;
+  overtimeId: true;
+}
+
+interface RoleShortInfo {
+  roleId: string;
+  roleName: string;
+}
+
 export interface Account {
   accountId: number;
   email: string;
   password: string;
-  roleId: string;
-  userId: number;
+  role: RoleShortInfo;
+  user: UserShortInfo;
   createdById: number;
   updatedById: number;
   createdAt?: Date;
@@ -21,21 +115,14 @@ export interface User {
   hometown: string;
   positionId: string;
   birthday: string;
-  image: string;
   fatherFullName: string;
   fatherBirthday: string;
   motherFullName: string;
   motherBirthday: string;
-  departmentId: string;
   weeklySchedule: number[];
-  insuranceIds: string[];
-  allowances: string[];
-  allowanceIds: number[];
-  evaluateId: number;
   jobDescription: string[];
   otherDescription: string;
-  createdById: number;
-  updatedById: number;
+  departmentId: string;
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -44,8 +131,14 @@ export interface User {
 export interface Role {
   roleId: string;
   roleName: string;
-  createdById: number;
-  updatedById: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface PositionAllowance {
+  id: number;
+  positionId: string;
+  allowanceId: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -54,9 +147,17 @@ export interface Position {
   positionId: string;
   positionName: string;
   salaryCoefficient: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface LeaveHistory {
+  leaveHistoryId: number;
+  userId: number;
   leaveId: string;
-  createdById: number;
-  updatedById: number;
+  startDay: string;
+  endDay: string;
+  note?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -64,7 +165,18 @@ export interface Position {
 export interface Leave {
   leaveId: string;
   leaveTypes: string;
-  MaxLeaveEntitlement: number;
+  maxLeaveEntitlement: number;
+  unit: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface UserInsurance {
+  id: number;
+  userId: number;
+  insuranceId: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Insurance {
@@ -73,13 +185,15 @@ export interface Insurance {
   insuranceType: string;
   monthlyPercentage: number;
   note: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Evaluate {
   evaluateId: number;
   userId: number;
   workLoad: number;
-  quanlityOfWork: number;
+  qualityOfWork: number;
   capacityOfWork: number;
   quantityOfScientificWorks: number;
   workInitiatives: number;
@@ -97,8 +211,6 @@ export interface Evaluate {
 export interface Department {
   departmentId: string;
   departmentName: string;
-  createdById: number;
-  updatedById: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -111,6 +223,8 @@ export interface Allowance {
   allowanceRate: number;
   allowanceFee: number;
   note: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Overtime {
@@ -118,6 +232,8 @@ export interface Overtime {
   overtimeName: string;
   overtimePay: number;
   note: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface OvertimeHistory {
@@ -125,8 +241,11 @@ export interface OvertimeHistory {
   userId: number;
   overtimeId: string;
   departmentId: string;
-  days: string;
   note: string;
+  startDay: string;
+  endDay: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface CustomDataSets {
@@ -170,12 +289,124 @@ export interface NursingTrainingResults {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface AccountDetail {
+  accountId: number;
+  email: string;
+  password: string;
+  role: RoleShortInfo | null;
+  user: UserShortInfo | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface UserDetail {
+  userId: number;
+  fullName: string;
+  gender: string;
+  address: string;
+  phoneNumber: string;
+  nation: string;
+  nationality: string;
+  hometown: string;
+  birthday: string;
+  fatherFullName: string;
+  fatherBirthday: string;
+  motherFullName: string;
+  motherBirthday: string;
+  weeklySchedule: number[];
+  jobDescription: string[];
+  otherDescription: string;
+  account: AccountShortInfo | null;
+  department: DepartmentShortInfo | null;
+  leaveHistories: LeaveHistoryShortInfo[] | null;
+  overtimeHistories: OvertimeHistoryUserShortInfo[] | null;
+  userInsurances: UserInsuranceShortInfo[] | null;
+  position: PositionShortInfo | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+  status: string;
+}
+
+export interface RoleDetail extends Role {}
+
+export interface PositionAllowanceDetail {
+  id: number;
+  position: PositionShortInfo | null;
+  allowance: AllowanceShortInfo | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface PositionDetail {
+  positionId: string;
+  positionName: string;
+  salaryCoefficient: number;
+  users: UserShortInfo[] | null;
+  positionAllowances: PositionAllowanceShortInfo[] | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface LeaveHistoryDetail {
+  leaveHistoryId: number;
+  createdAt: Date;
+  updatedAt: Date;
+  startDay: string;
+  endDay: string;
+  user: UserShortInfo | null;
+  leave: LeaveShortInfo | null;
+}
+export interface LeaveDetail extends Leave {}
+
+export interface UserInsuranceDetail {
+  id: number;
+  user: UserShortInfo | null;
+  insurance: InsuranceShortInfo | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface InsuranceDetail {
+  insuranceId: string;
+  insuranceName: string;
+  insuranceType: string;
+  monthlyPercentage: number;
+  note: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  userInsurances: UserInsuranceShortInfo[] | null;
+}
+
+export interface EvaluateDetail extends Evaluate {}
+
+export interface DepartmentDetail extends Department {
+  users: UserShortInfo[] | null;
+  overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | null;
+}
+
+export interface OvertimeDetail extends Overtime {}
+
+export interface OvertimeHistoryDetail {
+  overtimeHistoryId: number;
+  note: string;
+  startDay: string;
+  endDay: string;
+  user: UserShortInfo | null;
+  department: DepartmentShortInfo | null;
+  overtime: OvertimeShortInfo | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface AllowanceDetail extends Allowance {}
+
 export enum Gender {
   FEMALE = 0,
   MALE,
 }
 
-export enum Dayofweek {
+export enum DayOfWeek {
   MONDAY = 2,
   TUESDAY = 3,
   WEDNESDAY = 4,
@@ -186,11 +417,11 @@ export enum Dayofweek {
 }
 
 export const dayOfWeek = {
-  [Dayofweek.MONDAY]: "Monday",
-  [Dayofweek.TUESDAY]: "Tuesday",
-  [Dayofweek.WEDNESDAY]: "Wednesday",
-  [Dayofweek.THURSDAY]: "Thursday",
-  [Dayofweek.FRIDAY]: "Friday",
-  [Dayofweek.SATURDAY]: "Saturday",
-  [Dayofweek.SUNDAY]: "Sunday",
+  [DayOfWeek.MONDAY]: "Monday",
+  [DayOfWeek.TUESDAY]: "Tuesday",
+  [DayOfWeek.WEDNESDAY]: "Wednesday",
+  [DayOfWeek.THURSDAY]: "Thursday",
+  [DayOfWeek.FRIDAY]: "Friday",
+  [DayOfWeek.SATURDAY]: "Saturday",
+  [DayOfWeek.SUNDAY]: "Sunday",
 };

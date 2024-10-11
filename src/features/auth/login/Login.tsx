@@ -1,10 +1,9 @@
 import { Button, Form, Input } from "antd";
 import "./Login.scss";
 import { useEffect, useState } from "react";
-import { Account, doLogin } from "../constants/accountSlice";
+import { doLogin } from "../constants/accountSlice";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import {
   errMessageSubmit,
   validateMessages,
@@ -12,6 +11,8 @@ import {
 import { INIT_ACCOUNT } from "../../../common/common.constant";
 import { getAccounts } from "../../../api/apiServices";
 import { useAppDispatch } from "../../../app/hooks";
+import { LoginSubmit } from "../constants/login.type";
+import { AccountDetail } from "../../../common/common.type";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,9 +22,7 @@ const Login = () => {
 
   const [isErrSubmit, setIsErrSubmit] = useState<Boolean>(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [accounts, setAccounts] = useState<Account[]>([INIT_ACCOUNT]);
+  const [accounts, setAccounts] = useState<AccountDetail[]>([INIT_ACCOUNT]);
 
   useEffect(() => {
     fetchAccounts();
@@ -31,17 +30,22 @@ const Login = () => {
 
   const fetchAccounts = async () => {
     const res = await getAccounts();
-    if (res.status === 200) {
+    if (res?.status === 200) {
       const accountsData = res.data.data;
       console.log("accountsData:", accountsData);
+
       setAccounts(accountsData);
     }
   };
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: LoginSubmit) => {
+    console.log("values:", values);
+
     const currentAccount = accounts.find((account) => {
-      return account.email === email && account.password === password;
-      // return user.email === values.user.email && user.password === values.user.password;
+      return (
+        account.email === values.account.email &&
+        account.password === values.account.password
+      );
     });
 
     if (currentAccount == undefined) {
@@ -90,7 +94,6 @@ const Login = () => {
               className="val-input"
               placeholder="Enter your email"
               id="email"
-              onChange={(e) => setEmail(e.target.value)}
             />
           </Form.Item>
           <Form.Item
@@ -111,7 +114,6 @@ const Login = () => {
               className="val-input"
               placeholder="Enter your password"
               id="password"
-              onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Item>
           <div id="error-submit">{isErrSubmit ? errMessageSubmit : ""}</div>

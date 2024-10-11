@@ -1,30 +1,34 @@
+import dayjs from "dayjs";
 import {
-  Account,
-  Allowance,
-  Department,
-  Evaluate,
-  Insurance,
-  Leave,
+  AccountDetail,
+  AllowanceDetail,
+  DepartmentDetail,
+  EvaluateDetail,
+  InsuranceDetail,
+  LeaveDetail,
+  LeaveHistoryDetail,
   MedicalTrainingResults,
   NursingTrainingResults,
-  Overtime,
-  OvertimeHistory,
-  Position,
-  Role,
-  User,
+  OvertimeDetail,
+  OvertimeHistoryDetail,
+  PositionAllowanceDetail,
+  PositionDetail,
+  RoleDetail,
+  UserDetail,
+  UserInsuranceDetail,
 } from "./common.type";
 
-export const INIT_ACCOUNT: Account = {
+export const INIT_ACCOUNT: AccountDetail = {
   accountId: 0,
   email: "",
   password: "",
-  roleId: "",
-  userId: 0,
-  createdById: 0,
-  updatedById: 0,
+  role: null,
+  user: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_USER: User = {
+export const INIT_USER: UserDetail = {
   userId: 1,
   fullName: "-",
   gender: "-",
@@ -33,61 +37,93 @@ export const INIT_USER: User = {
   nation: "-",
   nationality: "-",
   hometown: "-",
-  positionId: "-",
   birthday: "-",
-  image: "-",
   fatherFullName: "-",
   fatherBirthday: "-",
   motherFullName: "-",
   motherBirthday: "-",
-  departmentId: "-",
-  weeklySchedule: [0],
-  insuranceIds: ["-"],
-  allowances: [""],
-  allowanceIds: [0],
-  evaluateId: 1,
+  weeklySchedule: [2, 3, 4, 5, 6],
   jobDescription: [""],
   otherDescription: "-",
-  createdById: 0,
-  updatedById: 0,
+  account: null,
+  department: null,
+  leaveHistories: null,
+  overtimeHistories: null,
+  userInsurances: null,
+  position: null,
   status: "-",
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_ROLE: Role = {
+export const INIT_ROLE: RoleDetail = {
   roleId: "user",
   roleName: "User",
-  createdById: 0,
-  updatedById: 0,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_POSITION: Position = {
+export const INIT_POSITION_ALLOWANCE_DETAIL: PositionAllowanceDetail = {
+  id: 0,
+  position: null,
+  allowance: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_POSITION: PositionDetail = {
   positionId: "",
   positionName: "",
   salaryCoefficient: 0,
-  leaveId: "",
-  createdById: 0,
-  updatedById: 0,
+  users: null,
+  positionAllowances: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_LEAVE: Leave = {
+export const INIT_LEAVE_HISTORY_DETAIL: LeaveHistoryDetail = {
+  leaveHistoryId: 0,
+  startDay: "",
+  endDay: "",
+  user: null,
+  leave: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_LEAVE: LeaveDetail = {
   leaveId: "",
   leaveTypes: "",
-  MaxLeaveEntitlement: 0,
+  maxLeaveEntitlement: 0,
+  unit: "day",
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_INSURANCE: Insurance = {
+export const INIT_USER_INSURANCE_DETAIL: UserInsuranceDetail = {
+  id: 0,
+  user: null,
+  insurance: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_INSURANCE: InsuranceDetail = {
   insuranceId: "-",
   insuranceName: "-",
   insuranceType: "-",
   monthlyPercentage: 0,
   note: "-",
+  userInsurances: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_EVALUATE: Evaluate = {
+export const INIT_EVALUATE: EvaluateDetail = {
   evaluateId: 0,
   userId: 0,
   workLoad: 0,
-  quanlityOfWork: 0,
+  qualityOfWork: 0,
   capacityOfWork: 0,
   quantityOfScientificWorks: 0,
   workInitiatives: 0,
@@ -98,16 +134,41 @@ export const INIT_EVALUATE: Evaluate = {
   workSpirit: 0,
   workResult: 0,
   averageScore: 0,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_DEPARTMENT: Department = {
+export const INIT_DEPARTMENT: DepartmentDetail = {
   departmentId: "",
   departmentName: "",
-  createdById: 0,
-  updatedById: 0,
+  users: null,
+  overtimeHistories: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_ALLOWANCE: Allowance = {
+export const INIT_OVERTIME: OvertimeDetail = {
+  overtimeId: "",
+  overtimeName: "",
+  overtimePay: 0,
+  note: [""],
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_OVERTIME_HISTORY: OvertimeHistoryDetail = {
+  overtimeHistoryId: 1,
+  note: "",
+  startDay: "",
+  endDay: "",
+  user: null,
+  department: null,
+  overtime: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_ALLOWANCE: AllowanceDetail = {
   allowanceId: 0,
   allowanceAcronym: "-",
   allowanceName: "-",
@@ -115,22 +176,8 @@ export const INIT_ALLOWANCE: Allowance = {
   allowanceRate: 0,
   allowanceFee: 0,
   note: "-",
-};
-
-export const INIT_OVERTIME: Overtime = {
-  overtimeId: "",
-  overtimeName: "",
-  overtimePay: 0,
-  note: [""],
-};
-
-export const INIT_OVERTIME_HISTORY: OvertimeHistory = {
-  overtimeHistoryId: 1,
-  userId: 0,
-  overtimeId: "",
-  departmentId: "",
-  days: "",
-  note: "",
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
 export const INIT_MEDICAL_TRAINING_RESULTS: MedicalTrainingResults = {
