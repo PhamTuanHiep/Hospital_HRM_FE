@@ -1,4 +1,4 @@
-import { Drawer, Flex, List } from "antd";
+import { Avatar, Drawer, Flex, List } from "antd";
 import { useAppSelector } from "../../app/hooks";
 import "./ManagementDrawerScreen.scss";
 import {
@@ -215,14 +215,8 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
   ];
 
-  type User = {
-    name: string;
-    age: number;
-    getDetails: () => string;
-  };
-
   const featureNames =
-    currentAccount?.roleId === RoleId.ADMIN ? adminFeature : userFeature;
+    currentAccount?.role?.roleId === RoleId.USER ? userFeature : adminFeature;
   const featureList = featureNames.map((featureName) => (
     <NavLink to={featureName.path || "#"}>
       <Flex onClick={(e) => featureName.fn(e)}>
@@ -241,10 +235,13 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
         open={open}
         extra={
           <div className="avatar-box">
-            <img
+            <Avatar
+              size="large"
+              src={currentAccount.avatar}
+              icon={<UserOutlined style={{ fontSize: "80%" }} />}
+              shape="circle"
               className="avatar"
-              src="https://media.istockphoto.com/id/474486193/photo/close-up-of-a-golden-retriever-panting-11-years-old-isolated.jpg?s=612x612&w=0&k=20&c=o6clwQS-h6c90AHlpDPC74vAgtc_y2vvGg6pnb7oCNE="
-            ></img>
+            />
           </div>
         }
       >

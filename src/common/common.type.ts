@@ -5,7 +5,7 @@ interface AccountShortInfo {
 }
 
 interface UserShortInfo {
-  userId: string;
+  userId: number;
   fullName: string;
 }
 
@@ -15,10 +15,10 @@ interface RoleShortInfo {
 }
 
 interface LeaveHistoryShortInfo {
-  leaveHistoryId: true;
-  leaveId: true;
-  startDay: true;
-  endDay: true;
+  leaveHistoryId: number;
+  leaveId: string;
+  startDay: string;
+  endDay: string;
 }
 interface OvertimeHistoryUserShortInfo {
   overtimeHistoryId: number;
@@ -48,9 +48,9 @@ interface AllowanceShortInfo {
 }
 
 interface PositionAllowanceShortInfo {
-  id: true;
-  positionId: true;
-  allowanceId: true;
+  id: number;
+  positionId: string;
+  allowanceId: number;
 }
 
 interface LeaveShortInfo {
@@ -82,9 +82,9 @@ interface OvertimeShortInfo {
 }
 
 interface OvertimeHistoryDepartmentShortInfo {
-  overtimeHistoryId: true;
-  userId: true;
-  overtimeId: true;
+  overtimeHistoryId: number;
+  userId: number;
+  overtimeId: string;
 }
 
 interface RoleShortInfo {
@@ -96,6 +96,7 @@ export interface Account {
   accountId: number;
   email: string;
   password: string;
+  avatar: string;
   role: RoleShortInfo;
   user: UserShortInfo;
   createdById: number;
@@ -294,6 +295,7 @@ export interface AccountDetail {
   accountId: number;
   email: string;
   password: string;
+  avatar: string;
   role: RoleShortInfo | null;
   user: UserShortInfo | null;
   createdAt?: Date;

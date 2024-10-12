@@ -1,84 +1,101 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Flex, List, Space } from "antd";
+import { Avatar, Flex, List, Space, Table } from "antd";
 import "./RecordScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import instance from "../../../../api/api";
 import { UserApis } from "../../constants/constant.endpoint";
 import { UserInfo } from "./type";
-import { Gender, Role, User } from "../../../../common/common.type";
+import { Gender, Role, User, UserDetail } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
 import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
 import { getRole, getUser } from "../../../../api/apiServices";
 import { INIT_ROLE, INIT_USER } from "../../../../common/common.constant";
+import { USER_INFO_COLUMNS } from "../../constants/user.constant";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
-
-  const [role, setRole] = useState<Role>(INIT_ROLE);
-
-  const [user, setUser] = useState<User>(INIT_USER);
-  const [avatar, setAvatar] = useState<string>("");
-
+  console.log("currentAccount:", currentAccount);
+  const [user, setUser] = useState<UserDetail>(INIT_USER);
   const { t } = useTranslation();
+
   useEffect(() => {
-    fetchRole();
     fetchUser();
   }, [currentAccount]);
 
+  const fetchUser = async () => {
+    if (currentAccount.user?.userId) {
+      const res = await getUser(currentAccount.user?.userId);
+      console.log("res:", res);
+
+      if (res) {
+        const user = res.data;
+        setUser(user);
+      }
+    }
+  };
+
+  console.log("user:", user);
+
   const userData: UserInfo[] = [
-    { lable: t("content.info.Email"), content: currentAccount.email },
-    { lable: t("content.info.Role"), content: role.roleName },
-    { lable: t("content.info.UserName"), content: user.fullName },
+    { label: t("content.info.Email"), content: currentAccount.email },
     {
-      lable: t("content.info.Gender"),
+      label: t("content.info.Role"),
+      content: currentAccount.role?.roleName || "",
+    },
+    {
+      label: t("content.info.UserName"),
+      content: currentAccount.user?.fullName || "",
+    },
+    {
+      label: t("content.info.Gender"),
       content:
         user.gender === Gender.MALE.toString()
           ? t("content.other.Male")
           : t("content.other.Female"),
     },
-    { lable: t("content.info.PhoneNumber"), content: user.phoneNumber },
-    { lable: t("content.info.Birthday"), content: user.birthday },
+    { label: t("content.info.PhoneNumber"), content: user.phoneNumber },
+    { label: t("content.info.Birthday"), content: user.birthday },
   ];
 
-  const addUserData1: UserInfo[] = [
-    { lable: t("content.info.Hometown"), content: user.hometown },
-    { lable: t("content.info.Address"), content: user.address },
-    { lable: t("content.info.Nation"), content: user.nation },
-    { lable: t("content.info.Nationality"), content: user.nationality },
-  ];
+  interface AddUserInfo {
+    selfInfo: string;
+    parentInfo: string;
+  }
+  const userInfo = useMemo(() => {
+    const infoShow: AddUserInfo[] = [
+      {
+        selfInfo: `${t("content.info.Hometown")}: ${user.hometown}`,
+        parentInfo: `${t("content.info.FatherName")}: ${user.fatherFullName}`,
+      },
+      {
+        selfInfo: `${t("content.info.Address")}: ${user.address}`,
+        parentInfo: `${t("content.info.FatherBirthday")}: ${
+          user.fatherBirthday
+        }`,
+      },
+      {
+        selfInfo: `${t("content.info.Nation")}: ${user.nation}`,
+        parentInfo: `${t("content.info.MotherName")}: ${user.motherFullName}`,
+      },
+      {
+        selfInfo: `${t("content.info.Nationality")}: ${user.nationality}`,
+        parentInfo: `${t("content.info.MotherBirthday")}: ${
+          user.motherBirthday
+        }`,
+      },
+    ];
+    return infoShow;
+  }, [user]);
 
-  const addUserData2: UserInfo[] = [
-    { lable: t("content.info.FatherName"), content: user.fatherFullName },
-    { lable: t("content.info.FatherBirthday"), content: user.fatherBirthday },
-    { lable: t("content.info.MotherName"), content: user.motherFullName },
-    { lable: t("content.info.MotherBirthday"), content: user.motherBirthday },
-  ];
-
-  const fetchRole = async () => {
-    const res = await getRole(currentAccount.roleId);
-    if (res.status === 200) {
-      const role = res.data.data;
-      setRole(role);
-    }
-  };
-
-  const fetchUser = async () => {
-    const res = await getUser(currentAccount.userId);
-    if (res.status === 200) {
-      const user = res.data.data;
-      setUser(user);
-      setAvatar(user.image);
-    }
-  };
-
+  console.log("userInfo:", userInfo);
   return (
-    <Flex vertical={false} id="record-screen">
+    <Flex vertical={false} id="record-screen" gap={24}>
       <Flex vertical className="user-info" justify="space-between">
         <Space size={16} className="avatar-wrap">
           <Avatar
             size="large"
-            src={avatar}
+            src={currentAccount.avatar}
             icon={<UserOutlined style={{ fontSize: "150%" }} />}
             shape="circle"
             className="avater-item"
@@ -86,7 +103,7 @@ const RecordScreen = () => {
         </Space>
         <span>
           {t("content.info.DateOfJoining")}:{" "}
-          {getDDMMYYYYfromISO8601DateString(user.createdAt)}
+          {getDDMMYYYYfromISO8601DateString(currentAccount.createdAt)}
         </span>
         <div className="account-descriptions">
           {/* <h3 className="title-info">Recor d Info</h3> */}
@@ -96,7 +113,7 @@ const RecordScreen = () => {
             renderItem={(item) => (
               <List.Item>
                 <li className="info-item">
-                  <div className="lable-item">{item.lable}:</div>
+                  <div className="lable-item">{item.label}:</div>
                   <div className="content-item">{item.content}</div>
                 </li>
               </List.Item>
@@ -104,8 +121,14 @@ const RecordScreen = () => {
           />
         </div>
       </Flex>
-      <Flex vertical={false} className="add-info" justify="space-around">
-        <List
+      <Flex vertical={false} justify="space-around" align="center">
+        <Table
+          columns={USER_INFO_COLUMNS}
+          dataSource={userInfo}
+          pagination={false}
+          showHeader={false}
+        />
+        {/* <List
           dataSource={addUserData1}
           renderItem={(item) => (
             <List.Item>
@@ -125,8 +148,8 @@ const RecordScreen = () => {
                 <div className="content-item">{item.content}</div>
               </li>
             </List.Item>
-          )}
-        />
+          )} */}
+        {/* /> */}
       </Flex>
     </Flex>
   );

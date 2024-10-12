@@ -1,6 +1,6 @@
 import { Avatar, Flex, Typography } from "antd";
 import { Menu, Button } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
@@ -14,14 +14,13 @@ import { useAppSelector } from "../../app/hooks";
 import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
 import { useTranslation } from "react-i18next";
 import Language from "./Language";
-import instance from "../../api/api";
-import { UserApis } from "../../features/users/constants/constant.endpoint";
 
 const HeaderComponent = () => {
   // const navigate = useNavigate();
   const { account: currentAccount, isAuthen } = useAppSelector(
     (state) => state.account_user
   );
+  console.log("currentAccount:", currentAccount);
   const { t } = useTranslation();
 
   const items = [
@@ -148,25 +147,11 @@ const HeaderComponent = () => {
   ];
 
   const [open, setOpen] = useState(false);
-  const [avatar, setAvatar] = useState<string>("");
-
-  useEffect(() => {
-    getUser();
-  }, [currentAccount]);
 
   const showDrawer = () => {
     setOpen(true);
   };
 
-  const getUser = async () => {
-    const res = await instance.get(
-      `${UserApis.USERS}/${currentAccount.userId}`
-    );
-    if (res.status === 200) {
-      const user = res.data.data;
-      setAvatar(user.image);
-    }
-  };
   return (
     <div id="header">
       <Flex vertical>
@@ -200,7 +185,7 @@ const HeaderComponent = () => {
               <div className="avatar-box" onClick={showDrawer}>
                 <Avatar
                   size="large"
-                  src={avatar}
+                  src={currentAccount.avatar}
                   icon={<UserOutlined style={{ fontSize: "80%" }} />}
                   shape="circle"
                   className="avatar"

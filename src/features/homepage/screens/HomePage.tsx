@@ -1,7 +1,6 @@
 import { Card, Carousel, Col, Flex, Row, Statistic } from "antd";
 
 import "./HomePage.scss";
-import { useAppSelector } from "../../../app/hooks";
 
 const HomePage = () => {
   return (

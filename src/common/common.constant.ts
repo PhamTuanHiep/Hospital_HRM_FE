@@ -22,6 +22,7 @@ export const INIT_ACCOUNT: AccountDetail = {
   accountId: 0,
   email: "",
   password: "",
+  avatar: "",
   role: null,
   user: null,
   createdAt: dayjs("2000-01-01").toDate(),

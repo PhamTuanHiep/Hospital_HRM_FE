@@ -39,29 +39,4 @@
       }
     }
   }
-
-  .add-info {
-    width: 66%;
-    .ant-list {
-      font-size: 16px;
-      text-align: start;
-      margin: auto;
-      .ant-list-items {
-        .ant-list-item {
-          .info-item {
-            display: flex;
-
-            flex-direction: row;
-
-            .label-item {
-            }
-            .content-item {
-              margin: 0 4px;
-              padding: 0 8px;
-            }
-          }
-        }
-      }
-    }
-  }
 }

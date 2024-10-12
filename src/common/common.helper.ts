@@ -13,7 +13,7 @@ export const addSuffix = (value: number | string, suffix: string) => {
 
 export const getDDMMYYYYfromISO8601DateString = (date: Date | undefined) => {
   let newDate = date ? date : "";
-  return new Date(newDate).toLocaleString("vi-VN");
+  return dayjs(newDate).format("DD/MM/YYYY");
 };
 
 export const getDayToDaysOfOvertime = (days: string) => {

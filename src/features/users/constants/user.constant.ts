@@ -3,6 +3,23 @@ import {
   getFormatNumberToString,
 } from "../../../common/common.helper";
 
+const userInfoIndex = {
+  selfInfo: "selfInfo",
+  parentInfo: "parentInfo",
+};
+export const USER_INFO_COLUMNS = [
+  {
+    title: "",
+    dataIndex: userInfoIndex.selfInfo,
+    key: userInfoIndex.selfInfo,
+  },
+  {
+    title: "",
+    dataIndex: userInfoIndex.parentInfo,
+    key: userInfoIndex.parentInfo,
+  },
+];
+
 const insuranceIndex = {
   insuranceId: "insuranceId",
   insuranceName: "insuranceName",

@@ -1,4 +1,4 @@
 export interface UserInfo {
-  lable: string;
+  label: string;
   content: string;
 }
