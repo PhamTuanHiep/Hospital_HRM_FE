@@ -20,7 +20,7 @@ const HeaderComponent = () => {
   const { account: currentAccount, isAuthen } = useAppSelector(
     (state) => state.account_user
   );
-  console.log("currentAccount:", currentAccount);
+
   const { t } = useTranslation();
 
   const items = [

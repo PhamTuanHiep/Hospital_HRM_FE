@@ -385,7 +385,24 @@ export interface InsuranceDetail {
   userInsurances: UserInsuranceShortInfo[] | null;
 }
 
-export interface EvaluateDetail extends Evaluate {}
+export interface EvaluateDetail {
+  evaluateId: number;
+  userId: number;
+  workLoad: number;
+  qualityOfWork: number;
+  capacityOfWork: number;
+  quantityOfScientificWorks: number;
+  workInitiatives: number;
+  professionalEthics: number;
+  workingStyle: number;
+  responsibilityForWork: number;
+  workAttitude: number;
+  workSpirit: number;
+  workResult: number;
+  averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 export interface DepartmentDetail extends Department {
   users: UserShortInfo[] | null;
@@ -407,6 +424,24 @@ export interface OvertimeHistoryDetail {
 }
 
 export interface AllowanceDetail extends Allowance {}
+
+export interface MedicalTrainingResultsDetail {
+  trainingResultsId: number;
+  user: UserShortInfo | null;
+  understandingOfMedicalTheory: number;
+  knowledgeOfTreatmentProtocols: number;
+  abilityToLearnNewKnowledge: number;
+  diagnosticSkills: number;
+  treatmentSkills: number;
+  decisionMakingSkills: number;
+  communicationSkillsWithPatientsAndTheirFamilies: number;
+  communicationSkillsWithColleagues: number;
+  patientMonitoringAndCare: number;
+  participationInMedicalResearch: number;
+  averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 export enum Gender {
   FEMALE = 0,

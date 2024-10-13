@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { useEffect, useMemo, useState } from "react";
 import "chart.js/auto"; // ADD THIS
 import { Flex } from "antd";
 import BarChart from "./BarChart";
 import { useAppSelector } from "../../../../app/hooks";
-import { Evaluate } from "../../../../common/common.type";
+import { EvaluateDetail } from "../../../../common/common.type";
 import { INIT_EVALUATE } from "../../../../common/common.constant";
 import { getEvaluates } from "../../../../api/apiServices";
 import {
@@ -15,17 +14,17 @@ import dayjs from "dayjs";
 
 export const WorkPerformanceScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
-  const [evaluates, setEvaluates] = useState<Evaluate[]>([INIT_EVALUATE]);
+  const [evaluates, setEvaluates] = useState<EvaluateDetail[]>([INIT_EVALUATE]);
 
   useEffect(() => {
     fetchEvaluates();
   }, []);
   const fetchEvaluates = async () => {
     const res = await getEvaluates();
-    if (res.status === 200) {
-      const evaluatesData = res.data.data as Evaluate[];
+    if (res) {
+      const evaluatesData = res.data.data as EvaluateDetail[];
       let userEvaluates = evaluatesData.filter((evaluateData) => {
-        return evaluateData.userId === currentAccount.userId;
+        return evaluateData.userId === currentAccount.user?.userId;
       });
 
       setEvaluates(userEvaluates);

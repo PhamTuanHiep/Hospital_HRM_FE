@@ -7,7 +7,7 @@ import {
   InsuranceDetail,
   LeaveDetail,
   LeaveHistoryDetail,
-  MedicalTrainingResults,
+  MedicalTrainingResultsDetail,
   NursingTrainingResults,
   OvertimeDetail,
   OvertimeHistoryDetail,
@@ -181,9 +181,9 @@ export const INIT_ALLOWANCE: AllowanceDetail = {
   updatedAt: dayjs("2000-01-01").toDate(),
 };
 
-export const INIT_MEDICAL_TRAINING_RESULTS: MedicalTrainingResults = {
+export const INIT_MEDICAL_TRAINING_RESULTS: MedicalTrainingResultsDetail = {
   trainingResultsId: 1,
-  userId: 1,
+  user: null,
   understandingOfMedicalTheory: 1,
   knowledgeOfTreatmentProtocols: 1,
   abilityToLearnNewKnowledge: 1,

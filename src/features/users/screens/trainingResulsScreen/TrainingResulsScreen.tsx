@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getMedicalTrainingResults } from "../../../../api/apiServices";
 import RadarChart from "./RadarChart";
 import { useAppSelector } from "../../../../app/hooks";
-import { MedicalTrainingResults } from "../../../../common/common.type";
+import { MedicalTrainingResultsDetail } from "../../../../common/common.type";
 import { INIT_MEDICAL_TRAINING_RESULTS } from "../../../../common/common.constant";
 import dayjs from "dayjs";
 import CommonBarChart from "./CommonBarChart";
@@ -16,8 +16,9 @@ const TrainingResulsScreen = () => {
   const [year, setYear] = useState<number>(dayjs().year());
 
   const [medicalTrainingResults, setMedicalTrainingResults] = useState<
-    MedicalTrainingResults[]
+    MedicalTrainingResultsDetail[]
   >([INIT_MEDICAL_TRAINING_RESULTS]);
+
   useEffect(() => {
     fetchMedicalTrainingResults();
   }, [currentAccount]);
@@ -25,17 +26,28 @@ const TrainingResulsScreen = () => {
   const fetchMedicalTrainingResults = async () => {
     const res = await getMedicalTrainingResults();
     if (res) {
-      const medicalTrainingResultsData = res.data.data;
-      setMedicalTrainingResults(medicalTrainingResultsData);
+      const medicalTrainingResultsData = res.data
+        .data as MedicalTrainingResultsDetail[];
+      let yoursMedicalTrainingResults = medicalTrainingResultsData.filter(
+        (medicalTrainingResult) => {
+          return (
+            medicalTrainingResult.user?.userId === currentAccount.user?.userId
+          );
+          return;
+        }
+      );
+      setMedicalTrainingResults(yoursMedicalTrainingResults);
     }
   };
+
+  console.log("medicalTrainingResults:", medicalTrainingResults);
   const dataRadarChart = useMemo(() => {
     var labelsData: string[] = [];
 
     let dataSets = medicalTrainingResults.map((medicalTrainingResult) => {
       const {
         trainingResultsId,
-        userId,
+        user,
         averageScore,
         createdAt,
         updatedAt,
