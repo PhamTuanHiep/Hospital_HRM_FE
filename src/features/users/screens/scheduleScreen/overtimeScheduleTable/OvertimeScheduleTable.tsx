@@ -1,77 +1,86 @@
-import { Card, List, Table } from "antd";
+import { Card, Flex, List, Table } from "antd";
 import { OVERTIME_SCHEDULE_COLUMNS } from "../../../constants/user.constant";
 import {
-  Dayofweek,
-  Department,
-  Overtime,
-  OvertimeHistory,
-  User,
-  dayOfWeek,
+  DepartmentDetail,
+  OvertimeDetail,
+  OvertimeHistoryDepartmentShortInfo,
+  UserDetail,
 } from "../../../../../common/common.type";
 import { useEffect, useMemo, useState } from "react";
 import {
-  getOvertimeNamefromOvertimeId,
-  getUserfromUserId,
+  checkDayOfWeek,
+  getOvertimeNameFromOvertimeId,
+  getUserNameFromUserId,
+  timeStartToEndOfAWeek,
 } from "../../../../../common/common.helper";
 import {
   INIT_DEPARTMENT,
   INIT_OVERTIME,
-  INIT_OVERTIME_HISTORY,
   INIT_USER,
 } from "../../../../../common/common.constant";
 import {
   getDepartments,
-  getOvertimeHistories,
   getOvertimes,
   getUsers,
 } from "../../../../../api/apiServices";
-import dayjs from "dayjs";
 import "./OvertimeScheduleTable.scss";
 
 const OvertimeScheduleTable = () => {
-  const [departments, setDepartments] = useState<Department[]>([
+  const [departments, setDepartments] = useState<DepartmentDetail[]>([
     INIT_DEPARTMENT,
   ]);
 
-  const [users, setUsers] = useState<User[]>([INIT_USER]);
+  const [users, setUsers] = useState<UserDetail[]>([INIT_USER]);
 
-  const [overtimes, setOvertimes] = useState<Overtime[]>([INIT_OVERTIME]);
-
-  const [overtimeHistories, setOvertimeHistories] = useState<OvertimeHistory[]>(
-    [INIT_OVERTIME_HISTORY]
-  );
+  const [overtimes, setOvertimes] = useState<OvertimeDetail[]>([INIT_OVERTIME]);
 
   useEffect(() => {
     fetchDepartments();
     fetchUsers();
     fetchOvertimes();
-    fetchOvertimeHistories();
   }, []);
 
-  const getOvertimePeopleAccordingToDayofTheWeek = (
-    overtimeHistories: OvertimeHistory[],
-    day: number,
-    departmentId: string
-  ) => {
-    let accordingDepartments: OvertimeHistory[] = overtimeHistories.filter(
-      (overtimeHistoryData) => {
-        return overtimeHistoryData.departmentId === departmentId;
-      }
-    );
-    let accordingDay = accordingDepartments.filter((accordingDepartment) => {
-      return (
-        dayjs(accordingDepartment.days).format("dddd") ===
-        dayOfWeek[day as Dayofweek]
-      );
-    });
+  const fetchUsers = async () => {
+    const res = await getUsers();
+    if (res) {
+      const usersData = res.data.data;
+      setUsers(usersData);
+    }
+  };
 
-    return accordingDay.map((accordingDayData) => {
+  const fetchDepartments = async () => {
+    const res = await getDepartments();
+    if (res) {
+      const departmentsData = res.data.data;
+      setDepartments(departmentsData);
+    }
+  };
+
+  const fetchOvertimes = async () => {
+    const res = await getOvertimes();
+    if (res) {
+      const overtimesData = res.data.data;
+      setOvertimes(overtimesData);
+    }
+  };
+
+  const getOvertimePeopleAccordingToDayOfTheWeek = (
+    overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | null,
+    day: number,
+    next?: boolean
+  ) => {
+    const isNext = !!next;
+    let accordingDay = overtimeHistories?.filter((overtimeHistory) => {
+      return checkDayOfWeek(overtimeHistory.startDay, day, isNext);
+    });
+    console.log("accordingDay:", accordingDay);
+    return accordingDay?.map((accordingDayData) => {
       return (
         <List>
           <List.Item>
-            <div>{getUserfromUserId(accordingDayData.userId, users)}</div>
+            <div>{getUserNameFromUserId(accordingDayData.userId, users)}</div>
             <div>
-              {getOvertimeNamefromOvertimeId(
+              {getOvertimeNameFromOvertimeId(
                 accordingDayData.overtimeId,
                 overtimes
               )}
@@ -82,97 +91,100 @@ const OvertimeScheduleTable = () => {
     });
   };
 
-  const fetchUsers = async () => {
-    const res = await getUsers();
-    if (res.status === 200) {
-      const usersData = res.data.data;
-      setUsers(usersData);
-    }
+  const getOvertimeHistories = (
+    departmentData: DepartmentDetail,
+    index: number,
+    next?: boolean
+  ) => {
+    const isNext = !!next;
+    return {
+      order: index + 1,
+      departmentName: departmentData.departmentName,
+      monday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        2,
+        isNext
+      ),
+
+      tuesday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        3,
+        isNext
+      ),
+
+      wednesday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        4,
+        isNext
+      ),
+
+      thursday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        5,
+        isNext
+      ),
+
+      friday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        6,
+        isNext
+      ),
+
+      saturday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        7,
+        isNext
+      ),
+
+      sunday: getOvertimePeopleAccordingToDayOfTheWeek(
+        departmentData.overtimeHistories,
+        8,
+        isNext
+      ),
+    };
   };
 
-  const fetchDepartments = async () => {
-    const res = await getDepartments();
-    if (res.status === 200) {
-      const departmentsData = res.data.data;
-      setDepartments(departmentsData);
-    }
-  };
-
-  const fetchOvertimes = async () => {
-    const res = await getOvertimes();
-    if (res.status === 200) {
-      const overtimesData = res.data.data;
-      setOvertimes(overtimesData);
-    }
-  };
-
-  const fetchOvertimeHistories = async () => {
-    const res = await getOvertimeHistories();
-    if (res.status === 200) {
-      const overtimeHistoriesData = res.data.data;
-      setOvertimeHistories(overtimeHistoriesData);
-    }
-  };
   const overtimeSchedule = useMemo(() => {
     return departments.map((departmentData, index) => {
-      return {
-        order: index + 1,
-        departmentName: departmentData.departmentName,
-        monday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          2,
-          departmentData.departmentId
-        ),
+      return getOvertimeHistories(departmentData, index);
+    });
+  }, [departments]);
 
-        tuesday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          3,
-          departmentData.departmentId
-        ),
-
-        wednesday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          4,
-          departmentData.departmentId
-        ),
-
-        thursday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          5,
-          departmentData.departmentId
-        ),
-
-        friday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          6,
-          departmentData.departmentId
-        ),
-
-        saturday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          7,
-          departmentData.departmentId
-        ),
-
-        sunday: getOvertimePeopleAccordingToDayofTheWeek(
-          overtimeHistories,
-          8,
-          departmentData.departmentId
-        ),
-      };
+  const overtimeScheduleOnNextWeek = useMemo(() => {
+    return departments.map((departmentData, index) => {
+      return getOvertimeHistories(departmentData, index, true);
     });
   }, [departments]);
 
   return (
-    <Card title="Lịch trực tuần" bordered={false} id="overtime-schedule-card">
-      <Table
-        columns={OVERTIME_SCHEDULE_COLUMNS}
-        dataSource={overtimeSchedule}
-        pagination={false}
-        bordered={true}
-        scroll={{ x: 1200 }}
-      />
-    </Card>
+    <Flex vertical gap={18}>
+      <Card
+        title={`Lịch trực tuần hiện tại ${timeStartToEndOfAWeek()}`}
+        bordered={false}
+        id="overtime-schedule-card"
+      >
+        <Table
+          columns={OVERTIME_SCHEDULE_COLUMNS}
+          dataSource={overtimeSchedule}
+          pagination={false}
+          bordered={true}
+          scroll={{ x: 1200 }}
+        />
+      </Card>
+      <Card
+        title={`Lịch trực tuần kế tiếp ${timeStartToEndOfAWeek(true)}`}
+        bordered={false}
+        id="overtime-schedule-card"
+      >
+        <Table
+          columns={OVERTIME_SCHEDULE_COLUMNS}
+          dataSource={overtimeScheduleOnNextWeek}
+          pagination={false}
+          bordered={true}
+          scroll={{ x: 1200 }}
+        />
+      </Card>
+    </Flex>
   );
 };
 export default OvertimeScheduleTable;

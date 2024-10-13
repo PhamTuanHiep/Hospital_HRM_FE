@@ -20,7 +20,7 @@ interface LeaveHistoryShortInfo {
   startDay: string;
   endDay: string;
 }
-interface OvertimeHistoryUserShortInfo {
+export interface OvertimeHistoryUserShortInfo {
   overtimeHistoryId: number;
   overtimeId: string;
   startDay: string;
@@ -81,10 +81,12 @@ interface OvertimeShortInfo {
   overtimePay: number;
 }
 
-interface OvertimeHistoryDepartmentShortInfo {
+export interface OvertimeHistoryDepartmentShortInfo {
   overtimeHistoryId: number;
   userId: number;
   overtimeId: string;
+  startDay: string;
+  endDay: string;
 }
 
 interface RoleShortInfo {
@@ -237,16 +239,19 @@ export interface Overtime {
   updatedAt?: Date;
 }
 
-export interface OvertimeHistory {
+export interface OvertimeHistoryAccordingDepartment {
   overtimeHistoryId: number;
   userId: number;
   overtimeId: string;
-  departmentId: string;
-  note: string;
+  note?: string;
   startDay: string;
   endDay: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface OvertimeHistory extends OvertimeHistoryAccordingDepartment {
+  departmentId: string;
 }
 
 export interface CustomDataSets {

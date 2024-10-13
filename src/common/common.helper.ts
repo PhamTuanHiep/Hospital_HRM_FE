@@ -1,6 +1,17 @@
-import { CustomDataSets, Overtime, User } from "./common.type";
+import {
+  CustomDataSets,
+  DayOfWeek,
+  Overtime,
+  UserDetail,
+  dayOfWeek,
+} from "./common.type";
 import dayjs, { Dayjs } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
+import isBetween from "dayjs/plugin/isBetween"; // Import plugin từ dayjs
+import isoWeek from "dayjs/plugin/isoWeek"; // Import plugin isoWeek
+
+dayjs.extend(isBetween);
+dayjs.extend(isoWeek);
 
 export const getFormatNumberToString = (num: number, char: string) => {
   let strNum = num.toLocaleString();
@@ -20,7 +31,7 @@ export const getDayToDaysOfOvertime = (days: string) => {
   return days.split("_")[0];
 };
 
-export const getUserfromUserId = (userId: number, users: User[]) => {
+export const getUserNameFromUserId = (userId: number, users: UserDetail[]) => {
   return (
     users.find((user) => {
       return user.userId === userId;
@@ -28,7 +39,7 @@ export const getUserfromUserId = (userId: number, users: User[]) => {
   );
 };
 
-export const getOvertimeNamefromOvertimeId = (
+export const getOvertimeNameFromOvertimeId = (
   overtimeId: string,
   overtimes: Overtime[]
 ) => {
@@ -124,4 +135,77 @@ export const convertToPercentage = (arr: number[]): number[] => {
 export const convertToPercentageWithEvaluate = (arr: number[]): number[] => {
   // Chuyển đổi mỗi phần tử thành tỷ lệ phần trăm
   return arr.map((num) => (num / 5) * 100);
+};
+
+// Hàm kiểm tra tuần
+export const checkWeek = (
+  dateString: string | Date,
+  next?: boolean
+): boolean => {
+  const date = dayjs(dateString);
+
+  // Lấy ra tuần hiện tại
+  const startOfThisWeek = dayjs().startOf("isoWeek").format("YYYY-MM-DD");
+  const endOfThisWeek = dayjs().endOf("isoWeek").format("YYYY-MM-DD");
+
+  // Lấy ra tuần sau
+  const startOfNextWeek = dayjs()
+    .add(1, "week")
+    .startOf("isoWeek")
+    .format("YYYY-MM-DD");
+  const endOfNextWeek = dayjs()
+    .add(1, "week")
+    .endOf("isoWeek")
+    .format("YYYY-MM-DD");
+
+  //default next =false -> check this week
+  if (next) {
+    // Parameter 4 is a string with two characters; '[' means inclusive, '(' exclusive
+    // '()' excludes start and end date (default)
+    // '[]' includes start and end date
+    // '[)' includes the start date but excludes the stop
+    // Granuality offers the precision on start and end inclusive checks.
+    // For example including the start date on day precision you should use 'day' as 3r
+    return date.isBetween(startOfNextWeek, endOfNextWeek, "day", "[]")
+      ? true
+      : false;
+  } else {
+    //The third parameter can be replaced by day or year.
+    return date.isBetween(startOfThisWeek, endOfThisWeek, "day", "[]")
+      ? true
+      : false;
+  }
+};
+
+export const checkDayOfWeek = (
+  dateString: string | Date,
+  day: number,
+  next?: boolean
+): boolean => {
+  if (next) {
+    if (checkWeek(dateString, next)) {
+      return dayjs(dateString).format("dddd") === dayOfWeek[day as DayOfWeek];
+    }
+  } else {
+    if (checkWeek(dateString)) {
+      return dayjs(dateString).format("dddd") === dayOfWeek[day as DayOfWeek];
+    }
+  }
+  return false;
+};
+
+export const timeStartToEndOfAWeek = (next?: boolean) => {
+  let startOfWeek: string = "";
+  let endOfWeek: string = "";
+  if (next) {
+    startOfWeek = dayjs()
+      .add(1, "week")
+      .startOf("isoWeek")
+      .format("DD/MM/YYYY");
+    endOfWeek = dayjs().add(1, "week").endOf("isoWeek").format("DD/MM/YYYY");
+  } else {
+    startOfWeek = dayjs().startOf("isoWeek").format("DD/MM/YYYY");
+    endOfWeek = dayjs().endOf("isoWeek").format("DD/MM/YYYY");
+  }
+  return `(${startOfWeek}-${endOfWeek})`;
 };

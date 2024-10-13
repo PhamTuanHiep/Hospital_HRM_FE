@@ -4,18 +4,20 @@ import "./RecordScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";
 import { useEffect, useMemo, useState } from "react";
 import instance from "../../../../api/api";
-import { UserApis } from "../../constants/constant.endpoint";
+
 import { UserInfo } from "./type";
-import { Gender, Role, User, UserDetail } from "../../../../common/common.type";
+import { Gender, UserDetail } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
-import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
-import { getRole, getUser } from "../../../../api/apiServices";
-import { INIT_ROLE, INIT_USER } from "../../../../common/common.constant";
+import {
+  checkWeek,
+  getDDMMYYYYfromISO8601DateString,
+} from "../../../../common/common.helper";
+import { getUser } from "../../../../api/apiServices";
+import { INIT_USER } from "../../../../common/common.constant";
 import { USER_INFO_COLUMNS } from "../../constants/user.constant";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
-  console.log("currentAccount:", currentAccount);
   const [user, setUser] = useState<UserDetail>(INIT_USER);
   const { t } = useTranslation();
 
@@ -26,7 +28,6 @@ const RecordScreen = () => {
   const fetchUser = async () => {
     if (currentAccount.user?.userId) {
       const res = await getUser(currentAccount.user?.userId);
-      console.log("res:", res);
 
       if (res) {
         const user = res.data;
@@ -34,8 +35,6 @@ const RecordScreen = () => {
       }
     }
   };
-
-  console.log("user:", user);
 
   const userData: UserInfo[] = [
     { label: t("content.info.Email"), content: currentAccount.email },
@@ -88,7 +87,6 @@ const RecordScreen = () => {
     return infoShow;
   }, [user]);
 
-  console.log("userInfo:", userInfo);
   return (
     <Flex vertical={false} id="record-screen" gap={24}>
       <Flex vertical className="user-info" justify="space-between">

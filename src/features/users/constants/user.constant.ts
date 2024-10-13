@@ -128,13 +128,14 @@ const overtimeScheduleIndex = {
   order: "order",
   departmentName: "departmentName",
   monday: "monday",
-  tuesday: "positionName",
+  tuesday: "tuesday",
   wednesday: "wednesday",
   thursday: "thursday",
   friday: "friday",
   saturday: "saturday",
   sunday: "sunday",
 };
+
 export const OVERTIME_SCHEDULE_COLUMNS = [
   {
     title: "Stt",

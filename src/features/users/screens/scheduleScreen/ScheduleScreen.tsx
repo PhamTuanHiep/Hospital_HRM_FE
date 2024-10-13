@@ -4,7 +4,6 @@ import "./ScheduleScreen.scss";
 import OvertimeScheduleTable from "./overtimeScheduleTable/OvertimeScheduleTable";
 import AssignmentByRegulationTable from "./assignmentByRegulationTable/AssignmentByRegulationTable";
 import dayjs from "dayjs";
-import { dayOfWeek } from "../../../../common/common.type";
 
 const ScheduleScreen = () => {
   const today = "2024-09-24 09:34:30.898896";
@@ -21,8 +20,8 @@ const ScheduleScreen = () => {
 
   return (
     <Flex id="schedule-screen" vertical gap={18}>
-      <AssignmentByRegulationTable />
       <OvertimeScheduleTable />
+      <AssignmentByRegulationTable />
     </Flex>
   );
 };
