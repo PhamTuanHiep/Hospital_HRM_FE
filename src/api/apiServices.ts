@@ -1,3 +1,4 @@
+import { Account } from "../common/common.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
@@ -13,11 +14,28 @@ export const getAccounts = async () => {
 
 export const getAccount = async (accountId: number) => {
   try {
-    return await instance.get(`${apiPaths.ACCOUNTS}/ ${accountId}`, {});
+    return await instance.get(`${apiPaths.ACCOUNTS}/${accountId}`, {});
   } catch (error) {
     console.log("Error calling API:", error);
   }
 };
+
+export const putAccount = async (accountId: number, account: Account) => {
+  try {
+    return await instance.put(`${apiPaths.ACCOUNTS}/${accountId}`, account);
+  } catch (error) {
+    console.log("Error calling API putAccount:", error);
+  }
+};
+
+export const deleteAccount = async (accountId: number) => {
+  try {
+    return await instance.delete(`${apiPaths.ACCOUNTS}/${accountId}`);
+  } catch (error) {
+    console.log("Error calling API putAccount:", error);
+  }
+};
+
 //USER
 
 export const getUsers = async () => {

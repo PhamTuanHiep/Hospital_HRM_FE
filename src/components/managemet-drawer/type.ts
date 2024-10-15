@@ -4,9 +4,3 @@ export interface FeatureName {
   fn: Function;
   path?: string;
 }
-
-export const enum RoleId {
-  ADMIN = "admin",
-  MANAGE = "manage",
-  USER = "user",
-}

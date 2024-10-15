@@ -4,6 +4,7 @@ import {
   Flex,
   Input,
   InputRef,
+  Modal,
   Space,
   Table,
   TableColumnType,
@@ -13,33 +14,34 @@ import {
 import { FilterDropdownProps } from "antd/es/table/interface";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { Account, Role, User } from "../../../../common/common.type";
-import {
-  INIT_ACCOUNT,
-  INIT_ROLE,
-  INIT_USER,
-} from "../../../../common/common.constant";
-import { getAccounts, getRoles, getUsers } from "../../../../api/apiServices";
-import { useAppSelector } from "../../../../app/hooks";
+import { AccountDetail } from "../../../../common/common.type";
+import { INIT_ACCOUNT } from "../../../../common/common.constant";
+import { getAccounts } from "../../../../api/apiServices";
 import { AccountsData } from "../../constants/manager.type";
+import UpdateAccountModal from "./updateAccountModel/UpdateAccountModal";
+import dayjs from "dayjs";
+import ViewAccountModal from "./viewAccountModel/ViewAccountModel";
+import DeleteAccountModal from "./deleteAccountModel/DeleteAccountModal";
 
 type DataIndex = keyof AccountsData;
 
 const AccountManagementScreen = () => {
-  const currentAccount = useAppSelector((state) => state.account_user.account);
   const searchInput = useRef<InputRef>(null);
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [accounts, setAccounts] = useState<Account[]>([INIT_ACCOUNT]);
-  const [roles, setRoles] = useState<Role[]>([INIT_ROLE]);
-  const [users, setUsers] = useState<User[]>([INIT_USER]);
+  const [accounts, setAccounts] = useState<AccountDetail[]>([INIT_ACCOUNT]);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const [reset, setReset] = useState(false);
+
+  const [account, setAccount] = useState<AccountDetail>(INIT_ACCOUNT);
 
   useEffect(() => {
     fetchAccounts();
-    fetchRoles();
-    fetchUsers();
-  }, []);
+  }, [reset]);
 
   const fetchAccounts = async () => {
     const res = await getAccounts();
@@ -47,40 +49,6 @@ const AccountManagementScreen = () => {
       setAccounts(res.data.data);
     }
   };
-
-  const fetchRoles = async () => {
-    const res = await getRoles();
-    if (res) {
-      setRoles(res.data.data);
-    }
-  };
-
-  const fetchUsers = async () => {
-    const res = await getUsers();
-    if (res) {
-      setUsers(res.data.data);
-    }
-  };
-  const accountsData = useMemo(() => {
-    return accounts.map((account) => {
-      return {
-        key: account.accountId,
-        email: account.email,
-        password: account.password,
-        roleName:
-          roles.find((role) => role.roleId === account.roleId)?.roleName || "",
-        userName:
-          users.find((user) => user.userId === account.userId)?.fullName || "",
-        createdByName:
-          users.find((user) => user.userId === account.createdById)?.fullName ||
-          "",
-        updatedByName:
-          users.find((user) => user.userId === account.updatedById)?.fullName ||
-          "",
-        actions: account.accountId,
-      };
-    });
-  }, [accounts]);
 
   const handleSearch = (
     selectedKeys: string[],
@@ -196,9 +164,26 @@ const AccountManagementScreen = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
+  const accountsData = useMemo(() => {
+    return accounts.map((account) => {
+      return {
+        key: account.accountId,
+        email: account.email,
+        password: account.password,
+        roleName: account.role?.roleName || "",
+        userName: account.user?.fullName || "",
+        createdAt: dayjs(account.createdAt).format("DD-MM-YYYY") || "",
+        updatedAt: dayjs(account.updatedAt).format("DD-MM-YYYY") || "",
+        actions: account,
+      };
+    });
+  }, [accounts]);
+
+  console.log("----------------------------");
+
   const accountColumns: TableColumnsType<AccountsData> = [
     {
-      title: "email",
+      title: "Email",
       dataIndex: "email",
       sorter: {
         compare: (a, b) => a.email.localeCompare(b.email),
@@ -206,11 +191,11 @@ const AccountManagementScreen = () => {
       },
     },
     {
-      title: "password",
+      title: "Password",
       dataIndex: "password",
     },
     {
-      title: "roleName",
+      title: "Role Name",
       dataIndex: "roleName",
       sorter: {
         compare: (a, b) => a.roleName.localeCompare(b.roleName),
@@ -230,23 +215,23 @@ const AccountManagementScreen = () => {
         record.roleName.indexOf(value as string) === 0,
     },
     {
-      title: "userName",
+      title: "User Name",
       dataIndex: "userName",
       ...getColumnSearchProps("userName"),
     },
     {
-      title: "createdByName",
-      dataIndex: "createdByName",
+      title: "Created At",
+      dataIndex: "createdAt",
       sorter: {
-        compare: (a, b) => a.createdByName.localeCompare(b.createdByName),
+        compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
         multiple: 2,
       },
     },
     {
-      title: "updatedByName",
-      dataIndex: "updatedByName",
+      title: "Updated At",
+      dataIndex: "updatedAt",
       sorter: {
-        compare: (a, b) => a.updatedByName.localeCompare(b.updatedByName),
+        compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
         multiple: 1,
       },
     },
@@ -254,12 +239,17 @@ const AccountManagementScreen = () => {
       title: "Action",
       dataIndex: "actions",
       render: (value) => {
-        console.log("value:", value);
         return (
           <Flex justify="space-between" gap={8}>
-            <Button>View</Button>
-            <Button type="primary">Update</Button>
-            <Button type="primary" danger>
+            <Button onClick={() => handleViewAccount(value)}>View</Button>
+            <Button onClick={() => handleUpdateAccount(value)} type="primary">
+              Update
+            </Button>
+            <Button
+              onClick={() => handleDeleteAccount(value)}
+              type="primary"
+              danger
+            >
               Delete
             </Button>
           </Flex>
@@ -268,6 +258,23 @@ const AccountManagementScreen = () => {
     },
   ];
 
+  const handleViewAccount = (accountDetail: AccountDetail) => {
+    setAccount(accountDetail);
+    setIsViewModalOpen(true);
+  };
+
+  const handleUpdateAccount = (accountDetail: AccountDetail) => {
+    console.log("accountDetail:", accountDetail);
+
+    setAccount(accountDetail);
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleDeleteAccount = (accountDetail: AccountDetail) => {
+    setAccount(accountDetail);
+    setIsDeleteModalOpen(true);
+  };
+
   return (
     <div>
       <Table<AccountsData>
@@ -275,6 +282,26 @@ const AccountManagementScreen = () => {
         dataSource={accountsData}
         onChange={onChange}
         showSorterTooltip={{ target: "full-header" }}
+      />
+      <UpdateAccountModal
+        isModalOpen={isUpdateModalOpen}
+        setIsModalOpen={setIsUpdateModalOpen}
+        setReset={setReset}
+        account={account}
+        confirmLoading={!account}
+      />
+      <ViewAccountModal
+        isModalOpen={isViewModalOpen}
+        setIsModalOpen={setIsViewModalOpen}
+        account={account}
+        confirmLoading={!account}
+      />
+      <DeleteAccountModal
+        isModalOpen={isDeleteModalOpen}
+        setIsModalOpen={setIsDeleteModalOpen}
+        setReset={setReset}
+        account={account}
+        confirmLoading={!account}
       />
     </div>
   );

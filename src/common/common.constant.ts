@@ -210,3 +210,15 @@ export const INIT_NURSING_TRAINING_RESULTS: NursingTrainingResults = {
   abilityToAdaptToTheWorkEnvironment: 1,
   averageScore: 1,
 };
+
+export enum RoleName {
+  USER = "User",
+  MANAGER = "Manager",
+  ADMIN = "Admin",
+}
+
+export const enum RoleId {
+  ADMIN = "admin",
+  MANAGER = "manager",
+  USER = "user",
+}

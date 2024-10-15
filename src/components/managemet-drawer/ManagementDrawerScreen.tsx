@@ -17,14 +17,14 @@ import {
   UserOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { FeatureName, RoleId } from "./type";
+import { FeatureName } from "./type";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { doLogout } from "../../features/auth/constants/accountSlice";
 import { UserPaths } from "../../features/users/constants/constant.path";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ManagerPaths } from "../../features/manager/constants/constant.path";
+import { RoleId } from "../../common/common.constant";
 
 interface ManagementDrawerProps {
   open: boolean;
@@ -51,6 +51,14 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <UserOutlined />,
       text: t("content.feature.AccountInfo"),
       path: UserPaths.ACCOUNT_INFO,
+      fn: (e: any) => {
+        setOpen(false);
+      },
+    },
+    {
+      icon: <FileOutlined />,
+      text: t("content.feature.Record"),
+      path: UserPaths.RECORD,
       fn: (e: any) => {
         setOpen(false);
       },

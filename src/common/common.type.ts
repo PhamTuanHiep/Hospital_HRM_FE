@@ -95,14 +95,12 @@ interface RoleShortInfo {
 }
 
 export interface Account {
-  accountId: number;
+  accountId?: number;
   email: string;
-  password: string;
-  avatar: string;
-  role: RoleShortInfo;
-  user: UserShortInfo;
-  createdById: number;
-  updatedById: number;
+  password?: string;
+  avatar?: string;
+  roleId: string;
+  userId?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

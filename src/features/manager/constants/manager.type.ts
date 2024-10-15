@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { AccountDetail } from "../../../common/common.type";
 
 export interface AccountsData {
   key: React.Key;
@@ -6,7 +6,7 @@ export interface AccountsData {
   password: string;
   roleName: string;
   userName: string;
-  createdByName: string;
-  updatedByName: string;
-  actions: string | ReactNode;
+  createdAt: string;
+  updatedAt: string;
+  actions: AccountDetail;
 }
