@@ -1,4 +1,4 @@
-import { AccountDetail } from "../../../common/common.type";
+import { AccountDetail, UserDetail } from "../../../common/common.type";
 
 export interface AccountsData {
   key: React.Key;
@@ -9,4 +9,21 @@ export interface AccountsData {
   createdAt: string;
   updatedAt: string;
   actions: AccountDetail;
+}
+
+export interface UsersData {
+  key: React.Key;
+  fullName: string;
+  email: string;
+  gender: string;
+  address: string;
+  phoneNumber: string;
+  nation: string;
+  birthday: string;
+  departmentName: string;
+  positionName: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  actions: UserDetail;
 }

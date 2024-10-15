@@ -1,24 +1,25 @@
 import { List, Modal } from "antd";
-import { AccountDetail } from "../../../../../common/common.type";
-import { deleteAccount } from "../../../../../api/apiServices";
+import { UserDetail } from "../../../../../common/common.type";
+import { deleteUser } from "../../../../../api/apiServices";
 
-interface DeleteAccountModalProps {
+interface DeleteUserModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
   setReset: Function;
-  account: AccountDetail;
+  user: UserDetail;
   confirmLoading: boolean;
 }
-const DeleteAccountModal = ({
+const DeleteUserModal = ({
   isModalOpen,
   setIsModalOpen,
   setReset,
-  account,
+  user,
   confirmLoading,
-}: DeleteAccountModalProps) => {
+}: DeleteUserModalProps) => {
   const handleOk = async () => {
-    const res = await deleteAccount(account.accountId);
-    if (res) {
+    const res = await deleteUser(user.userId);
+    console.log("res:", res);
+    if (res?.data.affected != 0) {
       setIsModalOpen(false);
       setReset(true);
     } else {
@@ -31,17 +32,17 @@ const DeleteAccountModal = ({
     setIsModalOpen(false);
   };
 
-  console.log(" account:", account);
+  console.log(" user:", user);
   return (
     <Modal
-      title="Delete Account"
+      title="Delete User"
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
     >
-      <List>Would you like delete account: {account.email}</List>
+      <List>Would you like delete user: {user.fullName}</List>
     </Modal>
   );
 };
-export default DeleteAccountModal;
+export default DeleteUserModal;

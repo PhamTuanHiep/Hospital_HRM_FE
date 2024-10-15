@@ -94,7 +94,7 @@ interface RoleShortInfo {
   roleName: string;
 }
 
-export interface Account {
+export interface AccountForm {
   accountId?: number;
   email: string;
   password?: string;
@@ -105,8 +105,8 @@ export interface Account {
   updatedAt?: Date;
 }
 
-export interface User {
-  userId: number;
+export interface UserForm {
+  userId?: number;
   fullName: string;
   gender: string;
   address: string;
@@ -114,19 +114,20 @@ export interface User {
   nation: string;
   nationality: string;
   hometown: string;
-  positionId: string;
   birthday: string;
   fatherFullName: string;
   fatherBirthday: string;
   motherFullName: string;
   motherBirthday: string;
   weeklySchedule: number[];
+
+  positionName: string;
+  departmentName: string;
   jobDescription: string[];
   otherDescription: string;
-  departmentId: string;
+  status: string;
   createdAt?: Date;
   updatedAt?: Date;
-  status: string;
 }
 
 export interface Role {

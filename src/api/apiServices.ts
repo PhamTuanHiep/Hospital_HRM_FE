@@ -1,4 +1,4 @@
-import { Account } from "../common/common.type";
+import { AccountForm } from "../common/common.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
@@ -20,7 +20,7 @@ export const getAccount = async (accountId: number) => {
   }
 };
 
-export const putAccount = async (accountId: number, account: Account) => {
+export const putAccount = async (accountId: number, account: AccountForm) => {
   try {
     return await instance.put(`${apiPaths.ACCOUNTS}/${accountId}`, account);
   } catch (error) {
@@ -51,6 +51,14 @@ export const getUser = async (userId: number) => {
     return await instance.get(`${apiPaths.USERS}/${userId}`);
   } catch (error) {
     console.log("Error calling API:", error);
+  }
+};
+
+export const deleteUser = async (userId: number) => {
+  try {
+    return await instance.delete(`${apiPaths.USERS}/${userId}`);
+  } catch (error) {
+    console.log("Error calling API putAccount:", error);
   }
 };
 

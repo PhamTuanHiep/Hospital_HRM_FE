@@ -1,8 +1,6 @@
-import { Button, Form, FormProps, Input, Modal, Select } from "antd";
-
-import { Account, AccountDetail } from "../../../../../common/common.type";
+import { Form, Input, Modal, Select } from "antd";
+import { AccountDetail, AccountForm } from "../../../../../common/common.type";
 import { RoleId, RoleName } from "../../../../../common/common.constant";
-import { putAccount } from "../../../../../api/apiServices";
 import { useEffect, useMemo } from "react";
 
 interface ViewAccountModalProps {
@@ -49,7 +47,6 @@ const ViewAccountModal = ({
     >
       <Form
         form={form}
-        id="myForm"
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
@@ -61,15 +58,15 @@ const ViewAccountModal = ({
           roleId: `${account.role?.roleId}`,
         }}
       >
-        <Form.Item<Account> label="Email" name="email">
+        <Form.Item<AccountForm> label="Email" name="email">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<Account> label="Password" name="password">
+        <Form.Item<AccountForm> label="Password" name="password">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<Account> label="Role" name="roleId">
+        <Form.Item<AccountForm> label="Role" name="roleId">
           <Select
             options={[
               { value: RoleId.ADMIN, label: RoleName.ADMIN },

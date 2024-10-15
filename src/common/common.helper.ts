@@ -92,6 +92,13 @@ export const toSnakeCaseFromCamelCase = (str: string): string => {
     .replace(/^_/, ""); // Loại bỏ dấu "_" đầu chuỗi nếu có
 };
 
+export const transformCamelToTitleCaseHaveSpace = (str: string): string => {
+  return str
+    .replace(/([A-Z])/g, " $1") // Thêm dấu cách trước mỗi ký tự viết hoa
+    .replace(/^./, (firstChar) => firstChar.toUpperCase()) // Viết hoa ký tự đầu tiên
+    .trim(); // Xóa các dấu cách thừa ở đầu và cuối chuỗi
+};
+
 export const increaseMonthToTime = (time: Date, addMonth: number = 3) => {
   return dayjs(time).add(addMonth, "month").toDate();
 };

@@ -3,5 +3,25 @@
 }
 .extend-model {
   width: 1080px !important;
-  height: 540px !important;
+  max-height: 80vh !important;
+  background-color: white;
+  overflow-y: auto;
+  top: 10vh;
+  .ant-modal-content {
+    .ant-modal-body {
+      .ant-form {
+        &.ant-form-horizontal {
+          max-width: 100%;
+          .container-form-item {
+            width: 50%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.btn-add-object {
+  float: right;
+  margin: 8px 4px 4px;
 }

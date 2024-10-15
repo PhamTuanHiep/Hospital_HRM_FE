@@ -1,6 +1,6 @@
 import { Button, Form, FormProps, Input, Modal, Select } from "antd";
 
-import { Account, AccountDetail } from "../../../../../common/common.type";
+import { AccountDetail, AccountForm } from "../../../../../common/common.type";
 import { RoleId, RoleName } from "../../../../../common/common.constant";
 import { putAccount } from "../../../../../api/apiServices";
 import { useEffect, useMemo } from "react";
@@ -33,9 +33,9 @@ const UpdateAccountModal = ({
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
 
-  const onFinish: FormProps<Account>["onFinish"] = async (values) => {
+  const onFinish: FormProps<AccountForm>["onFinish"] = async (values) => {
     console.log("Success:", values);
-    const accountUpdate = values as Account;
+    const accountUpdate = values as AccountForm;
     const res = await putAccount(account.accountId, accountUpdate);
     if (res) {
       setIsModalOpen(false);
@@ -43,7 +43,9 @@ const UpdateAccountModal = ({
     }
   };
 
-  const onFinishFailed: FormProps<Account>["onFinishFailed"] = (errorInfo) => {
+  const onFinishFailed: FormProps<AccountForm>["onFinishFailed"] = (
+    errorInfo
+  ) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -64,7 +66,7 @@ const UpdateAccountModal = ({
       confirmLoading={confirmLoading}
       okText={
         <Button
-          form="myForm"
+          form="updateAccountForm"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -76,7 +78,7 @@ const UpdateAccountModal = ({
     >
       <Form
         form={form}
-        id="myForm"
+        id="updateAccountForm"
         name="basic"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
@@ -90,7 +92,7 @@ const UpdateAccountModal = ({
           roleId: `${account.role?.roleId}`,
         }}
       >
-        <Form.Item<Account>
+        <Form.Item<AccountForm>
           label="Email"
           name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
@@ -98,7 +100,7 @@ const UpdateAccountModal = ({
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<Account>
+        <Form.Item<AccountForm>
           label="Password"
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
@@ -106,7 +108,7 @@ const UpdateAccountModal = ({
           <Input.Password />
         </Form.Item>
 
-        <Form.Item<Account>
+        <Form.Item<AccountForm>
           label="Role"
           name="roleId"
           rules={[{ required: true, message: "Please input your role!" }]}
