@@ -5,6 +5,8 @@ import {
   positionName,
 } from "../../../common/common.type";
 
+import { ColumnFilterItem } from "antd/es/table/interface";
+
 export const weeklyScheduleOptions: SelectProps["options"] = Object.entries(
   dayOfWeekVN
 ).map(([key, value]) => {
@@ -30,4 +32,20 @@ export const positionOptions: SelectProps["options"] = Object.entries(
     label: value,
     value: key,
   };
+});
+
+export const filterDepartmentOptions = departmentOptions.map(
+  (departmentOption) => {
+    return {
+      text: departmentOption.label,
+      value: departmentOption.label,
+    } as ColumnFilterItem;
+  }
+);
+
+export const filterPositionOptions = positionOptions.map((positionOption) => {
+  return {
+    text: positionOption.label,
+    value: positionOption.label,
+  } as ColumnFilterItem;
 });

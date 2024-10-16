@@ -27,3 +27,16 @@ export interface UsersData {
   updatedAt: string;
   actions: UserDetail;
 }
+
+export interface EmployeeColumnType {
+  key: React.Key;
+  email: string;
+  fullName: string;
+  gender: number;
+  departmentName: string;
+  positionName: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  actions: UserDetail;
+}

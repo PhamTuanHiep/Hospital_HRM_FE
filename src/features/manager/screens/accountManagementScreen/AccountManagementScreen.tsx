@@ -4,7 +4,6 @@ import {
   Flex,
   Input,
   InputRef,
-  Modal,
   Space,
   Table,
   TableColumnType,

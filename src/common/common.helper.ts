@@ -216,3 +216,8 @@ export const timeStartToEndOfAWeek = (next?: boolean) => {
   }
   return `(${startOfWeek}-${endOfWeek})`;
 };
+
+export const getDayNameFromNumber = (days: number[]) => {
+  const dayList = days.join(",");
+  return `Các thứ trong tuần: ${dayList}`;
+};

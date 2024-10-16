@@ -15,6 +15,10 @@
           .container-form-item {
             width: 50%;
           }
+          .ant-form-item {
+            flex: 1 1 50%; /* Mỗi phần tử chiếm 50% chiều rộng (4 phần tử trên mỗi hàng) */
+            max-width: 50%;
+          }
         }
       }
     }

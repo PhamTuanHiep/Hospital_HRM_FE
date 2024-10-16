@@ -62,6 +62,14 @@ export const postUser = async (user: UserPost) => {
   }
 };
 
+export const putUser = async (userId: number, user: UserPost) => {
+  try {
+    return await instance.put(`${apiPaths.USERS}/${userId}`, user);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
 export const deleteUser = async (userId: number) => {
   try {
     return await instance.delete(`${apiPaths.USERS}/${userId}`);

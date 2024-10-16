@@ -106,6 +106,7 @@ export interface AccountForm {
 }
 
 export interface UserPost {
+  email?: string;
   fullName: string;
   gender: number;
   address: string;
