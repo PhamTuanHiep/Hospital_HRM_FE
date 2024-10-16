@@ -15,7 +15,7 @@ export interface UsersData {
   key: React.Key;
   fullName: string;
   email: string;
-  gender: string;
+  gender: number;
   address: string;
   phoneNumber: string;
   nation: string;

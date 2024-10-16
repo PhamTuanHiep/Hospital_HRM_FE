@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
-import { ManagerPaths } from "../constants/constant.path";
-import EmployeeManagementScreen from "../screens/employeeManagementScreen/EmployeeManagementScreen";
+import { managerChildPaths, managerPaths } from "../constants/constant.path";
+
 import AccountManagementScreen from "../screens/accountManagementScreen/AccountManagementScreen";
 import ProfileManagementScreen from "../screens/profileManagementScreen/ProfileManagementScreen";
 import DepartmentManagementScreen from "../screens/departmentManagementScreen/DepartmentManagementScreen";
@@ -10,51 +10,71 @@ import ContractManagementScreen from "../screens/contractManagementScreen/Contra
 import RecruitmentManagementScreen from "../screens/recruitmentManagementScreen/RecruitmentManagementScreen";
 import TrainingScreen from "../screens/trainingScreen/TrainingScreen";
 
+import ErrorPage from "../../../error-page";
+import EmployeeManagementScreen from "../screens/employeeManagementScreen/EmployeeManagementScreen";
+import UserProfilesTable from "../screens/profileManagementScreen/userProfilesTable/UserProfilesTable";
+import AddUserProfileScreen from "../screens/profileManagementScreen/addUserProfileScreen/AddUserProfileScreen";
+
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.ACCOUNT_MANAGEMENT,
+  path: managerPaths.ACCOUNT_MANAGEMENT,
   element: <AccountManagementScreen />,
 };
 
 const EMPLOYEE_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.EMPLOYEE_MANAGEMENT,
+  path: managerPaths.EMPLOYEE_MANAGEMENT,
   element: <EmployeeManagementScreen />,
 };
 
 const PROFILE_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.PROFILE_MANAGEMENT,
+  path: managerPaths.PROFILE_MANAGEMENT,
   element: <ProfileManagementScreen />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: <UserProfilesTable />,
+    },
+    {
+      path: managerChildPaths.ADD_USER,
+      element: <AddUserProfileScreen />,
+    },
+  ],
 };
 
 const CONTRACT_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.CONTRACT_MANAGEMENT,
+  path: managerPaths.CONTRACT_MANAGEMENT,
   element: <ContractManagementScreen />,
 };
 
 const DEPARTMENT_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.DEPARTMENT_MANAGEMENT,
+  path: managerPaths.DEPARTMENT_MANAGEMENT,
   element: <DepartmentManagementScreen />,
 };
 
 const JOB_MANAGEMENTS_ROUTE: RouteObject = {
-  path: ManagerPaths.JOB_MANAGEMENT,
+  path: managerPaths.JOB_MANAGEMENT,
   element: <JobManagementScreen />,
 };
 
 const BENEFITS_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.BENEFITS_MANAGEMENT,
+  path: managerPaths.BENEFITS_MANAGEMENT,
   element: <BenefitsManagementScreen />,
 };
 
 const RECRUITMENT_MANAGEMENT_ROUTE: RouteObject = {
-  path: ManagerPaths.RECRUITMENT_MANAGEMENT,
+  path: managerPaths.RECRUITMENT_MANAGEMENT,
   element: <RecruitmentManagementScreen />,
 };
 
 const TRAINING_ROUTE: RouteObject = {
-  path: ManagerPaths.TRAINING,
+  path: managerPaths.TRAINING,
   element: <TrainingScreen />,
 };
 
+// const ADD_USER_ROUTE: RouteObject = {
+//   path: "/manager/employee-management/add-user",
+//   element: <AddUserScreen />,
+// };
 export const MANAGER_ROUTES = [
   ACCOUNT_MANAGEMENT_ROUTE,
   EMPLOYEE_MANAGEMENT_ROUTE,
@@ -65,4 +85,5 @@ export const MANAGER_ROUTES = [
   BENEFITS_MANAGEMENT_ROUTE,
   RECRUITMENT_MANAGEMENT_ROUTE,
   TRAINING_ROUTE,
+  // ADD_USER_ROUTE,
 ];

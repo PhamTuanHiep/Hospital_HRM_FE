@@ -23,8 +23,8 @@ import { useDispatch } from "react-redux";
 import { doLogout } from "../../features/auth/constants/accountSlice";
 import { UserPaths } from "../../features/users/constants/constant.path";
 import { useTranslation } from "react-i18next";
-import { ManagerPaths } from "../../features/manager/constants/constant.path";
 import { RoleId } from "../../common/common.constant";
+import { managerPaths } from "../../features/manager/constants/constant.path";
 
 interface ManagementDrawerProps {
   open: boolean;
@@ -66,7 +66,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <AccountBookOutlined />,
       text: "Quản lý tài khoản",
-      path: ManagerPaths.ACCOUNT_MANAGEMENT,
+      path: managerPaths.ACCOUNT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -74,7 +74,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <UsergroupAddOutlined />,
       text: "Quản lý nhân viên",
-      path: ManagerPaths.EMPLOYEE_MANAGEMENT,
+      path: managerPaths.EMPLOYEE_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -82,7 +82,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <FileOutlined />,
       text: "Quản lý hồ sơ",
-      path: ManagerPaths.PROFILE_MANAGEMENT,
+      path: managerPaths.PROFILE_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -90,7 +90,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <FileTextOutlined />,
       text: "Quản lý hợp đồng",
-      path: ManagerPaths.CONTRACT_MANAGEMENT,
+      path: managerPaths.CONTRACT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -98,7 +98,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <ApartmentOutlined />,
       text: "Quản lý phòng ban",
-      path: ManagerPaths.DEPARTMENT_MANAGEMENT,
+      path: managerPaths.DEPARTMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -106,7 +106,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <InsertRowAboveOutlined />,
       text: "Quản lý công việc ",
-      path: ManagerPaths.JOB_MANAGEMENT,
+      path: managerPaths.JOB_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -114,7 +114,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <MoneyCollectOutlined />,
       text: "Quản lý phúc lợi",
-      path: ManagerPaths.BENEFITS_MANAGEMENT,
+      path: managerPaths.BENEFITS_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -122,7 +122,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <FileSearchOutlined />,
       text: "Quản lý tuyển dụng",
-      path: ManagerPaths.RECRUITMENT_MANAGEMENT,
+      path: managerPaths.RECRUITMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
@@ -130,7 +130,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <SnippetsOutlined />,
       text: "Đào tạo",
-      path: ManagerPaths.TRAINING,
+      path: managerPaths.TRAINING,
       fn: (e: any) => {
         setOpen(false);
       },

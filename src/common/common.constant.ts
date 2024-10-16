@@ -32,7 +32,7 @@ export const INIT_ACCOUNT: AccountDetail = {
 export const INIT_USER: UserDetail = {
   userId: 1,
   fullName: "-",
-  gender: "-",
+  gender: 1,
   address: "-",
   phoneNumber: "-",
   nation: "-",
@@ -221,4 +221,14 @@ export const enum RoleId {
   ADMIN = "admin",
   MANAGER = "manager",
   USER = "user",
+}
+
+export const enum GenderId {
+  FEMALE = 0,
+  MALE,
+}
+
+export const enum GenderName {
+  FEMALE = "Female",
+  MALE = "Male",
 }

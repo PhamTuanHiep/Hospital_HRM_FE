@@ -1,21 +1,21 @@
 import { List, Modal } from "antd";
-import { UserDetail } from "../../../../../common/common.type";
-import { deleteUser } from "../../../../../api/apiServices";
+import { UserDetail } from "../../../../../../common/common.type";
+import { deleteUser } from "../../../../../../api/apiServices";
 
-interface DeleteUserModalProps {
+interface DeleteUserProfileModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
   setReset: Function;
   user: UserDetail;
   confirmLoading: boolean;
 }
-const DeleteUserModal = ({
+const DeleteUserProfileModal = ({
   isModalOpen,
   setIsModalOpen,
   setReset,
   user,
   confirmLoading,
-}: DeleteUserModalProps) => {
+}: DeleteUserProfileModalProps) => {
   const handleOk = async () => {
     const res = await deleteUser(user.userId);
     console.log("res:", res);
@@ -45,4 +45,4 @@ const DeleteUserModal = ({
     </Modal>
   );
 };
-export default DeleteUserModal;
+export default DeleteUserProfileModal;

@@ -1,4 +1,10 @@
+import { Outlet } from "react-router-dom";
+
 const ProfileManagementScreen = () => {
-  return <div>ProfileManagementScreen</div>;
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 };
 export default ProfileManagementScreen;

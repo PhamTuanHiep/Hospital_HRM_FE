@@ -1,21 +1,22 @@
 import { Flex, Form, Input, Modal } from "antd";
-import { UserDetail, UserForm } from "../../../../../common/common.type";
-import { useEffect, useMemo } from "react";
-import { transformCamelToTitleCaseHaveSpace } from "../../../../../common/common.helper";
 
-interface ViewUserModelProps {
+import { useEffect, useMemo } from "react";
+import { UserDetail, UserForm } from "../../../../../../common/common.type";
+import { transformCamelToTitleCaseHaveSpace } from "../../../../../../common/common.helper";
+
+interface ViewUserProfileModelProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
   user: UserDetail;
   confirmLoading: boolean;
 }
 
-const ViewUserModel = ({
+const ViewUserProfileModel = ({
   isModalOpen,
   setIsModalOpen,
   user,
   confirmLoading,
-}: ViewUserModelProps) => {
+}: ViewUserProfileModelProps) => {
   const [form] = Form.useForm();
 
   const defaultValues = useMemo(() => {
@@ -90,4 +91,4 @@ const ViewUserModel = ({
     </Modal>
   );
 };
-export default ViewUserModel;
+export default ViewUserProfileModel;

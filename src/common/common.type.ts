@@ -105,10 +105,31 @@ export interface AccountForm {
   updatedAt?: Date;
 }
 
+export interface UserPost {
+  fullName: string;
+  gender: number;
+  address: string;
+  phoneNumber: string;
+  nation: string;
+  nationality: string;
+  hometown: string;
+  positionId: string;
+  departmentId: string;
+  birthday: string;
+  fatherFullName: string;
+  fatherBirthday: string;
+  motherFullName: string;
+  motherBirthday: string;
+  weeklySchedule: number[];
+  jobDescription: string[];
+  otherDescription: string;
+  status: string;
+}
+
 export interface UserForm {
   userId?: number;
   fullName: string;
-  gender: string;
+  gender: number;
   address: string;
   phoneNumber: string;
   nation: string;
@@ -120,7 +141,6 @@ export interface UserForm {
   motherFullName: string;
   motherBirthday: string;
   weeklySchedule: number[];
-
   positionName: string;
   departmentName: string;
   jobDescription: string[];
@@ -309,7 +329,7 @@ export interface AccountDetail {
 export interface UserDetail {
   userId: number;
   fullName: string;
-  gender: string;
+  gender: number;
   address: string;
   phoneNumber: string;
   nation: string;
@@ -449,12 +469,12 @@ export enum Gender {
 
 export enum DayOfWeek {
   MONDAY = 2,
-  TUESDAY = 3,
-  WEDNESDAY = 4,
-  THURSDAY = 5,
-  FRIDAY = 6,
-  SATURDAY = 7,
-  SUNDAY = 8,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY,
+  SUNDAY,
 }
 
 export const dayOfWeek = {
@@ -465,4 +485,92 @@ export const dayOfWeek = {
   [DayOfWeek.FRIDAY]: "Friday",
   [DayOfWeek.SATURDAY]: "Saturday",
   [DayOfWeek.SUNDAY]: "Sunday",
+};
+
+export const dayOfWeekVN = {
+  [DayOfWeek.MONDAY]: "Thứ hai",
+  [DayOfWeek.TUESDAY]: "Thứ ba",
+  [DayOfWeek.WEDNESDAY]: "Thứ tư",
+  [DayOfWeek.THURSDAY]: "Thứ năm",
+  [DayOfWeek.FRIDAY]: "Thứ sáu",
+  [DayOfWeek.SATURDAY]: "Thứ bảy",
+  [DayOfWeek.SUNDAY]: "Chủ nhật",
+};
+
+export enum DepartmentId {
+  D001 = "D001",
+  D002 = "D002",
+  D003 = "D003",
+  D004 = "D004",
+  D005 = "D005",
+  D006 = "D006",
+  D007 = "D007",
+  D008 = "D008",
+  D009 = "D009",
+  D010 = "D010",
+  D011 = "D011",
+  D012 = "D012",
+  D013 = "D013",
+  D014 = "D014",
+  D015 = "D015",
+  D016 = "D016",
+  D017 = "D017",
+  D018 = "D018",
+  D019 = "D019",
+  D020 = "D020",
+  D021 = "D021",
+  D022 = "D022",
+  D023 = "D023",
+}
+
+export const departmentName = {
+  [DepartmentId.D001]: "Phòng giám đốc",
+  [DepartmentId.D002]: "Phòng phó giám đốc",
+  [DepartmentId.D003]: "Khoa phòng khám",
+  [DepartmentId.D004]: "Khoa nội tổng hợp",
+  [DepartmentId.D005]: "Khoa hồi sức chống độc",
+  [DepartmentId.D006]: "Khoa lão khoa",
+  [DepartmentId.D007]: "Khoa nhi",
+  [DepartmentId.D008]: "Khoa châm cứu",
+  [DepartmentId.D009]: "Khoa phục hồi chấn thương",
+  [DepartmentId.D010]: "Khoa ngũ quan",
+  [DepartmentId.D011]: "Khoa ngoại",
+  [DepartmentId.D012]: "Khoa sản",
+  [DepartmentId.D013]: "Khoa phòng mổ",
+  [DepartmentId.D014]: "Khoa xét nghiệm",
+  [DepartmentId.D015]: "Chuẩn đoán hình ảnh",
+  [DepartmentId.D016]: "Khoa dược",
+  [DepartmentId.D017]: "Khoa dinh dưỡng",
+  [DepartmentId.D018]: "Khoa kiểm soát nhiễm khuẩn",
+  [DepartmentId.D019]: "Phòng tổ chức hành chính",
+  [DepartmentId.D020]: "Phòng kế hoạch tổng hợp",
+  [DepartmentId.D021]: "Phòng tài chính kế toán",
+  [DepartmentId.D022]: "Phòng đào tạo",
+  [DepartmentId.D023]: "Phòng điều dưỡng",
+};
+
+export enum PositionId {
+  P001 = "P001",
+  P002 = "P002",
+  P003 = "P003",
+  P004 = "P004",
+  P005 = "P005",
+  P006 = "P006",
+  P007 = "P007",
+  P008 = "P008",
+  P009 = "P009",
+  P010 = "P010",
+}
+
+export const positionName = {
+  [PositionId.P001]: "Bác sĩ cao cấp",
+  [PositionId.P002]: "Bác sĩ chính",
+  [PositionId.P003]: "Bác sĩ",
+  [PositionId.P004]: "Bác sĩ y học dự phòng cao cấp",
+  [PositionId.P005]: "Bác sĩ y học dự phòng chính",
+  [PositionId.P006]: "Bác sĩ y học dự phòng",
+  [PositionId.P007]: "Y sĩ",
+  [PositionId.P008]: "Y tá cao cấp",
+  [PositionId.P009]: "Y tá chính",
+  [PositionId.P010]: "Y tá",
 };

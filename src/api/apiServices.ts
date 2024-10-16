@@ -1,4 +1,4 @@
-import { AccountForm } from "../common/common.type";
+import { AccountForm, UserPost } from "../common/common.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
@@ -49,6 +49,14 @@ export const getUsers = async () => {
 export const getUser = async (userId: number) => {
   try {
     return await instance.get(`${apiPaths.USERS}/${userId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postUser = async (user: UserPost) => {
+  try {
+    return await instance.post(`${apiPaths.USERS}/`, user);
   } catch (error) {
     console.log("Error calling API:", error);
   }
