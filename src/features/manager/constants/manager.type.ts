@@ -1,4 +1,9 @@
-import { AccountDetail, UserDetail } from "../../../common/common.type";
+import { ReactNode } from "react";
+import {
+  AccountDetail,
+  DepartmentDetail,
+  UserDetail,
+} from "../../../common/common.type";
 
 export interface AccountsData {
   key: React.Key;
@@ -39,4 +44,23 @@ export interface EmployeeColumnType {
   createdAt: string;
   updatedAt: string;
   actions: UserDetail;
+}
+
+export interface DepartmentColumnType {
+  key: React.Key;
+  departmentId: string;
+  departmentName: string;
+  location: string;
+  funcDescription: string;
+  // users: ReactNode;
+  createdAt: string;
+  updatedAt: string;
+  actions: DepartmentDetail;
+}
+
+export interface DepartmentForm {
+  departmentId: string;
+  departmentName: string;
+  location: string;
+  funcDescription: string;
 }

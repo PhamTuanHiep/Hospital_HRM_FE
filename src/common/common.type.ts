@@ -4,7 +4,7 @@ interface AccountShortInfo {
   avatar: string;
 }
 
-interface UserShortInfo {
+export interface UserShortInfo {
   userId: number;
   fullName: string;
 }

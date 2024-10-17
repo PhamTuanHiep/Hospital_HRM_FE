@@ -1,5 +1,23 @@
-.content-center {
-  text-align: center !important;
+.ant-table-container {
+  .ant-table-content {
+    .ant-table-thead {
+      .title_content-center {
+        text-align: center !important;
+      }
+    }
+    .ant-table-tbody {
+      .ant-table-row {
+        .ant-table-cell {
+          .null-cell_content-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
 }
 .extend-model {
   width: 1080px !important;

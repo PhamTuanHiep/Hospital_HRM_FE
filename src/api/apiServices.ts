@@ -1,4 +1,5 @@
 import { AccountForm, UserPost } from "../common/common.type";
+import { DepartmentForm } from "../features/manager/constants/manager.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
@@ -230,6 +231,28 @@ export const getDepartments = async () => {
 export const getDepartment = async (departmentId: string) => {
   try {
     return await instance.get(`${apiPaths.DEPARTMENTS}/${departmentId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putDepartment = async (
+  departmentId: string,
+  department: DepartmentForm
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.DEPARTMENTS}/${departmentId}`,
+      department
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteDepartment = async (departmentId: string) => {
+  try {
+    return await instance.delete(`${apiPaths.DEPARTMENTS}/${departmentId}`);
   } catch (error) {
     console.log("Error calling API:", error);
   }

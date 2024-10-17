@@ -266,7 +266,7 @@ const EmployeeManagementScreen = () => {
     {
       title: "Action",
       dataIndex: "actions",
-      className: "content-center",
+      className: "title_content-center",
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>

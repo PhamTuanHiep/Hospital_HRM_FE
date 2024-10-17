@@ -236,7 +236,7 @@ const AccountManagementScreen = () => {
     {
       title: "Action",
       dataIndex: "actions",
-      className: "content-center",
+      className: "title_content-center",
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
@@ -281,6 +281,7 @@ const AccountManagementScreen = () => {
         dataSource={accountsData}
         onChange={onChange}
         showSorterTooltip={{ target: "full-header" }}
+        scroll={{ x: "max-content" }}
       />
       <UpdateAccountModal
         isModalOpen={isUpdateModalOpen}
