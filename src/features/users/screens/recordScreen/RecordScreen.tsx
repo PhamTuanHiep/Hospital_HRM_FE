@@ -3,17 +3,13 @@ import { Avatar, Flex, List, Space, Table } from "antd";
 import "./RecordScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";
 import { useEffect, useMemo, useState } from "react";
-import instance from "../../../../api/api";
 
 import { UserInfo } from "./type";
-import { Gender, UserDetail } from "../../../../common/common.type";
+import { UserDetail } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
-import {
-  checkWeek,
-  getDDMMYYYYfromISO8601DateString,
-} from "../../../../common/common.helper";
+import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
 import { getUser } from "../../../../api/apiServices";
-import { INIT_USER } from "../../../../common/common.constant";
+import { Gender, INIT_USER } from "../../../../common/common.constant";
 import { USER_INFO_COLUMNS } from "../../constants/user.constant";
 
 const RecordScreen = () => {
@@ -49,7 +45,7 @@ const RecordScreen = () => {
     {
       label: t("content.info.Gender"),
       content:
-        user.gender === Gender.MALE.toString()
+        user.gender === Gender.MALE
           ? t("content.other.Male")
           : t("content.other.Female"),
     },

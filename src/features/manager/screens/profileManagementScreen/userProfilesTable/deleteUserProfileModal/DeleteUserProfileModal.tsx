@@ -18,7 +18,6 @@ const DeleteUserProfileModal = ({
 }: DeleteUserProfileModalProps) => {
   const handleOk = async () => {
     const res = await deleteUser(user.userId);
-    console.log("res:", res);
     if (res?.data.affected != 0) {
       setIsModalOpen(false);
       setReset(true);

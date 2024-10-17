@@ -1,11 +1,11 @@
 import { SelectProps } from "antd";
+
+import { ColumnFilterItem } from "antd/es/table/interface";
 import {
   dayOfWeekVN,
   departmentName,
   positionName,
-} from "../../../common/common.type";
-
-import { ColumnFilterItem } from "antd/es/table/interface";
+} from "../../../common/common.constant";
 
 export const weeklyScheduleOptions: SelectProps["options"] = Object.entries(
   dayOfWeekVN

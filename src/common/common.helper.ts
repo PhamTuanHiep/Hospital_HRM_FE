@@ -1,14 +1,9 @@
-import {
-  CustomDataSets,
-  DayOfWeek,
-  Overtime,
-  UserDetail,
-  dayOfWeek,
-} from "./common.type";
+import { CustomDataSets, Overtime, UserDetail } from "./common.type";
 import dayjs, { Dayjs } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import isBetween from "dayjs/plugin/isBetween"; // Import plugin từ dayjs
 import isoWeek from "dayjs/plugin/isoWeek"; // Import plugin isoWeek
+import { DayOfWeek, dayOfWeek } from "./common.constant";
 
 dayjs.extend(isBetween);
 dayjs.extend(isoWeek);
@@ -220,4 +215,47 @@ export const timeStartToEndOfAWeek = (next?: boolean) => {
 export const getDayNameFromNumber = (days: number[]) => {
   const dayList = days.join(",");
   return `Các thứ trong tuần: ${dayList}`;
+};
+
+export const getDepartmentIdFromNumber = (num: number): string => {
+  // Chuyển đổi số thành chuỗi và thêm số 0 vào trước nếu cần để đảm bảo đủ 3 chữ số
+  const paddedNumber = num.toString().padStart(3, "0");
+
+  // Trả về chuỗi với tiền tố "D" và số đã được làm tròn thành 3 chữ số
+  return `D${paddedNumber}`;
+};
+
+export const getPositionIdFromNumber = (num: number): string => {
+  // Chuyển đổi số thành chuỗi và thêm số 0 vào trước nếu cần để đảm bảo đủ 3 chữ số
+  const paddedNumber = num.toString().padStart(3, "0");
+
+  // Trả về chuỗi với tiền tố "D" và số đã được làm tròn thành 3 chữ số
+  return `P${paddedNumber}`;
+};
+
+export const findMissingElementInId = (
+  arr: string[],
+  char: string
+): string | null => {
+  // Lấy phần tử đầu tiên để khởi tạo giá trị mong đợi
+  let expectedNumber = parseInt(arr[0].slice(1)); // Lấy phần số của phần tử đầu tiên
+
+  for (let i = 0; i < arr.length; i++) {
+    const currentNumber = parseInt(arr[i].slice(1)); // Lấy phần số của phần tử hiện tại
+
+    // Kiểm tra nếu phần số của phần tử hiện tại khác với số mong đợi
+    if (currentNumber !== expectedNumber) {
+      // Trả về phần tử bị thiếu
+      const missingElement = `${char}${expectedNumber
+        .toString()
+        .padStart(3, "0")}`;
+      return missingElement;
+    }
+
+    // Cập nhật giá trị mong đợi
+    expectedNumber++;
+  }
+
+  // Nếu không có phần tử bị thiếu, trả về phần tử tiếp theo
+  return `${char}${expectedNumber.toString().padStart(3, "0")}`;
 };

@@ -179,8 +179,6 @@ const AccountManagementScreen = () => {
     });
   }, [accounts]);
 
-  console.log("----------------------------");
-
   const accountColumns: TableColumnsType<TableDataType> = [
     {
       title: "Email",
