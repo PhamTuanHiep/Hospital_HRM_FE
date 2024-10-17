@@ -233,10 +233,7 @@ export const getPositionIdFromNumber = (num: number): string => {
   return `P${paddedNumber}`;
 };
 
-export const findMissingElementInId = (
-  arr: string[],
-  char: string
-): string | null => {
+export const findMissingElementInId = (arr: string[], char: string): string => {
   // Lấy phần tử đầu tiên để khởi tạo giá trị mong đợi
   let expectedNumber = parseInt(arr[0].slice(1)); // Lấy phần số của phần tử đầu tiên
 

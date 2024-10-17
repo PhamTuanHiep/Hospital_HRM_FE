@@ -250,6 +250,14 @@ export const putDepartment = async (
   }
 };
 
+export const postDepartment = async (department: DepartmentForm) => {
+  try {
+    return await instance.post(`${apiPaths.DEPARTMENTS}`, department);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
 export const deleteDepartment = async (departmentId: string) => {
   try {
     return await instance.delete(`${apiPaths.DEPARTMENTS}/${departmentId}`);

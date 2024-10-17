@@ -13,4 +13,5 @@ export const managerPaths = {
 
 export const managerChildPaths = {
   ADD_USER: "add-user",
+  ADD_DEPARTMENT: "add-department",
 };

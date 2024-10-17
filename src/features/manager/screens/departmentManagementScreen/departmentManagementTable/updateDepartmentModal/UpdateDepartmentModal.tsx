@@ -1,8 +1,9 @@
 import { Button, Form, FormProps, Input, Modal } from "antd";
-import { DepartmentDetail } from "../../../../../common/common.type";
-import { putDepartment } from "../../../../../api/apiServices";
+
 import { useEffect, useMemo } from "react";
-import { DepartmentForm } from "../../../constants/manager.type";
+import { DepartmentDetail } from "../../../../../../common/common.type";
+import { DepartmentForm } from "../../../../constants/manager.type";
+import { putDepartment } from "../../../../../../api/apiServices";
 
 interface UpdateDepartmentModalProps {
   isModalOpen: boolean;
@@ -34,7 +35,6 @@ const UpdateDepartmentModal = ({
   }, [form, defaultValues]);
 
   const onFinish: FormProps<DepartmentForm>["onFinish"] = async (values) => {
-    console.log("Success:", values);
     const departmentUpdate = values as DepartmentForm;
     const res = await putDepartment(department.departmentId, departmentUpdate);
     if (res) {

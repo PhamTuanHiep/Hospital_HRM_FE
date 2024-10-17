@@ -60,7 +60,6 @@ const AddUserProfileScreen = () => {
     const res = await postUser(values);
     if (res) {
       navigate(managerPaths.EMPLOYEE_MANAGEMENT);
-      console.log("res:", res);
     }
   };
 

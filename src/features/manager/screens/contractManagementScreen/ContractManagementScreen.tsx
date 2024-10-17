@@ -10,7 +10,6 @@ const ContractManagementScreen = () => {
     const res = await getUsers();
     if (res) {
       const userApi = res.data.data as UserDetail;
-      console.log("userApi:", userApi);
     }
   };
 

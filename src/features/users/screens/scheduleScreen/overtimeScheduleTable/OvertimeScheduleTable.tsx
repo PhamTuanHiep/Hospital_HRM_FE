@@ -73,7 +73,7 @@ const OvertimeScheduleTable = () => {
     let accordingDay = overtimeHistories?.filter((overtimeHistory) => {
       return checkDayOfWeek(overtimeHistory.startDay, day, isNext);
     });
-    console.log("accordingDay:", accordingDay);
+
     return accordingDay?.map((accordingDayData) => {
       return (
         <List>

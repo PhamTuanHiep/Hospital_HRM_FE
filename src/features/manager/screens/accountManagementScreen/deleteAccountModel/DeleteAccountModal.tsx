@@ -31,7 +31,6 @@ const DeleteAccountModal = ({
     setIsModalOpen(false);
   };
 
-  console.log(" account:", account);
   return (
     <Modal
       title="Delete Account"

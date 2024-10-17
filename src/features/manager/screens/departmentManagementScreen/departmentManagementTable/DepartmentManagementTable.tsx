@@ -4,6 +4,7 @@ import {
   Flex,
   Input,
   InputRef,
+  List,
   Space,
   Table,
   TableColumnType,
@@ -13,43 +14,48 @@ import {
 import { FilterDropdownProps } from "antd/es/table/interface";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { AccountDetail } from "../../../../common/common.type";
-import { INIT_ACCOUNT } from "../../../../common/common.constant";
-import { getAccounts } from "../../../../api/apiServices";
-import { AccountsData } from "../../constants/manager.type";
-import UpdateAccountModal from "./updateAccountModel/UpdateAccountModal";
+
 import dayjs from "dayjs";
-import ViewAccountModal from "./viewAccountModel/ViewAccountModel";
-import DeleteAccountModal from "./deleteAccountModel/DeleteAccountModal";
+import UpdateDepartmentModal from "./updateDepartmentModal/UpdateDepartmentModal";
+import DeleteDepartmentModal from "./deleteDepartmentModal/DeleteDepartmentModal";
+import HinderDeleteDepartmentModal from "./hinderDeleteDepartmentModal/HinderDeleteDepartmentModal";
+import { DepartmentColumnType } from "../../../constants/manager.type";
+import { DepartmentDetail } from "../../../../../common/common.type";
+import { INIT_DEPARTMENT } from "../../../../../common/common.constant";
+import { getDepartments } from "../../../../../api/apiServices";
+import { useNavigate } from "react-router-dom";
 
-type DataIndex = keyof AccountsData;
-interface TableDataType extends AccountsData {}
+type DataIndex = keyof DepartmentColumnType;
+interface TableDataType extends DepartmentColumnType {}
 
-const AccountManagementScreen = () => {
+const DepartmentManagementTable = () => {
   const searchInput = useRef<InputRef>(null);
+  const navigate = useNavigate();
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [accounts, setAccounts] = useState<AccountDetail[]>([INIT_ACCOUNT]);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isHinderDeleteModalOpen, setIsHinderDeleteModalOpen] = useState(false);
 
   const [reset, setReset] = useState(false);
 
-  const [account, setAccount] = useState<AccountDetail>(INIT_ACCOUNT);
+  const [departments, setDepartments] = useState<DepartmentDetail[]>([
+    INIT_DEPARTMENT,
+  ]);
+  const [department, setDepartment] =
+    useState<DepartmentDetail>(INIT_DEPARTMENT);
 
   useEffect(() => {
-    fetchAccounts();
+    fetchDepartments();
   }, [reset]);
 
-  const fetchAccounts = async () => {
-    const res = await getAccounts();
+  const fetchDepartments = async () => {
+    const res = await getDepartments();
     if (res) {
-      setAccounts(res.data.data);
+      setDepartments(res.data.data);
     }
   };
-
   const handleSearch = (
     selectedKeys: string[],
     confirm: FilterDropdownProps["confirm"],
@@ -164,58 +170,61 @@ const AccountManagementScreen = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
-  const accountsData = useMemo(() => {
-    return accounts.map((account) => {
+  const departmentData = useMemo(() => {
+    return departments.map((department) => {
       return {
-        key: account.accountId,
-        email: account.email,
-        password: account.password,
-        roleName: account.role?.roleName || "",
-        userName: account.user?.fullName || "",
-        createdAt: dayjs(account.createdAt).format("DD-MM-YYYY") || "",
-        updatedAt: dayjs(account.updatedAt).format("DD-MM-YYYY") || "",
-        actions: account,
+        key: department.departmentId,
+        departmentId: department.departmentId,
+        departmentName: department.departmentName,
+        location: department.location,
+        funcDescription: department.funcDescription,
+
+        users:
+          department.users && department.users.length > 0 ? (
+            <List>
+              {department.users.map((user) => (
+                <List.Item>{user.fullName}</List.Item>
+              ))}
+            </List>
+          ) : (
+            <div className="null-cell_content-center">-</div>
+          ),
+        createdAt: dayjs(department.createdAt).format("DD-MM-YYYY") || "",
+        updatedAt: dayjs(department.updatedAt).format("DD-MM-YYYY") || "",
+        actions: department,
       };
     });
-  }, [accounts]);
+  }, [departments]);
 
-  const accountColumns: TableColumnsType<TableDataType> = [
+  const departmentColumns: TableColumnsType<TableDataType> = [
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "departmentId",
+      dataIndex: "departmentId",
       sorter: {
-        compare: (a, b) => a.email.localeCompare(b.email),
+        compare: (a, b) => a.departmentId.localeCompare(b.departmentId),
         multiple: 4,
       },
     },
     {
-      title: "Password",
-      dataIndex: "password",
-    },
-    {
-      title: "Role Name",
-      dataIndex: "roleName",
+      title: "departmentName",
+      dataIndex: "departmentName",
       sorter: {
-        compare: (a, b) => a.roleName.localeCompare(b.roleName),
+        compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
         multiple: 3,
       },
-      filters: [
-        {
-          text: "Manager",
-          value: "Manager",
-        },
-        {
-          text: "User",
-          value: "User",
-        },
-      ],
-      onFilter: (value, record) =>
-        record.roleName.indexOf(value as string) === 0,
+      ...getColumnSearchProps("departmentName"),
     },
     {
-      title: "User Name",
-      dataIndex: "userName",
-      ...getColumnSearchProps("userName"),
+      title: "location",
+      dataIndex: "location",
+    },
+    {
+      title: "funcDescription",
+      dataIndex: "funcDescription",
+    },
+    {
+      title: "users",
+      dataIndex: "users",
     },
     {
       title: "Created At",
@@ -240,7 +249,6 @@ const AccountManagementScreen = () => {
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
-            <Button onClick={() => handleViewAccount(value)}>View</Button>
             <Button onClick={() => handleUpdateAccount(value)} type="primary">
               Update
             </Button>
@@ -257,51 +265,68 @@ const AccountManagementScreen = () => {
     },
   ];
 
-  const handleViewAccount = (accountDetail: AccountDetail) => {
-    setAccount(accountDetail);
-    setIsViewModalOpen(true);
-  };
+  const isDelete = useMemo(
+    () => (department.users && department.users?.length > 0 ? false : true),
+    [department]
+  );
 
-  const handleUpdateAccount = (accountDetail: AccountDetail) => {
-    setAccount(accountDetail);
+  const handleUpdateAccount = (departmentDetail: DepartmentDetail) => {
+    setDepartment(departmentDetail);
     setIsUpdateModalOpen(true);
+    setReset(false);
   };
 
-  const handleDeleteAccount = (accountDetail: AccountDetail) => {
-    setAccount(accountDetail);
-    setIsDeleteModalOpen(true);
+  const handleDeleteAccount = (departmentDetail: DepartmentDetail) => {
+    setDepartment(departmentDetail);
+    if (isDelete) {
+      setIsDeleteModalOpen(true);
+      setReset(false);
+    } else {
+      setIsHinderDeleteModalOpen(true);
+    }
   };
-
+  const handleAddUser = () => {
+    navigate("add-department");
+  };
   return (
-    <div>
+    <div id="department-management">
+      <Button
+        type="primary"
+        className="btn-add-object"
+        onClick={() => handleAddUser()}
+      >
+        Add Department
+      </Button>
       <Table<TableDataType>
-        columns={accountColumns}
-        dataSource={accountsData}
+        columns={departmentColumns}
+        dataSource={departmentData}
         onChange={onChange}
         showSorterTooltip={{ target: "full-header" }}
         scroll={{ x: "max-content" }}
       />
-      <UpdateAccountModal
+      <UpdateDepartmentModal
         isModalOpen={isUpdateModalOpen}
         setIsModalOpen={setIsUpdateModalOpen}
         setReset={setReset}
-        account={account}
-        confirmLoading={!account}
+        department={department}
+        confirmLoading={!department}
       />
-      <ViewAccountModal
-        isModalOpen={isViewModalOpen}
-        setIsModalOpen={setIsViewModalOpen}
-        account={account}
-        confirmLoading={!account}
-      />
-      <DeleteAccountModal
-        isModalOpen={isDeleteModalOpen}
-        setIsModalOpen={setIsDeleteModalOpen}
-        setReset={setReset}
-        account={account}
-        confirmLoading={!account}
-      />
+      {isDelete ? (
+        <DeleteDepartmentModal
+          isModalOpen={isDeleteModalOpen}
+          setIsModalOpen={setIsDeleteModalOpen}
+          setReset={setReset}
+          department={department}
+          confirmLoading={!department}
+        />
+      ) : (
+        <HinderDeleteDepartmentModal
+          isModalOpen={isHinderDeleteModalOpen}
+          setIsModalOpen={setIsHinderDeleteModalOpen}
+          confirmLoading={!department}
+        />
+      )}
     </div>
   );
 };
-export default AccountManagementScreen;
+export default DepartmentManagementTable;

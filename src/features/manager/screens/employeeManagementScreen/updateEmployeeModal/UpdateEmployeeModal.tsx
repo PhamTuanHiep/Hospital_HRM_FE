@@ -44,7 +44,6 @@ const UpdateEmployeeModal = ({
   }, [form, defaultValues]);
 
   const onFinish: FormProps<UserPost>["onFinish"] = async (values) => {
-    console.log("values:", values);
     const { email, ...employeeUpdate } = values as UserPost;
     const res = await putUser(employee.userId, employeeUpdate);
     console.log(res);

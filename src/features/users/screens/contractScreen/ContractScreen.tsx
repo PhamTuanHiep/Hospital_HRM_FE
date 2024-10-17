@@ -28,7 +28,7 @@ const ContractScreen = () => {
 
   const getRole = async () => {
     const res = await instance.get(
-      `${UserApis.ROLES}/${currentAccount.roleId}`
+      `${UserApis.ROLES}/${currentAccount.role?.roleId}`
     );
     console.log("res:", res);
     if (res.status === 200) {
@@ -39,7 +39,7 @@ const ContractScreen = () => {
 
   const getUser = async () => {
     const res = await instance.get(
-      `${UserApis.USERS}/${currentAccount.userId}`
+      `${UserApis.USERS}/${currentAccount.user?.userId}`
     );
     if (res.status === 200) {
       const user = res.data.data;

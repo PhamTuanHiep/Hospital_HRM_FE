@@ -1,6 +1,6 @@
 import { List, Modal } from "antd";
-import { DepartmentDetail } from "../../../../../common/common.type";
-import { deleteDepartment } from "../../../../../api/apiServices";
+import { DepartmentDetail } from "../../../../../../common/common.type";
+import { deleteDepartment } from "../../../../../../api/apiServices";
 
 interface DeleteDepartmentModalProps {
   isModalOpen: boolean;

@@ -40,7 +40,6 @@ const TrainingResulsScreen = () => {
     }
   };
 
-  console.log("medicalTrainingResults:", medicalTrainingResults);
   const dataRadarChart = useMemo(() => {
     var labelsData: string[] = [];
 

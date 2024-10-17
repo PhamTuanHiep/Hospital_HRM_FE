@@ -14,6 +14,8 @@ import ErrorPage from "../../../error-page";
 import EmployeeManagementScreen from "../screens/employeeManagementScreen/EmployeeManagementScreen";
 import UserProfilesTable from "../screens/profileManagementScreen/userProfilesTable/UserProfilesTable";
 import AddUserProfileScreen from "../screens/profileManagementScreen/addUserProfileScreen/AddUserProfileScreen";
+import AddDepartmentScreen from "../screens/departmentManagementScreen/addDepartmentScreen/AddDepartmentScreen";
+import DepartmentManagementTable from "../screens/departmentManagementScreen/departmentManagementTable/DepartmentManagementTable";
 
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -49,6 +51,17 @@ const CONTRACT_MANAGEMENT_ROUTE: RouteObject = {
 const DEPARTMENT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.DEPARTMENT_MANAGEMENT,
   element: <DepartmentManagementScreen />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: <DepartmentManagementTable />,
+    },
+    {
+      path: managerChildPaths.ADD_DEPARTMENT,
+      element: <AddDepartmentScreen />,
+    },
+  ],
 };
 
 const JOB_MANAGEMENTS_ROUTE: RouteObject = {

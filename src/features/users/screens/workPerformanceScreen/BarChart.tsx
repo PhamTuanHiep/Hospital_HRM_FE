@@ -40,7 +40,6 @@ const BarChart = ({ customDataSets, labels, year }: BarCharProps) => {
     datasets: dataSets.sort((a, b) => a.label.localeCompare(b.label)),
   };
 
-  console.log("charData.datasets:", charData.datasets);
   const nowYear = year || dayjs().year();
   return (
     <>

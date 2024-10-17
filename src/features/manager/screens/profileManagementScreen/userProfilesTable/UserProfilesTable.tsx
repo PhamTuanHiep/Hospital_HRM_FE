@@ -284,7 +284,6 @@ const UserProfilesTable = () => {
     navigate("add-user");
   };
   const handleViewAccount = (userDetail: UserDetail) => {
-    console.log("userDetail:", userDetail);
     setUser(userDetail);
     setIsViewModalOpen(true);
   };

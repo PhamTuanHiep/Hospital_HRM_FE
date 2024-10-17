@@ -31,7 +31,6 @@ const DeleteUserProfileModal = ({
     setIsModalOpen(false);
   };
 
-  console.log(" user:", user);
   return (
     <Modal
       title="Delete User"

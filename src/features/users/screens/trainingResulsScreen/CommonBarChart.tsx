@@ -29,9 +29,7 @@ const CommonBarChart = ({
       ],
     };
   });
-  console.log("customDataSets:", customDataSets);
 
-  // console.log("data:", data);
   return (
     <>
       {data.map((datum) => {

@@ -34,7 +34,6 @@ const UpdateAccountModal = ({
   }, [form, defaultValues]);
 
   const onFinish: FormProps<AccountForm>["onFinish"] = async (values) => {
-    console.log("Success:", values);
     const accountUpdate = values as AccountForm;
     const res = await putAccount(account.accountId, accountUpdate);
     if (res) {
