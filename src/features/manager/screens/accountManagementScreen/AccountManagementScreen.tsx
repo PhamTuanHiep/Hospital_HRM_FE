@@ -21,11 +21,16 @@ import UpdateAccountModal from "./updateAccountModel/UpdateAccountModal";
 import dayjs from "dayjs";
 import ViewAccountModal from "./viewAccountModel/ViewAccountModel";
 import DeleteAccountModal from "./deleteAccountModel/DeleteAccountModal";
+import { useAppSelector } from "../../../../app/hooks";
 
 type DataIndex = keyof AccountsData;
 interface TableDataType extends AccountsData {}
 
 const AccountManagementScreen = () => {
+  const { account: currentAccount } = useAppSelector(
+    (state) => state.account_user
+  );
+
   const searchInput = useRef<InputRef>(null);
 
   const [searchText, setSearchText] = useState("");
@@ -46,7 +51,11 @@ const AccountManagementScreen = () => {
   const fetchAccounts = async () => {
     const res = await getAccounts();
     if (res) {
-      setAccounts(res.data.data);
+      const accountsApi = res.data.data as AccountDetail[];
+      const newAccountsApi = accountsApi.filter((accountApi): boolean => {
+        return accountApi.accountId !== currentAccount.accountId;
+      });
+      setAccounts(newAccountsApi);
     }
   };
 

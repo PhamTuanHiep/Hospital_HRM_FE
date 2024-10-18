@@ -22,11 +22,15 @@ import { getUsers } from "../../../../../api/apiServices";
 import { INIT_USER } from "../../../../../common/common.constant";
 import ViewUserProfileModel from "./viewUserProfileModel/ViewUserProfileModel";
 import DeleteUserProfileModal from "./deleteUserProfileModal/DeleteUserProfileModal";
+import { useAppSelector } from "../../../../../app/hooks";
 
 type DataIndex = keyof UsersData;
 interface TableDataType extends UsersData {}
 
 const UserProfilesTable = () => {
+  const { account: currentAccount } = useAppSelector(
+    (state) => state.account_user
+  );
   const searchInput = useRef<InputRef>(null);
 
   const [searchText, setSearchText] = useState("");
@@ -46,7 +50,11 @@ const UserProfilesTable = () => {
   const fetchAccounts = async () => {
     const res = await getUsers();
     if (res) {
-      setUsers(res.data.data);
+      const usersApi = res.data.data as UserDetail[];
+      const newUsersApi = usersApi.filter((userApi): boolean => {
+        return userApi.userId !== currentAccount.user?.userId;
+      });
+      setUsers(newUsersApi);
     }
   };
 
