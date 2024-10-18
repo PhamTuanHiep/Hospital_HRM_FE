@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
+
 const JobManagementScreen = () => {
   return (
     <div>
-      JobManagementScreen
-      <h1>Danh gia kets qua lam viec</h1>
+      <Outlet />
     </div>
   );
 };

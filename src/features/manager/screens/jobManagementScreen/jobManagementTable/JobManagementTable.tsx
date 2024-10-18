@@ -16,19 +16,29 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 
 import dayjs from "dayjs";
-import UpdateDepartmentModal from "./updateDepartmentModal/UpdateDepartmentModal";
-import DeleteDepartmentModal from "./deleteDepartmentModal/DeleteDepartmentModal";
-import HinderDeleteDepartmentModal from "./hinderDeleteDepartmentModal/HinderDeleteDepartmentModal";
-import { DepartmentColumnType } from "../../../constants/manager.type";
-import { DepartmentDetail } from "../../../../../common/common.type";
-import { INIT_DEPARTMENT } from "../../../../../common/common.constant";
-import { getDepartments } from "../../../../../api/apiServices";
+import { PositionColumnType } from "../../../constants/manager.type";
+import {
+  PositionAllowanceDetail,
+  PositionDetail,
+} from "../../../../../common/common.type";
+import {
+  INIT_POSITION,
+  INIT_POSITION_ALLOWANCE_DETAIL,
+} from "../../../../../common/common.constant";
+import {
+  getPositionAllowances,
+  getPositions,
+} from "../../../../../api/apiServices";
 import { useNavigate } from "react-router-dom";
+import UpdateJobModal from "./updateJobModal/UpdateJobModal";
+import DeleteJobModal from "./deleteJobModal/DeleteJobModal";
+import HinderDeleteJobModal from "./hinderDeleteJobModal/HinderDeleteJobModal";
+import { managerChildPaths } from "../../../constants/constant.path";
 
-type DataIndex = keyof DepartmentColumnType;
-interface TableDataType extends DepartmentColumnType {}
+type DataIndex = keyof PositionColumnType;
+interface TableDataType extends PositionColumnType {}
 
-const DepartmentManagementTable = () => {
+const JobManagementTable = () => {
   const searchInput = useRef<InputRef>(null);
   const navigate = useNavigate();
 
@@ -40,21 +50,31 @@ const DepartmentManagementTable = () => {
     useState<boolean>(false);
 
   const [reset, setReset] = useState<boolean>(false);
+  const [positionAllowances, setPositionAllowances] = useState<
+    PositionAllowanceDetail[]
+  >([INIT_POSITION_ALLOWANCE_DETAIL]);
 
-  const [departments, setDepartments] = useState<DepartmentDetail[]>([
-    INIT_DEPARTMENT,
-  ]);
-  const [department, setDepartment] =
-    useState<DepartmentDetail>(INIT_DEPARTMENT);
+  const [positions, setPositions] = useState<PositionDetail[]>([INIT_POSITION]);
+  const [position, setPosition] = useState<PositionDetail>(INIT_POSITION);
+  console.log("positions:", positions);
+  console.log("positionAllowances:", positionAllowances);
 
   useEffect(() => {
-    fetchDepartments();
+    fetchPositions();
+    fetchPositionAllowances();
   }, [reset]);
 
-  const fetchDepartments = async () => {
-    const res = await getDepartments();
+  const fetchPositions = async () => {
+    const res = await getPositions();
     if (res) {
-      setDepartments(res.data.data);
+      setPositions(res.data.data);
+    }
+  };
+
+  const fetchPositionAllowances = async () => {
+    const res = await getPositionAllowances();
+    if (res) {
+      setPositionAllowances(res.data.data);
     }
   };
   const handleSearch = (
@@ -171,61 +191,79 @@ const DepartmentManagementTable = () => {
     console.log("params", pagination, filters, sorter, extra);
   };
 
-  const departmentData = useMemo(() => {
-    return departments.map((department) => {
+  const positionData = useMemo(() => {
+    return positions.map((position) => {
       return {
-        key: department.departmentId,
-        departmentId: department.departmentId,
-        departmentName: department.departmentName,
-        location: department.location,
-        funcDescription: department.funcDescription,
+        key: position.positionId,
+        positionId: position.positionId,
+        positionName: position.positionName,
+        salaryCoefficient: position.salaryCoefficient,
 
         users:
-          department.users && department.users.length > 0 ? (
+          position.users && position.users.length > 0 ? (
             <Flex gap="4px 0" wrap>
-              {department.users.map((user) => (
+              {position.users.map((user) => (
                 <Tag color="default">{user.fullName}</Tag>
               ))}
             </Flex>
           ) : (
             <div className="null-cell_content-center">-</div>
           ),
-        createdAt: dayjs(department.createdAt).format("DD-MM-YYYY") || "",
-        updatedAt: dayjs(department.updatedAt).format("DD-MM-YYYY") || "",
-        actions: department,
+        positionAllowances:
+          position.positionAllowances &&
+          position.positionAllowances.length > 0 ? (
+            <Flex gap="4px 0" wrap>
+              {position.positionAllowances.map((positionAllowance) => (
+                <Tag>
+                  {
+                    positionAllowances.find(
+                      (position_allowance) =>
+                        position_allowance.id === positionAllowance.id
+                    )?.allowance?.allowanceName
+                  }
+                </Tag>
+              ))}
+            </Flex>
+          ) : (
+            <div className="null-cell_content-center">-</div>
+          ),
+        createdAt: dayjs(position.createdAt).format("DD-MM-YYYY") || "",
+        updatedAt: dayjs(position.updatedAt).format("DD-MM-YYYY") || "",
+        actions: position,
       };
     });
-  }, [departments]);
+  }, [positions]);
 
-  const departmentColumns: TableColumnsType<TableDataType> = [
+  const POSITION_COLUMNS: TableColumnsType<TableDataType> = [
     {
-      title: "departmentId",
-      dataIndex: "departmentId",
+      title: "positionId",
+      dataIndex: "positionId",
       sorter: {
-        compare: (a, b) => a.departmentId.localeCompare(b.departmentId),
+        compare: (a, b) => a.positionId.localeCompare(b.positionId),
         multiple: 4,
       },
     },
     {
-      title: "departmentName",
-      dataIndex: "departmentName",
+      title: "positionName",
+      dataIndex: "positionName",
       sorter: {
-        compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
+        compare: (a, b) => a.positionName.localeCompare(b.positionName),
         multiple: 3,
       },
-      ...getColumnSearchProps("departmentName"),
+      ...getColumnSearchProps("positionName"),
     },
     {
-      title: "location",
-      dataIndex: "location",
-    },
-    {
-      title: "funcDescription",
-      dataIndex: "funcDescription",
+      title: "salaryCoefficient",
+      dataIndex: "salaryCoefficient",
     },
     {
       title: "users",
       dataIndex: "users",
+      width: 250,
+    },
+    {
+      title: "positionAllowances",
+      dataIndex: "positionAllowances",
       width: 250,
     },
     {
@@ -251,11 +289,11 @@ const DepartmentManagementTable = () => {
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
-            <Button onClick={() => handleUpdateAccount(value)} type="primary">
+            <Button onClick={() => handleUpdatePosition(value)} type="primary">
               Update
             </Button>
             <Button
-              onClick={() => handleDeleteAccount(value)}
+              onClick={() => handleDeletePosition(value)}
               type="primary"
               danger
             >
@@ -268,18 +306,18 @@ const DepartmentManagementTable = () => {
   ];
 
   const isDelete = useMemo(
-    () => (department.users && department.users?.length > 0 ? false : true),
-    [department]
+    () => (position.users && position.users?.length > 0 ? false : true),
+    [position]
   );
 
-  const handleUpdateAccount = (departmentDetail: DepartmentDetail) => {
-    setDepartment(departmentDetail);
+  const handleUpdatePosition = (positionDetail: PositionDetail) => {
+    setPosition(positionDetail);
     setIsUpdateModalOpen(true);
     setReset(false);
   };
 
-  const handleDeleteAccount = (departmentDetail: DepartmentDetail) => {
-    setDepartment(departmentDetail);
+  const handleDeletePosition = (positionDetail: PositionDetail) => {
+    setPosition(positionDetail);
     if (isDelete) {
       setIsDeleteModalOpen(true);
       setReset(false);
@@ -287,8 +325,8 @@ const DepartmentManagementTable = () => {
       setIsHinderDeleteModalOpen(true);
     }
   };
-  const handleAddUser = () => {
-    navigate("add-department");
+  const handleAddPosition = () => {
+    navigate(managerChildPaths.ADD_POSITION);
   };
 
   return (
@@ -296,40 +334,40 @@ const DepartmentManagementTable = () => {
       <Button
         type="primary"
         className="btn-add-object"
-        onClick={() => handleAddUser()}
+        onClick={() => handleAddPosition()}
       >
-        Add Department
+        Add Position
       </Button>
       <Table<TableDataType>
-        columns={departmentColumns}
-        dataSource={departmentData}
+        columns={POSITION_COLUMNS}
+        dataSource={positionData}
         onChange={onChange}
         showSorterTooltip={{ target: "full-header" }}
         scroll={{ x: "max-content" }}
       />
-      <UpdateDepartmentModal
+      <UpdateJobModal
         isModalOpen={isUpdateModalOpen}
         setIsModalOpen={setIsUpdateModalOpen}
         setReset={setReset}
-        department={department}
-        confirmLoading={!department}
+        position={position}
+        confirmLoading={!position}
       />
       {isDelete ? (
-        <DeleteDepartmentModal
+        <DeleteJobModal
           isModalOpen={isDeleteModalOpen}
           setIsModalOpen={setIsDeleteModalOpen}
           setReset={setReset}
-          department={department}
-          confirmLoading={!department}
+          position={position}
+          confirmLoading={!position}
         />
       ) : (
-        <HinderDeleteDepartmentModal
+        <HinderDeleteJobModal
           isModalOpen={isHinderDeleteModalOpen}
           setIsModalOpen={setIsHinderDeleteModalOpen}
-          confirmLoading={!department}
+          confirmLoading={!position}
         />
       )}
     </div>
   );
 };
-export default DepartmentManagementTable;
+export default JobManagementTable;

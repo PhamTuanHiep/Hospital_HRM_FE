@@ -16,6 +16,8 @@ import UserProfilesTable from "../screens/profileManagementScreen/userProfilesTa
 import AddUserProfileScreen from "../screens/profileManagementScreen/addUserProfileScreen/AddUserProfileScreen";
 import AddDepartmentScreen from "../screens/departmentManagementScreen/addDepartmentScreen/AddDepartmentScreen";
 import DepartmentManagementTable from "../screens/departmentManagementScreen/departmentManagementTable/DepartmentManagementTable";
+import JobManagementTable from "../screens/jobManagementScreen/jobManagementTable/JobManagementTable";
+import AddJobScreen from "../screens/jobManagementScreen/addJobScreen/AddJobScreen";
 
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -67,6 +69,17 @@ const DEPARTMENT_MANAGEMENT_ROUTE: RouteObject = {
 const JOB_MANAGEMENTS_ROUTE: RouteObject = {
   path: managerPaths.JOB_MANAGEMENT,
   element: <JobManagementScreen />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: <JobManagementTable />,
+    },
+    {
+      path: managerChildPaths.ADD_POSITION,
+      element: <AddJobScreen />,
+    },
+  ],
 };
 
 const BENEFITS_MANAGEMENT_ROUTE: RouteObject = {

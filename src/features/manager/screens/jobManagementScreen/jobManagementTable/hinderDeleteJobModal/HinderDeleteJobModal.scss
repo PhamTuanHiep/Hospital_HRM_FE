@@ -1,0 +1,21 @@
+.ant-modal-root {
+  .ant-modal-wrap {
+    .ant-modal {
+      &.hinder-delete-modal {
+        .ant-modal-content {
+          border: 1px solid #fe4e02;
+          .ant-modal-header {
+            .ant-modal-title {
+              color: red;
+            }
+          }
+          .ant-modal-body {
+            .ant-spin-container {
+              color: red;
+            }
+          }
+        }
+      }
+    }
+  }
+}

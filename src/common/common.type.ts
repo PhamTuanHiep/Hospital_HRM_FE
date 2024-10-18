@@ -1,3 +1,15 @@
+export interface QueryParams {
+  page?: number;
+  items_per_page?: number;
+  search?: string;
+}
+
+export interface Pagination {
+  current: number;
+  pageSize: number;
+  total: number;
+}
+
 interface AccountShortInfo {
   accountId: string;
   email: string;
@@ -47,7 +59,7 @@ interface AllowanceShortInfo {
   note: string;
 }
 
-interface PositionAllowanceShortInfo {
+export interface PositionAllowanceShortInfo {
   id: number;
   positionId: string;
   allowanceId: number;

@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
 import {
   AccountDetail,
   DepartmentDetail,
+  PositionDetail,
   UserDetail,
 } from "../../../common/common.type";
 
@@ -63,4 +63,23 @@ export interface DepartmentForm {
   departmentName: string;
   location: string;
   funcDescription: string;
+}
+
+export interface PositionColumnType {
+  key: React.Key;
+  positionId: string;
+  positionName: string;
+  salaryCoefficient: number;
+  // users: UserShortInfo[] | null;
+  // positionAllowances: PositionAllowanceShortInfo[] | null;
+  createdAt: string;
+  updatedAt: string;
+  actions: PositionDetail;
+}
+
+export interface PositionForm {
+  key: React.Key;
+  positionId: string;
+  positionName: string;
+  salaryCoefficient: number;
 }

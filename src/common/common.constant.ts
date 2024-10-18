@@ -11,12 +11,25 @@ import {
   NursingTrainingResults,
   OvertimeDetail,
   OvertimeHistoryDetail,
+  Pagination,
   PositionAllowanceDetail,
   PositionDetail,
+  QueryParams,
   RoleDetail,
   UserDetail,
   UserInsuranceDetail,
 } from "./common.type";
+
+export const INIT_QUERY_PARAMS: QueryParams = {
+  page: 1,
+  items_per_page: 4,
+};
+
+export const INIT_PAGINATION: Pagination = {
+  current: 1,
+  pageSize: 4,
+  total: 8,
+};
 
 export const INIT_ACCOUNT: AccountDetail = {
   accountId: 0,
@@ -142,6 +155,8 @@ export const INIT_EVALUATE: EvaluateDetail = {
 export const INIT_DEPARTMENT: DepartmentDetail = {
   departmentId: "",
   departmentName: "",
+  location: "",
+  funcDescription: "",
   users: null,
   overtimeHistories: null,
   createdAt: dayjs("2000-01-01").toDate(),

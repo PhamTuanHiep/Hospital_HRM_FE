@@ -1,5 +1,8 @@
-import { AccountForm, UserPost } from "../common/common.type";
-import { DepartmentForm } from "../features/manager/constants/manager.type";
+import { AccountForm, QueryParams, UserPost } from "../common/common.type";
+import {
+  DepartmentForm,
+  PositionForm,
+} from "../features/manager/constants/manager.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
@@ -133,6 +136,32 @@ export const getPosition = async (positionId: string) => {
   }
 };
 
+export const postPosition = async (position: PositionForm) => {
+  try {
+    return await instance.post(`${apiPaths.POSITIONS}`, position);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putPosition = async (
+  positionId: string,
+  position: PositionForm
+) => {
+  try {
+    return await instance.put(`${apiPaths.POSITIONS}/${positionId}`, position);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deletePosition = async (positionId: string) => {
+  try {
+    return await instance.delete(`${apiPaths.POSITIONS}/${positionId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
 //LEAVE-HISTORY
 export const getLeaveHistories = async () => {
   try {
@@ -220,9 +249,15 @@ export const getEvaluate = async (evaluateId: number) => {
 
 //DEPARTMENTS
 
-export const getDepartments = async () => {
+export const getDepartments = async (queryParams?: QueryParams) => {
   try {
-    return await instance.get(`${apiPaths.DEPARTMENTS}`);
+    if (queryParams) {
+      return await instance.get(`${apiPaths.DEPARTMENTS}`, {
+        params: queryParams,
+      });
+    } else {
+      return await instance.get(`${apiPaths.DEPARTMENTS}`);
+    }
   } catch (error) {
     console.log("Error calling API getDepartments :", error);
   }
