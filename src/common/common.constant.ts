@@ -65,6 +65,7 @@ export const INIT_USER: UserDetail = {
   overtimeHistories: null,
   userInsurances: null,
   position: null,
+  evaluateHistories: [],
   status: "-",
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
@@ -137,14 +138,11 @@ export const INIT_EVALUATE: EvaluateDetail = {
   evaluateId: 0,
   userId: 0,
   workLoad: 0,
-  qualityOfWork: 0,
   capacityOfWork: 0,
   quantityOfScientificWorks: 0,
   workInitiatives: 0,
-  professionalEthics: 0,
   workingStyle: 0,
   responsibilityForWork: 0,
-  workAttitude: 0,
   workSpirit: 0,
   workResult: 0,
   averageScore: 0,
@@ -246,11 +244,6 @@ export const enum GenderId {
 export const enum GenderName {
   FEMALE = "Female",
   MALE = "Male",
-}
-
-export enum Gender {
-  FEMALE = 0,
-  MALE,
 }
 
 export enum DayOfWeek {

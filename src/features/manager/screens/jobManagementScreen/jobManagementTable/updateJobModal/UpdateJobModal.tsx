@@ -62,13 +62,14 @@ const UpdateJobModal = ({
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       footer={[
-        <Button onClick={handleOk}>Cancel</Button>,
+        <Button onClick={handleCancel}>Cancel</Button>,
         <Button
           form="updatePositionForm"
           key="submit"
           type="primary"
           htmlType="submit"
           style={{ width: "50%" }}
+          onClick={handleOk}
         >
           Submit
         </Button>,

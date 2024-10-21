@@ -1,6 +1,7 @@
 import { AccountForm, QueryParams, UserPost } from "../common/common.type";
 import {
   DepartmentForm,
+  EvaluatePost,
   PositionForm,
 } from "../features/manager/constants/manager.type";
 import instance from "./api";
@@ -242,6 +243,25 @@ export const getEvaluates = async () => {
 export const getEvaluate = async (evaluateId: number) => {
   try {
     return await instance.get(`${apiPaths.EVALUATES}/${evaluateId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postEvaluate = async (evaluate: EvaluatePost) => {
+  try {
+    return await instance.post(`${apiPaths.EVALUATES}`, evaluate);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putEvaluate = async (
+  evaluateId: number,
+  evaluate: EvaluatePost
+) => {
+  try {
+    return await instance.put(`${apiPaths.EVALUATES}/${evaluateId}`, evaluate);
   } catch (error) {
     console.log("Error calling API:", error);
   }

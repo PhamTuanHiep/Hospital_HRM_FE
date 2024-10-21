@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import isBetween from "dayjs/plugin/isBetween"; // Import plugin từ dayjs
 import isoWeek from "dayjs/plugin/isoWeek"; // Import plugin isoWeek
-import { DayOfWeek, dayOfWeek } from "./common.constant";
+import { DayOfWeek, RoleName, dayOfWeek } from "./common.constant";
 
 dayjs.extend(isBetween);
 dayjs.extend(isoWeek);
@@ -255,4 +255,7 @@ export const findMissingElementInId = (arr: string[], char: string): string => {
 
   // Nếu không có phần tử bị thiếu, trả về phần tử tiếp theo
   return `${char}${expectedNumber.toString().padStart(3, "0")}`;
+};
+export const getLowerRole = (role?: string): string => {
+  return role === RoleName.ADMIN ? RoleName.MANAGER : RoleName.USER;
 };

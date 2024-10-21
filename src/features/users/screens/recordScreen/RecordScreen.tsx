@@ -9,7 +9,7 @@ import { UserDetail } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
 import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
 import { getUser } from "../../../../api/apiServices";
-import { Gender, INIT_USER } from "../../../../common/common.constant";
+import { GenderId, INIT_USER } from "../../../../common/common.constant";
 import { USER_INFO_COLUMNS } from "../../constants/user.constant";
 
 const RecordScreen = () => {
@@ -45,7 +45,7 @@ const RecordScreen = () => {
     {
       label: t("content.info.Gender"),
       content:
-        user.gender === Gender.MALE
+        user.gender === GenderId.MALE
           ? t("content.other.Male")
           : t("content.other.Female"),
     },

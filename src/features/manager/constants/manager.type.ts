@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   AccountDetail,
   DepartmentDetail,
@@ -40,6 +41,7 @@ export interface EmployeeColumnType {
   gender: number;
   departmentName: string;
   positionName: string;
+  // averageScore: ReactNode;
   status: string;
   createdAt: string;
   updatedAt: string;
@@ -83,3 +85,16 @@ export interface PositionForm {
   positionName: string;
   salaryCoefficient: number;
 }
+
+export interface EvaluateForm {
+  workLoad: number;
+  workResult: number;
+  workSpirit: number;
+  workingStyle: number;
+  capacityOfWork: number;
+  quantityOfScientificWorks: number;
+  responsibilityForWork: number;
+  workInitiatives: number;
+}
+
+export interface EvaluatePost extends EvaluateForm {}

@@ -224,18 +224,14 @@ export interface Insurance {
   updatedAt?: Date;
 }
 
-export interface Evaluate {
+export interface EvaluateShortInfo {
   evaluateId: number;
-  userId: number;
   workLoad: number;
-  qualityOfWork: number;
   capacityOfWork: number;
   quantityOfScientificWorks: number;
   workInitiatives: number;
-  professionalEthics: number;
   workingStyle: number;
   responsibilityForWork: number;
-  workAttitude: number;
   workSpirit: number;
   workResult: number;
   averageScore: number;
@@ -364,6 +360,7 @@ export interface UserDetail {
   overtimeHistories: OvertimeHistoryUserShortInfo[] | null;
   userInsurances: UserInsuranceShortInfo[] | null;
   position: PositionShortInfo | null;
+  evaluateHistories: EvaluateShortInfo[];
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -423,17 +420,15 @@ export interface EvaluateDetail {
   evaluateId: number;
   userId: number;
   workLoad: number;
-  qualityOfWork: number;
   capacityOfWork: number;
   quantityOfScientificWorks: number;
   workInitiatives: number;
-  professionalEthics: number;
   workingStyle: number;
   responsibilityForWork: number;
-  workAttitude: number;
   workSpirit: number;
   workResult: number;
   averageScore: number;
+  user: UserShortInfo;
   createdAt?: Date;
   updatedAt?: Date;
 }
