@@ -1,5 +1,5 @@
-import { Button, Card, Flex, Form, FormProps, Modal, Rate, Select } from "antd";
-import { EvaluateDetail, UserDetail } from "../../../../../common/common.type";
+import { Button, Card, Flex, Form, FormProps, Modal, Rate } from "antd";
+import { UserDetail } from "../../../../../common/common.type";
 import { useEffect, useMemo } from "react";
 
 import { EvaluateForm } from "../../../constants/manager.type";
@@ -9,6 +9,7 @@ import {
   getNowEvaluateHistory,
   isUpdateEvaluate,
 } from "../../../constants/manager.help";
+import { postEvaluate } from "../../../../../api/apiServices";
 
 interface EvaluateEmployeeModalProps {
   isModalOpen: boolean;
@@ -60,14 +61,12 @@ const EvaluateEmployeeModal = ({
 
   const onFinish: FormProps<EvaluateForm>["onFinish"] = async (values) => {
     console.log("values:", values);
-
-    // const { email, ...employeeUpdate } = values as EvaluateForm;
-    // const res = await putUser(employee.userId, employeeUpdate);
-    // console.log(res);
-    // if (res?.data.affected != 0) {
-    //   setIsModalOpen(false);
-    //   setReset(true);
-    // }
+    const newEvaluate = { userId: employee.userId, ...values };
+    const res = await postEvaluate(newEvaluate);
+    if (res) {
+      setIsModalOpen(false);
+      setReset(true);
+    }
   };
 
   const onFinishFailed: FormProps<EvaluateForm>["onFinishFailed"] = (
@@ -92,13 +91,14 @@ const EvaluateEmployeeModal = ({
     const submitButton = document.getElementById(
       "submitButton"
     ) as HTMLButtonElement;
-
+    console.log("evaluateForm:", evaluateForm);
     // Vô hiệu hóa các phần tử
-    evaluateForm.disabled = false;
     submitButton.disabled = false;
+    evaluateForm.disabled = false;
   };
 
   const tooltips = ["Tệ", "Không tốt lắm", "Bình thường", "Tốt", "Rất tốt"];
+
   return (
     <Modal
       title={isUpdate ? "Update Evaluate" : "Create Evaluate"}
@@ -116,7 +116,7 @@ const EvaluateEmployeeModal = ({
           htmlType="submit"
           style={{ width: "20%" }}
           onClick={handleOk}
-          // disabled={isUpdate}
+          disabled={isUpdate}
         >
           Submit
         </Button>,
@@ -161,7 +161,7 @@ const EvaluateEmployeeModal = ({
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
-            disabled={isUpdate}
+            // disabled={isUpdate}
           >
             <Flex vertical={false} justify="space-between" wrap>
               <Form.Item<EvaluateForm> label="workLoad" name="workLoad">
@@ -209,4 +209,5 @@ const EvaluateEmployeeModal = ({
     </Modal>
   );
 };
+
 export default EvaluateEmployeeModal;

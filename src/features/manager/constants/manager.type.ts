@@ -97,4 +97,6 @@ export interface EvaluateForm {
   workInitiatives: number;
 }
 
-export interface EvaluatePost extends EvaluateForm {}
+export interface EvaluatePost extends EvaluateForm {
+  userId: number;
+}
