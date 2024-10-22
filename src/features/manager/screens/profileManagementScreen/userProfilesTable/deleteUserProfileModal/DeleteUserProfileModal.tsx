@@ -1,6 +1,7 @@
 import { List, Modal } from "antd";
 import { UserDetail } from "../../../../../../common/common.type";
 import { deleteUser } from "../../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface DeleteUserProfileModalProps {
   isModalOpen: boolean;
@@ -16,6 +17,8 @@ const DeleteUserProfileModal = ({
   user,
   confirmLoading,
 }: DeleteUserProfileModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     const res = await deleteUser(user.userId);
     if (res?.data.affected != 0) {
@@ -33,13 +36,17 @@ const DeleteUserProfileModal = ({
 
   return (
     <Modal
-      title="Delete User"
+      title={t("content.common.DeleteUserInfo")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
-      <List>Would you like delete user: {user.fullName}</List>
+      <List>{`${t("content.common.UserDeletionWarning")}: ${
+        user.fullName
+      }`}</List>
     </Modal>
   );
 };

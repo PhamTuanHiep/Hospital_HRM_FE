@@ -20,9 +20,11 @@ import { postUser } from "../../../../../api/apiServices";
 import { useNavigate } from "react-router-dom";
 import { managerPaths } from "../../../constants/constant.path";
 import "./AddUserProfileScreen.scss";
+import { useTranslation } from "react-i18next";
 
 const AddUserProfileScreen = () => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -82,7 +84,7 @@ const AddUserProfileScreen = () => {
           navigate(-1);
         }}
       >
-        Back
+        {t("content.common.Back")}
       </Button>
       <Typography.Title>Create new User Profile</Typography.Title>
       <Form
@@ -96,57 +98,84 @@ const AddUserProfileScreen = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<UserPost> label="Full Name" name="fullName">
+        <Form.Item<UserPost> label={t("content.info.FullName")} name="fullName">
           <Input className="input-profile-item" />
         </Form.Item>
 
-        <Form.Item<UserPost> label="Gender" name="gender">
+        <Form.Item<UserPost> label={t("content.info.Gender")} name="gender">
           <Select
             className="input-profile-item"
             options={[
-              { value: GenderId.FEMALE, label: GenderName.FEMALE },
-              { value: GenderId.MALE, label: GenderName.MALE },
+              {
+                value: GenderId.FEMALE,
+                label: t(`content.common.${GenderName.FEMALE}`),
+              },
+              {
+                value: GenderId.MALE,
+                label: t(`content.common.${GenderName.MALE}`),
+              },
             ]}
           />
         </Form.Item>
-        <Form.Item<UserPost> label="Address" name="address">
+        <Form.Item<UserPost> label={t("content.info.Address")} name="address">
           <Input
             className="input-profile-item"
             placeholder="số nhà,đường, thôn, xã/phường, huyện/thị trấn/quận, tỉnh/thành phố"
           />
         </Form.Item>
-        <Form.Item<UserForm> label="Phone Number" name="phoneNumber">
+        <Form.Item<UserForm>
+          label={t("content.info.PhoneNumber")}
+          name="phoneNumber"
+        >
           <Input />
         </Form.Item>
-        <Form.Item<UserPost> label="Nation" name="nation">
+        <Form.Item<UserPost> label={t("content.info.Nation")} name="nation">
           <Input className="input-profile-item" />
         </Form.Item>
-        <Form.Item<UserPost> label="Nationality" name="nationality">
+        <Form.Item<UserPost>
+          label={t("content.info.Nationality")}
+          name="nationality"
+        >
           <Input className="input-profile-item" />
         </Form.Item>
 
-        <Form.Item<UserPost> label="Hometown" name="hometown">
+        <Form.Item<UserPost> label={t("content.info.Hometown")} name="hometown">
           <Input
             className="input-profile-item"
             placeholder="số nhà,đường, thôn, xã/phường, huyện/thị trấn/quận, tỉnh/thành phố"
           />
         </Form.Item>
-        <Form.Item<UserPost> label="Birthday" name="birthday">
+        <Form.Item<UserPost> label={t("content.info.Birthday")} name="birthday">
           <DatePicker className="input-profile-item" format={dateFormatList} />
         </Form.Item>
-        <Form.Item<UserPost> label="Father Full Name" name="fatherFullName">
+        <Form.Item<UserPost>
+          label={t("content.info.FatherFullName")}
+          name="fatherFullName"
+        >
           <Input className="input-profile-item" />
         </Form.Item>
-        <Form.Item<UserPost> label="Father Birthday" name="fatherBirthday">
+        <Form.Item<UserPost>
+          label={t("content.info.FatherBirthday")}
+          name="fatherBirthday"
+        >
           <DatePicker className="input-profile-item" format={dateFormatList} />
         </Form.Item>
-        <Form.Item<UserPost> label="Mother Full Name" name="motherFullName">
+        <Form.Item<UserPost>
+          label={t("content.info.MotherFullName")}
+          name="motherFullName"
+        >
           <Input className="input-profile-item" />
         </Form.Item>
-        <Form.Item<UserPost> label="Mother Birthday" name="motherBirthday">
+        <Form.Item<UserPost>
+          label={t("content.info.MotherBirthday")}
+          name="motherBirthday"
+        >
           <DatePicker className="input-profile-item" format={dateFormatList} />
         </Form.Item>
-        <Form.Item<UserPost> label="Weekly Schedule" name="positionId">
+        <Form.Item<UserPost>
+          label={t("content.info.PositionName")}
+          name="positionId"
+        >
           <Select
             className="input-profile-item"
             style={{ width: "100%" }}
@@ -154,7 +183,10 @@ const AddUserProfileScreen = () => {
             options={positionOptions}
           />
         </Form.Item>
-        <Form.Item<UserPost> label="Weekly Schedule" name="departmentId">
+        <Form.Item<UserPost>
+          label={t("content.info.DepartmentName")}
+          name="departmentId"
+        >
           <Select
             className="input-profile-item"
             style={{ width: "100%" }}
@@ -162,7 +194,10 @@ const AddUserProfileScreen = () => {
             options={departmentOptions}
           />
         </Form.Item>
-        <Form.Item<UserPost> label="Weekly Schedule" name="weeklySchedule">
+        <Form.Item<UserPost>
+          label={t("content.info.WeeklySchedule")}
+          name="weeklySchedule"
+        >
           <Select
             className="input-profile-item"
             mode="multiple"
@@ -174,13 +209,19 @@ const AddUserProfileScreen = () => {
             options={weeklyScheduleOptions}
           />
         </Form.Item>
-        <Form.Item<UserPost> label="Job Description" name="jobDescription">
+        <Form.Item<UserPost>
+          label={t("content.info.JobDescription")}
+          name="jobDescription"
+        >
           <Input className="input-profile-item" />
         </Form.Item>
-        <Form.Item<UserPost> label="Other Description" name="otherDescription">
+        <Form.Item<UserPost>
+          label={t("content.info.OtherDescription")}
+          name="otherDescription"
+        >
           <Input className="input-profile-item" />
         </Form.Item>
-        <Form.Item<UserPost> label="Status" name="status">
+        <Form.Item<UserPost> label={t("content.info.Status")} name="status">
           <Input className="input-profile-item" />
         </Form.Item>
 

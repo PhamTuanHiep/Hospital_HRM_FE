@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import ViewAccountModal from "./viewAccountModel/ViewAccountModel";
 import DeleteAccountModal from "./deleteAccountModel/DeleteAccountModal";
 import { useAppSelector } from "../../../../app/hooks";
+import { useTranslation } from "react-i18next";
 
 type DataIndex = keyof AccountsData;
 interface TableDataType extends AccountsData {}
@@ -30,6 +31,7 @@ const AccountManagementScreen = () => {
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
+  const { t } = useTranslation();
 
   const searchInput = useRef<InputRef>(null);
 
@@ -190,7 +192,7 @@ const AccountManagementScreen = () => {
 
   const accountColumns: TableColumnsType<TableDataType> = [
     {
-      title: "Email",
+      title: t("content.info.Email"),
       dataIndex: "email",
       sorter: {
         compare: (a, b) => a.email.localeCompare(b.email),
@@ -198,11 +200,11 @@ const AccountManagementScreen = () => {
       },
     },
     {
-      title: "Password",
+      title: t("content.info.Password"),
       dataIndex: "password",
     },
     {
-      title: "Role Name",
+      title: t("content.info.Role"),
       dataIndex: "roleName",
       sorter: {
         compare: (a, b) => a.roleName.localeCompare(b.roleName),
@@ -222,12 +224,12 @@ const AccountManagementScreen = () => {
         record.roleName.indexOf(value as string) === 0,
     },
     {
-      title: "User Name",
+      title: t("content.info.FullName"),
       dataIndex: "userName",
       ...getColumnSearchProps("userName"),
     },
     {
-      title: "Created At",
+      title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
       sorter: {
         compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
@@ -235,7 +237,7 @@ const AccountManagementScreen = () => {
       },
     },
     {
-      title: "Updated At",
+      title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
       sorter: {
         compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
@@ -243,7 +245,7 @@ const AccountManagementScreen = () => {
       },
     },
     {
-      title: "Action",
+      title: "",
       dataIndex: "actions",
       className: "title_content-center",
       render: (value) => {
@@ -251,14 +253,14 @@ const AccountManagementScreen = () => {
           <Flex justify="space-between" gap={8}>
             <Button onClick={() => handleViewAccount(value)}>View</Button>
             <Button onClick={() => handleUpdateAccount(value)} type="primary">
-              Update
+              {t("content.common.Update")}
             </Button>
             <Button
               onClick={() => handleDeleteAccount(value)}
               type="primary"
               danger
             >
-              Delete
+              {t("content.common.Delete")}
             </Button>
           </Flex>
         );

@@ -23,6 +23,7 @@ import { INIT_USER } from "../../../../../common/common.constant";
 import ViewUserProfileModel from "./viewUserProfileModel/ViewUserProfileModel";
 import DeleteUserProfileModal from "./deleteUserProfileModal/DeleteUserProfileModal";
 import { useAppSelector } from "../../../../../app/hooks";
+import { useTranslation } from "react-i18next";
 
 type DataIndex = keyof UsersData;
 interface TableDataType extends UsersData {}
@@ -31,6 +32,7 @@ const UserProfilesTable = () => {
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
+  const { t } = useTranslation();
   const searchInput = useRef<InputRef>(null);
 
   const [searchText, setSearchText] = useState("");
@@ -195,7 +197,7 @@ const UserProfilesTable = () => {
 
   const accountColumns: TableColumnsType<TableDataType> = [
     {
-      title: "Full Name",
+      title: t("content.info.FullName"),
       dataIndex: "fullName",
       width: 150,
       sorter: {
@@ -204,7 +206,7 @@ const UserProfilesTable = () => {
       },
     },
     {
-      title: "Email",
+      title: t("content.info.Email"),
       dataIndex: "email",
       width: 150,
 
@@ -214,38 +216,38 @@ const UserProfilesTable = () => {
       },
     },
     {
-      title: "gender",
+      title: t("content.info.Gender"),
       dataIndex: "gender",
     },
     {
-      title: "address",
+      title: t("content.info.Address"),
       dataIndex: "address",
     },
     {
-      title: "phoneNumber",
+      title: t("content.info.PhoneNumber"),
       dataIndex: "phoneNumber",
     },
     {
-      title: "nation",
+      title: t("content.info.Nation"),
       dataIndex: "nation",
     },
     {
-      title: "birthday",
+      title: t("content.info.Birthday"),
       dataIndex: "birthday",
     },
     {
-      title: "departmentName",
+      title: t("content.info.DepartmentName"),
       dataIndex: "departmentName",
       ...getColumnSearchProps("departmentName"),
     },
     {
-      title: "positionName",
+      title: t("content.info.PositionName"),
       dataIndex: "positionName",
       ...getColumnSearchProps("positionName"),
     },
 
     {
-      title: "Created At",
+      title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
       sorter: {
         compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
@@ -253,7 +255,7 @@ const UserProfilesTable = () => {
       },
     },
     {
-      title: "Updated At",
+      title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
       sorter: {
         compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
@@ -261,18 +263,18 @@ const UserProfilesTable = () => {
       },
     },
     {
-      title: "status",
+      title: t("content.common.Status"),
       dataIndex: "status",
     },
     {
-      title: "Action",
+      title: "",
       dataIndex: "actions",
       className: "content-center",
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
             <Button onClick={() => handleViewAccount(value)}>
-              Xem chi tiết
+              {t("content.common.View")}
             </Button>
             <Button
               onClick={() => handleDeleteAccount(value)}
@@ -280,7 +282,7 @@ const UserProfilesTable = () => {
               danger
             >
               {" "}
-              Xóa
+              {t("content.common.Delete")}
             </Button>
           </Flex>
         );
@@ -308,7 +310,7 @@ const UserProfilesTable = () => {
         className="btn-add-object"
         onClick={() => handleAddUser()}
       >
-        Add User
+        {t("content.common.AddUserInfo")}
       </Button>
       <Table<UsersData>
         columns={accountColumns}

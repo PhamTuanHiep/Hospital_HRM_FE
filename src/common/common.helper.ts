@@ -94,6 +94,10 @@ export const transformCamelToTitleCaseHaveSpace = (str: string): string => {
     .trim(); // Xóa các dấu cách thừa ở đầu và cuối chuỗi
 };
 
+export const transformCamelToPascal = (camelCaseString: string): string => {
+  return camelCaseString.charAt(0).toUpperCase() + camelCaseString.slice(1);
+};
+
 export const increaseMonthToTime = (time: Date, addMonth: number = 3) => {
   return dayjs(time).add(addMonth, "month").toDate();
 };

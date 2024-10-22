@@ -2,7 +2,8 @@ import { Flex, Form, Input, Modal } from "antd";
 
 import { useEffect, useMemo } from "react";
 import { UserDetail, UserForm } from "../../../../../../common/common.type";
-import { transformCamelToTitleCaseHaveSpace } from "../../../../../../common/common.helper";
+import { transformCamelToPascal } from "../../../../../../common/common.helper";
+import { useTranslation } from "react-i18next";
 
 interface ViewUserProfileModelProps {
   isModalOpen: boolean;
@@ -18,7 +19,7 @@ const ViewUserProfileModel = ({
   confirmLoading,
 }: ViewUserProfileModelProps) => {
   const [form] = Form.useForm();
-
+  const { t } = useTranslation();
   const defaultValues = useMemo(() => {
     return {
       fullName: `${user.fullName}`,
@@ -64,6 +65,8 @@ const ViewUserProfileModel = ({
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       className="extend-model"
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
       <Form
         form={form}
@@ -78,7 +81,7 @@ const ViewUserProfileModel = ({
             return (
               <div className="container-form-item">
                 <Form.Item<UserForm>
-                  label={`${transformCamelToTitleCaseHaveSpace(keyName)}`}
+                  label={t(`content.info.${transformCamelToPascal(keyName)}`)}
                   name={keyName}
                 >
                   <Input disabled />
