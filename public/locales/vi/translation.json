@@ -48,11 +48,17 @@
             "Delete": "Xóa",
             "Cancel": "Hủy",
             "Ok": "Đồng ý",
+            "Yes": "Đồng ý",
             "Submit": "Xác nhận",
             "Back": "Quay lại",
+            "BtnEvaluate": "Đánh giá kết quả công việc",
             "DeleteUserInfo": "Xóa thông tin nhân viên",
             "AddUserInfo": "Thêm nhân viên mới",
-            "UserDeletionWarning": "Có phải bạn muốn xóa thôn tin nhân viên"
+            "UserDeletionWarning": "Có phải bạn muốn xóa thôn tin nhân viên",
+            "ViewAccountTitle": "Xem thông tin tài khoản",
+            "UpdateAccountTitle": "Cập nhật thông tin tài khoản",
+            "DeleteAccountTitle": "Xóa tài khoản",
+            "DeleteAccount": "Bạn muốn xóa tài khoản này"
         },
         "info": {
             "Email": "Email",
@@ -77,7 +83,33 @@
             "WeeklySchedule": "Lịch làm việc hàng tuần",
             "JobDescription": "Mô tả công việc",
             "OtherDescription": " Mô tả khác",
-            "Status": "Trạng thái"
+            "Status": "Trạng thái",
+            "AverageScore": "Điểm đánh giá trung bình"
+        },
+        "employee": {
+            "Hello": "Xin chào",
+            "NoticeNowLevel": " Cấp độ trong hệ thống của bạn hiện tại là",
+            "NoticeRoleManagement": "Bạn có thể quản lí các nhân viên có cấp độ",
+            "DownLevel": " trở xuống",
+            "NoticeOfBenefits": "Bạn có thể thay đổi các thông tin công việc của nhân viên và thực hiện đánh giá hàng năm với họ",
+            "AskAboutEvaluate": " Bạn có muốn thực hiện đánh giá ngay không",
+            "ManageEmployeesTitle": "Quản lý nhân viên",
+            "UpdateEmployeeTitle": "Cập nhật thông tin nhân viên",
+            "UpdateEvaluateTitle": "Cập nhật đánh giá kết quả làm việc của  nhân viên ",
+            "CreateEvaluteTitle": "Tạo đánh giá kết quả làm việc của  nhân viên",
+            "Employee": "Nhân viên",
+            "PositionName": "Chức vụ",
+            "DepartmentWorking": "Làm việc tại khoa/phòng",
+            "AskAboutUpdateEvaluation": "Nhân viên này đã được đánh giá công việc hàng năm. Bạn muốn cập nhật lại đánh giá",
+            "NoticeEvaluation": "Bạn đang thực hiện đánh giá công việc hàng năm cho nhân viên này"
+        },
+        "department": {
+            "DepartmentId": "Mã Khoa/phòng",
+            "DepartmentName": "Khoa/phòng",
+            "Location": "Vị trí khoa/phòng",
+            "FuncDescription": "Chức năng",
+            "Users": "Nhân viên",
+            "AddDepartment": "Tạo thêm khoa/phòng"
         },
         "allowance": {
             "TypesOfInsurance": "Các loại bảo hiểm",

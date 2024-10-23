@@ -8,6 +8,7 @@ import {
   weeklyScheduleOptions,
 } from "../../../constants/manager.help";
 import { putUser } from "../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface UpdateEmployeeModalProps {
   isModalOpen: boolean;
@@ -24,6 +25,7 @@ const UpdateEmployeeModal = ({
   confirmLoading,
 }: UpdateEmployeeModalProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const defaultValues = useMemo(() => {
     return {
@@ -71,27 +73,27 @@ const UpdateEmployeeModal = ({
 
   return (
     <Modal
-      title="Update Employee"
+      title={t("content.employee.UpdateEmployeeTitle")}
       open={isModalOpen}
-      onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      className="extend-model "
-      okText={
+      className="extend-model"
+      footer={[
+        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           form="updateEmployeeForm"
           key="submit"
           type="primary"
           htmlType="submit"
-          style={{ width: "100%" }}
+          onClick={handleOk}
         >
-          Submit
-        </Button>
-      }
+          {t("content.common.Submit")}
+        </Button>,
+      ]}
     >
       <Form
         form={form}
-        id="addUserForm"
+        id="updateEmployeeForm"
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
@@ -100,24 +102,36 @@ const UpdateEmployeeModal = ({
         autoComplete="off"
       >
         <Flex vertical={false} justify="space-between" wrap>
-          <Form.Item<UserPost> label="Full Name" name="fullName">
+          <Form.Item<UserPost>
+            label={t("content.info.FullName")}
+            name="fullName"
+          >
             <Input className="input-profile-item" disabled />
           </Form.Item>
-          <Form.Item<UserPost> label="email" name="email">
+          <Form.Item<UserPost> label={t("content.info.Email")} name="email">
             <Input className="input-profile-item" disabled />
           </Form.Item>
 
-          <Form.Item<UserPost> label="Gender" name="gender">
+          <Form.Item<UserPost> label={t("content.info.Gender")} name="gender">
             <Select
               className="input-profile-item"
               options={[
-                { value: GenderId.FEMALE, label: GenderName.FEMALE },
-                { value: GenderId.MALE, label: GenderName.MALE },
+                {
+                  value: GenderId.FEMALE,
+                  label: t(`content.common.${GenderName.FEMALE}`),
+                },
+                {
+                  value: GenderId.MALE,
+                  label: t(`content.common.${GenderName.MALE}`),
+                },
               ]}
             />
           </Form.Item>
 
-          <Form.Item<UserPost> label="PositionName" name="positionId">
+          <Form.Item<UserPost>
+            label={t("content.info.PositionName")}
+            name="positionId"
+          >
             <Select
               className="input-profile-item"
               style={{ width: "100%" }}
@@ -125,7 +139,10 @@ const UpdateEmployeeModal = ({
               options={positionOptions}
             />
           </Form.Item>
-          <Form.Item<UserPost> label="DepartmentName" name="departmentId">
+          <Form.Item<UserPost>
+            label={t("content.info.DepartmentName")}
+            name="departmentId"
+          >
             <Select
               className="input-profile-item"
               style={{ width: "100%" }}
@@ -133,7 +150,10 @@ const UpdateEmployeeModal = ({
               options={departmentOptions}
             />
           </Form.Item>
-          <Form.Item<UserPost> label="Weekly Schedule" name="weeklySchedule">
+          <Form.Item<UserPost>
+            label={t("content.info.WeeklySchedule")}
+            name="weeklySchedule"
+          >
             <Select
               className="input-profile-item"
               mode="multiple"
@@ -144,16 +164,19 @@ const UpdateEmployeeModal = ({
               options={weeklyScheduleOptions}
             />
           </Form.Item>
-          <Form.Item<UserPost> label="Job Description" name="jobDescription">
+          <Form.Item<UserPost>
+            label={t("content.info.JobDescription")}
+            name="jobDescription"
+          >
             <Input className="input-profile-item" />
           </Form.Item>
           <Form.Item<UserPost>
-            label="Other Description"
+            label={t("content.info.OtherDescription")}
             name="otherDescription"
           >
             <Input className="input-profile-item" />
           </Form.Item>
-          <Form.Item<UserPost> label="Status" name="status">
+          <Form.Item<UserPost> label={t("content.info.Status")} name="status">
             <Input className="input-profile-item" />
           </Form.Item>
         </Flex>

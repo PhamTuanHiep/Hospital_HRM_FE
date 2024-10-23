@@ -4,6 +4,7 @@ import { AccountDetail, AccountForm } from "../../../../../common/common.type";
 import { RoleId, RoleName } from "../../../../../common/common.constant";
 import { putAccount } from "../../../../../api/apiServices";
 import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface UpdateAccountModalProps {
   isModalOpen: boolean;
@@ -20,6 +21,7 @@ const UpdateAccountModal = ({
   confirmLoading,
 }: UpdateAccountModalProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const defaultValues = useMemo(() => {
     return {
@@ -58,22 +60,23 @@ const UpdateAccountModal = ({
 
   return (
     <Modal
-      title="Update Account"
+      title={t("content.common.UpdateAccountTitle")}
       open={isModalOpen}
-      onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      okText={
+      footer={[
+        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           form="updateAccountForm"
           key="submit"
           type="primary"
           htmlType="submit"
-          style={{ width: "100%" }}
+          style={{ width: "50%" }}
+          onClick={handleOk}
         >
-          Submit
-        </Button>
-      }
+          {t("content.common.Submit")}
+        </Button>,
+      ]}
     >
       <Form
         form={form}
@@ -92,7 +95,7 @@ const UpdateAccountModal = ({
         }}
       >
         <Form.Item<AccountForm>
-          label="Email"
+          label={t("content.info.Email")}
           name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
         >
@@ -100,7 +103,7 @@ const UpdateAccountModal = ({
         </Form.Item>
 
         <Form.Item<AccountForm>
-          label="Password"
+          label={t("content.info.Password")}
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
@@ -108,7 +111,7 @@ const UpdateAccountModal = ({
         </Form.Item>
 
         <Form.Item<AccountForm>
-          label="Role"
+          label={t("content.info.Role")}
           name="roleId"
           rules={[{ required: true, message: "Please input your role!" }]}
         >
@@ -120,12 +123,6 @@ const UpdateAccountModal = ({
             ]}
           />
         </Form.Item>
-
-        {/* <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item> */}
       </Form>
     </Modal>
   );

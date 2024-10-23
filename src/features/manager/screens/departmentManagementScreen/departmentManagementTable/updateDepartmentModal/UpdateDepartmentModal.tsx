@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import { DepartmentDetail } from "../../../../../../common/common.type";
 import { DepartmentForm } from "../../../../constants/manager.type";
 import { putDepartment } from "../../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface UpdateDepartmentModalProps {
   isModalOpen: boolean;
@@ -20,6 +21,7 @@ const UpdateDepartmentModal = ({
   confirmLoading,
 }: UpdateDepartmentModalProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const defaultValues = useMemo(() => {
     return {

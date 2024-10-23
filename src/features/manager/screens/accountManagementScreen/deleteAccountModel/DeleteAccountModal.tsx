@@ -1,6 +1,7 @@
 import { List, Modal } from "antd";
 import { AccountDetail } from "../../../../../common/common.type";
 import { deleteAccount } from "../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface DeleteAccountModalProps {
   isModalOpen: boolean;
@@ -16,6 +17,8 @@ const DeleteAccountModal = ({
   account,
   confirmLoading,
 }: DeleteAccountModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     const res = await deleteAccount(account.accountId);
     if (res) {
@@ -33,13 +36,17 @@ const DeleteAccountModal = ({
 
   return (
     <Modal
-      title="Delete Account"
+      title={t("content.common.DeleteAccountTitle")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
-      <List>Would you like delete account: {account.email}</List>
+      <List>
+        {t("content.common.DeleteAccount")}: {account.email} ?
+      </List>
     </Modal>
   );
 };

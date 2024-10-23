@@ -2,6 +2,7 @@ import { Form, Input, Modal, Select } from "antd";
 import { AccountDetail, AccountForm } from "../../../../../common/common.type";
 import { RoleId, RoleName } from "../../../../../common/common.constant";
 import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ViewAccountModalProps {
   isModalOpen: boolean;
@@ -16,6 +17,7 @@ const ViewAccountModal = ({
   confirmLoading,
 }: ViewAccountModalProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const defaultValues = useMemo(() => {
     return {
@@ -39,11 +41,13 @@ const ViewAccountModal = ({
 
   return (
     <Modal
-      title="View Account"
+      title={t("content.common.ViewAccountTitle")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
       <Form
         form={form}
@@ -58,15 +62,18 @@ const ViewAccountModal = ({
           roleId: `${account.role?.roleId}`,
         }}
       >
-        <Form.Item<AccountForm> label="Email" name="email">
+        <Form.Item<AccountForm> label={t("content.info.Email")} name="email">
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<AccountForm> label="Password" name="password">
+        <Form.Item<AccountForm>
+          label={t("content.info.Password")}
+          name="password"
+        >
           <Input disabled />
         </Form.Item>
 
-        <Form.Item<AccountForm> label="Role" name="roleId">
+        <Form.Item<AccountForm> label={t("content.info.Role")} name="roleId">
           <Select
             options={[
               { value: RoleId.ADMIN, label: RoleName.ADMIN },

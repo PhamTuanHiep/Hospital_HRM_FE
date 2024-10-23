@@ -19,7 +19,11 @@ import { FilterDropdownProps } from "antd/es/table/interface";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 import { UserDetail } from "../../../../common/common.type";
-import { INIT_USER } from "../../../../common/common.constant";
+import {
+  GenderId,
+  GenderName,
+  INIT_USER,
+} from "../../../../common/common.constant";
 import { getUsers } from "../../../../api/apiServices";
 import { EmployeeColumnType } from "../../constants/manager.type";
 
@@ -36,6 +40,7 @@ import {
   getLowerRole,
 } from "../../../../common/common.helper";
 import EvaluateEmployeeModal from "./evaluateEmployeeModal/EvaluateEmployeeModal";
+import { useTranslation } from "react-i18next";
 
 type DataIndex = keyof EmployeeColumnType;
 interface TableDataType extends EmployeeColumnType {}
@@ -44,6 +49,7 @@ const EmployeeManagementScreen = () => {
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
+  const { t } = useTranslation();
 
   const searchInput = useRef<InputRef>(null);
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -215,7 +221,7 @@ const EmployeeManagementScreen = () => {
 
   const EMPLOYEE_COLUMNS: TableColumnsType<TableDataType> = [
     {
-      title: "Email",
+      title: t("content.info.Email"),
       dataIndex: "email",
       width: 100,
       sorter: {
@@ -224,7 +230,7 @@ const EmployeeManagementScreen = () => {
       },
     },
     {
-      title: "fullName",
+      title: t("content.info.FullName"),
       dataIndex: "fullName",
       width: 150,
 
@@ -235,12 +241,17 @@ const EmployeeManagementScreen = () => {
       ...getColumnSearchProps("fullName"),
     },
     {
-      title: "gender",
+      title: t("content.info.Gender"),
       dataIndex: "gender",
-      width: 80,
+      width: 100,
+      render: (value) => {
+        return value === GenderId.MALE
+          ? t(`content.common.${GenderName.MALE}`)
+          : t(`content.common.${GenderName.FEMALE}`);
+      },
     },
     {
-      title: "departmentName",
+      title: t("content.info.DepartmentName"),
       dataIndex: "departmentName",
       width: 200,
       sorter: {
@@ -252,9 +263,9 @@ const EmployeeManagementScreen = () => {
         record.departmentName.indexOf(value as string) === 0,
     },
     {
-      title: "positionName",
+      title: t("content.info.PositionName"),
       dataIndex: "positionName",
-      width: 100,
+      width: 130,
       sorter: {
         compare: (a, b) => a.positionName.localeCompare(b.positionName),
         multiple: 3,
@@ -265,23 +276,23 @@ const EmployeeManagementScreen = () => {
     },
 
     {
-      title: "weeklySchedule",
+      title: t("content.info.WeeklySchedule"),
       dataIndex: "weeklySchedule",
       width: 220,
       render: (value) => getDayNameFromNumber(value),
     },
     {
-      title: "averageScore",
+      title: t("content.info.AverageScore"),
       dataIndex: "averageScore",
       width: 220,
     },
     {
-      title: "status",
+      title: t("content.info.Status"),
       dataIndex: "status",
       width: 100,
     },
     {
-      title: "Created At",
+      title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
       width: 130,
       sorter: {
@@ -290,7 +301,7 @@ const EmployeeManagementScreen = () => {
       },
     },
     {
-      title: "Updated At",
+      title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
       width: 130,
       sorter: {
@@ -299,7 +310,7 @@ const EmployeeManagementScreen = () => {
       },
     },
     {
-      title: "Action",
+      title: "",
       dataIndex: "actions",
       className: "title_content-center",
       render: (value) => {
@@ -308,16 +319,20 @@ const EmployeeManagementScreen = () => {
             <Button
               onClick={() => handleUpdateEmployee(value)}
               type="primary"
-              style={{ width: "80px", whiteSpace: "normal", height: "46px" }}
+              style={{
+                width: "100px",
+                whiteSpace: "normal",
+                height: "46px",
+              }}
             >
-              Update
+              {t("content.common.Update")}
             </Button>
             <Button
               onClick={() => handleEvaluateEmployee(value)}
               type="primary"
               style={{ width: "130px", whiteSpace: "normal", height: "46px" }}
             >
-              Đánh giá kết quả công việc
+              {t("content.common.BtnEvaluate")}
             </Button>
           </Flex>
         );
@@ -332,12 +347,6 @@ const EmployeeManagementScreen = () => {
   };
 
   const handleEvaluateEmployee = (value: UserDetail) => {
-    // const currentEvaluate = evaluates.find((evaluate) => {
-    //   return evaluate.userId === value.userId;
-    // });
-    // if (currentEvaluate) {
-    //   setEvaluate(currentEvaluate);
-    // }
     setEmployee(value);
     setIsEvaluateModalOpen(true);
     setReset(false);
@@ -364,26 +373,27 @@ const EmployeeManagementScreen = () => {
   const items: CollapseProps["items"] = [
     {
       key: "1",
-      label: <Flex>Xin chào {currentAccount.user?.fullName} </Flex>,
+      label: (
+        <Flex>
+          {t("content.employee.Hello")} {currentAccount.user?.fullName}{" "}
+        </Flex>
+      ),
       children: (
         <Flex vertical justify="space-between" align="start" gap={8}>
           <List.Item>
-            Cấp độ trong hệ thống của bạn hiện tại là{" "}
-            <Tag color="processing">{currentAccount.role?.roleName}</Tag>. Bạn
-            có thể quản lí các nhân viên có cấp độ{" "}
+            {t("content.employee.NoticeNowLevel")}{" "}
+            <Tag color="processing">{currentAccount.role?.roleName}</Tag>.
+            {t("content.employee.NoticeRoleManagement")}{" "}
             <Tag color="processing">
               {getLowerRole(currentAccount.role?.roleName)}
-            </Tag>{" "}
-            trở xuống.
+            </Tag>
+            {t("content.employee.DownLevel")} .
           </List.Item>
+          <List.Item>{t("content.employee.NoticeOfBenefits")} .</List.Item>
           <List.Item>
-            Bạn có thể thay đổi các thông tin công việc của nhân viên và thực
-            hiện đánh giá hàng năm với họ.
-          </List.Item>
-          <List.Item>
-            Bạn có muốn thực hiện đánh giá ngay không ?{" "}
+            {t("content.employee.AskAboutEvaluate")} ?{" "}
             <Button type="primary" onClick={handleGotoAction}>
-              Yes
+              {t("content.common.Yes")}
             </Button>
           </List.Item>
         </Flex>
@@ -398,7 +408,10 @@ const EmployeeManagementScreen = () => {
           defaultActiveKey={["1"]}
           onChange={onChangeCollapse}
         />
-        <Card id="employee-table" title="Manage employees">
+        <Card
+          id="employee-table"
+          title={t("content.employee.ManageEmployeesTitle")}
+        >
           <div ref={tableContainerRef}>
             <Table<TableDataType>
               columns={EMPLOYEE_COLUMNS}

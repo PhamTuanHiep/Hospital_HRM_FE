@@ -24,6 +24,7 @@ import { DepartmentDetail } from "../../../../../common/common.type";
 import { INIT_DEPARTMENT } from "../../../../../common/common.constant";
 import { getDepartments } from "../../../../../api/apiServices";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type DataIndex = keyof DepartmentColumnType;
 interface TableDataType extends DepartmentColumnType {}
@@ -31,6 +32,7 @@ interface TableDataType extends DepartmentColumnType {}
 const DepartmentManagementTable = () => {
   const searchInput = useRef<InputRef>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");
   const [searchedColumn, setSearchedColumn] = useState<string>("");
@@ -199,16 +201,19 @@ const DepartmentManagementTable = () => {
 
   const departmentColumns: TableColumnsType<TableDataType> = [
     {
-      title: "departmentId",
+      title: t("content.department.DepartmentId"),
       dataIndex: "departmentId",
+      width: 100,
       sorter: {
         compare: (a, b) => a.departmentId.localeCompare(b.departmentId),
         multiple: 4,
       },
     },
     {
-      title: "departmentName",
+      title: t("content.department.DepartmentName"),
       dataIndex: "departmentName",
+      width: 100,
+
       sorter: {
         compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
         multiple: 3,
@@ -216,50 +221,56 @@ const DepartmentManagementTable = () => {
       ...getColumnSearchProps("departmentName"),
     },
     {
-      title: "location",
+      title: t("content.department.Location"),
       dataIndex: "location",
+      width: 200,
     },
     {
-      title: "funcDescription",
+      title: t("content.department.FuncDescription"),
       dataIndex: "funcDescription",
+      width: 200,
     },
     {
-      title: "users",
+      title: t("content.department.Users"),
       dataIndex: "users",
-      width: 250,
+      width: 200,
     },
     {
-      title: "Created At",
+      title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
+      width: 130,
+
       sorter: {
         compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
         multiple: 2,
       },
     },
     {
-      title: "Updated At",
+      title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
+      width: 130,
+
       sorter: {
         compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
         multiple: 1,
       },
     },
     {
-      title: "Action",
+      title: "",
       dataIndex: "actions",
       className: "title_content-center",
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
             <Button onClick={() => handleUpdateAccount(value)} type="primary">
-              Update
+              {t("content.common.Update")}
             </Button>
             <Button
               onClick={() => handleDeleteAccount(value)}
               type="primary"
               danger
             >
-              Delete
+              {t("content.common.Delete")}
             </Button>
           </Flex>
         );
@@ -298,7 +309,7 @@ const DepartmentManagementTable = () => {
         className="btn-add-object"
         onClick={() => handleAddUser()}
       >
-        Add Department
+        {t("content.department.AddDepartment")}
       </Button>
       <Table<TableDataType>
         columns={departmentColumns}

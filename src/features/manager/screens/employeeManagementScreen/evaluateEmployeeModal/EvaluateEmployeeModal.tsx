@@ -10,6 +10,7 @@ import {
   isUpdateEvaluate,
 } from "../../../constants/manager.help";
 import { postEvaluate } from "../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface EvaluateEmployeeModalProps {
   isModalOpen: boolean;
@@ -26,12 +27,11 @@ const EvaluateEmployeeModal = ({
   confirmLoading,
 }: EvaluateEmployeeModalProps) => {
   const [form] = Form.useForm();
-  console.log("employee:", employee);
+  const { t } = useTranslation();
 
   const isUpdate = useMemo(() => {
     return isUpdateEvaluate(employee.evaluateHistories);
   }, [employee]);
-  console.log("isUpdate:", isUpdate);
 
   const defaultValues = useMemo(() => {
     return {
@@ -101,13 +101,17 @@ const EvaluateEmployeeModal = ({
 
   return (
     <Modal
-      title={isUpdate ? "Update Evaluate" : "Create Evaluate"}
+      title={
+        isUpdate
+          ? t("content.employee.UpdateEvaluateTitle")
+          : t("content.employee.CreateEvaluteTitle")
+      }
       open={isModalOpen}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       className="extend-model "
       footer={[
-        <Button onClick={handleCancel}>Cancel</Button>,
+        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           id="submitButton"
           form="evaluateForm"
@@ -118,37 +122,43 @@ const EvaluateEmployeeModal = ({
           onClick={handleOk}
           disabled={isUpdate}
         >
-          Submit
+          {t("content.common.Submit")}
         </Button>,
       ]}
     >
       <Flex vertical gap={8}>
         <Card>
-          <Typography>Nhân viên: {employee.fullName}</Typography>
-          <Typography>Chức vụ: {employee.position?.positionName}</Typography>
           <Typography>
-            Làm việc tại khoa/phòng: {employee.department?.departmentName}
+            {`${t("content.employee.Employee")}: ${employee.fullName}`}
           </Typography>
           <Typography>
-            Giới tính:{" "}
-            {employee.gender === GenderId.MALE
-              ? GenderName.MALE
-              : GenderName.FEMALE}
+            {`${t("content.employee.PositionName")}: ${
+              employee.position?.positionName
+            }`}
+          </Typography>
+          <Typography>
+            {`${t("content.employee.DepartmentWorking")}: ${
+              employee.department?.departmentName
+            }`}
+          </Typography>
+          <Typography>
+            {`${t("content.common.Gender")}: ${
+              employee.gender === GenderId.MALE
+                ? t(`content.common.${GenderName.MALE}`)
+                : t(`content.common.${GenderName.FEMALE}`)
+            }`}{" "}
           </Typography>
           {isUpdate ? (
             <Flex justify="flex-start" gap={24} align="center">
               <Typography>
-                Nhân viên này đã được đánh giá công việc hàng năm. Bạn muốn cập
-                nhật lại đánh giá ?
+                {t("content.employee.AskAboutUpdateEvaluation")} ?
               </Typography>
               <Button onClick={handleDisable} type="primary">
-                Yes
+                {t("content.common.Yes")}
               </Button>
             </Flex>
           ) : (
-            <Typography>
-              Bạn đang thực hiện đánh giá công việc hàng năm cho nhân viên này !
-            </Typography>
+            <Typography>{t("content.employee.NoticeEvaluation")} !</Typography>
           )}
         </Card>
         <Card>

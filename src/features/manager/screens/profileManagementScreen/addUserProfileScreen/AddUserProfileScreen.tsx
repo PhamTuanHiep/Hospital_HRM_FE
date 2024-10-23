@@ -227,7 +227,7 @@ const AddUserProfileScreen = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" className="btn-submit">
-            Submit
+            {t("content.common.Submit")}
           </Button>
         </Form.Item>
       </Form>
