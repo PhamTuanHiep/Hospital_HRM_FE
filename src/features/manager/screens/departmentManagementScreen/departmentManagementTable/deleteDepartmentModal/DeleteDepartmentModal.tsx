@@ -1,6 +1,7 @@
 import { List, Modal } from "antd";
 import { DepartmentDetail } from "../../../../../../common/common.type";
 import { deleteDepartment } from "../../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface DeleteDepartmentModalProps {
   isModalOpen: boolean;
@@ -16,6 +17,8 @@ const DeleteDepartmentModal = ({
   department,
   confirmLoading,
 }: DeleteDepartmentModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     const res = await deleteDepartment(department.departmentId);
     if (res) {
@@ -33,13 +36,17 @@ const DeleteDepartmentModal = ({
 
   return (
     <Modal
-      title="Delete department"
+      title={t("content.department.DeleteDepartment")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
-      <List>Would you like delete department: {department.departmentName}</List>
+      <List>{`${t("content.department.AskAboutDeleteDepartment")}: ${
+        department.departmentName
+      }`}</List>
     </Modal>
   );
 };

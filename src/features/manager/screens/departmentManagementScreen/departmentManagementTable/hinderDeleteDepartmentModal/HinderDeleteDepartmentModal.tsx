@@ -1,6 +1,7 @@
 import { Button, Flex, List, Modal, Typography } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import "./HinderDeleteDepartmentModal.scss";
+import { useTranslation } from "react-i18next";
 
 interface HinderDeleteDepartmentModalProps {
   isModalOpen: boolean;
@@ -12,6 +13,8 @@ const HinderDeleteDepartmentModal = ({
   setIsModalOpen,
   confirmLoading,
 }: HinderDeleteDepartmentModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     setIsModalOpen(false);
   };
@@ -23,7 +26,7 @@ const HinderDeleteDepartmentModal = ({
         <Flex gap={8}>
           <WarningOutlined />
           <Typography.Text type="danger">
-            Hành vi của bạn không thể thực hiện
+            {t("content.department.HinderDeleteDepartmentTitle")}
           </Typography.Text>
         </Flex>
       }
@@ -37,11 +40,11 @@ const HinderDeleteDepartmentModal = ({
           style={{ width: "100%" }}
           onClick={handleOk}
         >
-          Ok
+          {t("content.common.Yes")}
         </Button>,
       ]}
     >
-      <List>Bạn không thể xóa các khoa phòng vẫn còn nhân viên</List>
+      <List>{t("content.department.HinderDeleteContent")}</List>
     </Modal>
   );
 };

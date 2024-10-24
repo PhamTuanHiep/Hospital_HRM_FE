@@ -45,7 +45,7 @@ const DeleteAccountModal = ({
       cancelText={t("content.common.Cancel")}
     >
       <List>
-        {t("content.common.DeleteAccount")}: {account.email} ?
+        {t("content.common.AskAboutDeleteAccount")}: {account.email} ?
       </List>
     </Modal>
   );

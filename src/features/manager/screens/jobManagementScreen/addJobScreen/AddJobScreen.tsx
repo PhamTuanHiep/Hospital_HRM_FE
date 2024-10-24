@@ -6,10 +6,12 @@ import { managerPaths } from "../../../constants/constant.path";
 import { getPositions, postPosition } from "../../../../../api/apiServices";
 import { PositionDetail } from "../../../../../common/common.type";
 import { PositionForm } from "../../../constants/manager.type";
+import { useTranslation } from "react-i18next";
 
 const AddJobScreen = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [positionId, setPositionId] = useState<string>("");
 
@@ -63,9 +65,11 @@ const AddJobScreen = () => {
           navigate(-1);
         }}
       >
-        Back
+        {t("content.common.Back")}
       </Button>
-      <Typography.Title>Create new Position</Typography.Title>
+      <Typography.Title>
+        {t("content.position.CreatePosition")}
+      </Typography.Title>
       <Form
         form={form}
         id="addPositionForm"
@@ -77,15 +81,21 @@ const AddJobScreen = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<PositionForm> label="positionId" name="positionId">
+        <Form.Item<PositionForm>
+          label={t("content.position.PositionId")}
+          name="positionId"
+        >
           <Input className="input-profile-item" disabled />
         </Form.Item>
-        <Form.Item<PositionForm> label="positionName" name="positionName">
+        <Form.Item<PositionForm>
+          label={t("content.position.PositionName")}
+          name="positionName"
+        >
           <Input className="input-profile-item" placeholder="Tên chức vụ mới" />
         </Form.Item>
 
         <Form.Item<PositionForm>
-          label="salaryCoefficient"
+          label={t("content.position.SalaryCoefficient")}
           name="salaryCoefficient"
         >
           <Input className="input-profile-item" />
@@ -93,7 +103,7 @@ const AddJobScreen = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" className="btn-submit-post">
-            Submit
+            {t("content.common.Submit")}
           </Button>
         </Form.Item>
       </Form>

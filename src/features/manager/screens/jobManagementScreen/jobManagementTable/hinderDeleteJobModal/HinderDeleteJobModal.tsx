@@ -1,6 +1,7 @@
 import { Button, Flex, List, Modal, Typography } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import "./HinderDeleteJobModal.scss";
+import { useTranslation } from "react-i18next";
 
 interface HinderDeleteJobModalProps {
   isModalOpen: boolean;
@@ -12,6 +13,8 @@ const HinderDeleteJobModal = ({
   setIsModalOpen,
   confirmLoading,
 }: HinderDeleteJobModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     setIsModalOpen(false);
   };
@@ -23,7 +26,7 @@ const HinderDeleteJobModal = ({
         <Flex gap={8}>
           <WarningOutlined />
           <Typography.Text type="danger">
-            Hành vi của bạn không thể thực hiện
+            {t("content.position.HinderDeletePositionTitle")}
           </Typography.Text>
         </Flex>
       }
@@ -37,11 +40,11 @@ const HinderDeleteJobModal = ({
           style={{ width: "100%" }}
           onClick={handleOk}
         >
-          Ok
+          {t("content.common.Yes")}
         </Button>,
       ]}
     >
-      <List>Bạn không thể xóa các chức vụ vẫn đang được áp dụng</List>
+      <List> {t("content.position.HinderDeletePositionContent")}</List>
     </Modal>
   );
 };

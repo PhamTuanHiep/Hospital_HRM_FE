@@ -61,7 +61,9 @@ const RecordScreen = () => {
     const infoShow: AddUserInfo[] = [
       {
         selfInfo: `${t("content.info.Hometown")}: ${user.hometown}`,
-        parentInfo: `${t("content.info.FatherName")}: ${user.fatherFullName}`,
+        parentInfo: `${t("content.info.FatherFullName")}: ${
+          user.fatherFullName
+        }`,
       },
       {
         selfInfo: `${t("content.info.Address")}: ${user.address}`,
@@ -71,7 +73,9 @@ const RecordScreen = () => {
       },
       {
         selfInfo: `${t("content.info.Nation")}: ${user.nation}`,
-        parentInfo: `${t("content.info.MotherName")}: ${user.motherFullName}`,
+        parentInfo: `${t("content.info.MotherFullName")}: ${
+          user.motherFullName
+        }`,
       },
       {
         selfInfo: `${t("content.info.Nationality")}: ${user.nationality}`,

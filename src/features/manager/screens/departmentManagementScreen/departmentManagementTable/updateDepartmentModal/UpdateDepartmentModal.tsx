@@ -61,22 +61,22 @@ const UpdateDepartmentModal = ({
 
   return (
     <Modal
-      title="Update Account"
+      title={t("content.department.UpdateDepartmentTitle")}
       open={isModalOpen}
-      onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      okText={
+      footer={[
+        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           form="updateDepartmentForm"
           key="submit"
           type="primary"
           htmlType="submit"
-          style={{ width: "100%" }}
+          onClick={handleOk}
         >
-          Submit
-        </Button>
-      }
+          {t("content.common.Submit")}
+        </Button>,
+      ]}
     >
       <Form
         form={form}
@@ -89,12 +89,15 @@ const UpdateDepartmentModal = ({
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<DepartmentForm> label="departmentId" name="departmentId">
+        <Form.Item<DepartmentForm>
+          label={t("content.department.DepartmentId")}
+          name="departmentId"
+        >
           <Input disabled />
         </Form.Item>
 
         <Form.Item<DepartmentForm>
-          label="departmentName"
+          label={t("content.department.DepartmentName")}
           name="departmentName"
           rules={[
             { required: true, message: "Please input your departmentName!" },
@@ -104,14 +107,14 @@ const UpdateDepartmentModal = ({
         </Form.Item>
 
         <Form.Item<DepartmentForm>
-          label="location"
+          label={t("content.department.Location")}
           name="location"
           rules={[{ required: true, message: "Please input location!" }]}
         >
           <Input />
         </Form.Item>
         <Form.Item<DepartmentForm>
-          label="funcDescription"
+          label={t("content.department.FuncDescription")}
           name="funcDescription"
           rules={[{ required: true, message: "Please input funcDescription!" }]}
         >

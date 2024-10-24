@@ -6,10 +6,12 @@ import { DepartmentDetail } from "../../../../../common/common.type";
 import { getDepartments, postDepartment } from "../../../../../api/apiServices";
 import { findMissingElementInId } from "../../../../../common/common.helper";
 import { managerPaths } from "../../../constants/constant.path";
+import { useTranslation } from "react-i18next";
 
 const AddDepartmentScreen = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [departmentId, setDepartmentId] = useState<string>("");
 
@@ -63,9 +65,11 @@ const AddDepartmentScreen = () => {
           navigate(-1);
         }}
       >
-        Back
+        {t("content.common.Back")}
       </Button>
-      <Typography.Title>Create new Department</Typography.Title>
+      <Typography.Title>
+        {t("content.department.CreateDepartment")}
+      </Typography.Title>
       <Form
         form={form}
         id="addUserForm"
@@ -77,24 +81,33 @@ const AddDepartmentScreen = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<DepartmentForm> label="departmentId" name="departmentId">
+        <Form.Item<DepartmentForm>
+          label={t("content.department.DepartmentId")}
+          name="departmentId"
+        >
           <Input className="input-profile-item" disabled />
         </Form.Item>
-        <Form.Item<DepartmentForm> label="departmentName" name="departmentName">
+        <Form.Item<DepartmentForm>
+          label={t("content.department.DepartmentName")}
+          name="departmentName"
+        >
           <Input
             className="input-profile-item"
             placeholder="Tên khoa phòng mới"
           />
         </Form.Item>
 
-        <Form.Item<DepartmentForm> label="location" name="location">
+        <Form.Item<DepartmentForm>
+          label={t("content.department.Location")}
+          name="location"
+        >
           <Input
             className="input-profile-item"
             placeholder="Tòa nhà, tầng, dãy phòng"
           />
         </Form.Item>
         <Form.Item<DepartmentForm>
-          label="funcDescription"
+          label={t("content.department.FuncDescription")}
           name="funcDescription"
         >
           <Input
@@ -105,7 +118,7 @@ const AddDepartmentScreen = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" className="btn-submit">
-            Submit
+            {t("content.common.Submit")}
           </Button>
         </Form.Item>
       </Form>

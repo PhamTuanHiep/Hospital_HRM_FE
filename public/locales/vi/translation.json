@@ -5,12 +5,12 @@
         "Logout": "Đăng xuất",
         "Intro": "Giới thiệu",
         "Vision": "Tầm nhìn - sứ mệnh",
-        "Origanization": "Cơ cấu tổ chức",
+        "Organization": "Cơ cấu tổ chức",
         "BoardOfDirectors": "Ban lãnh đạo bệnh viện",
         "Department": "Đơn vị - khoa phòng",
         "NewsAndEvents": "Tin tức và sự kiện",
         "News": "Tin tức bệnh viện",
-        "Reserch": "Nghiên cứu",
+        "Research": "Nghiên cứu",
         "Nutrition": "Góc dinh dưỡng",
         "Contact": "Liên hệ",
         "Recruitment": "Tuyển dụng",
@@ -40,8 +40,8 @@
             "Male": "Nam",
             "Female": "Nữ",
             "Status": "Trạng thái",
-            "UpdatedAt": "Ngày cập nhật",
             "CreatedAt": "Ngày tạo",
+            "UpdatedAt": "Ngày cập nhật",
             "Edit": "Chỉnh sửa",
             "View": "Xem chi tiết",
             "Update": "Cập nhật",
@@ -58,7 +58,7 @@
             "ViewAccountTitle": "Xem thông tin tài khoản",
             "UpdateAccountTitle": "Cập nhật thông tin tài khoản",
             "DeleteAccountTitle": "Xóa tài khoản",
-            "DeleteAccount": "Bạn muốn xóa tài khoản này"
+            "AskAboutDeleteAccount": "Bạn muốn xóa tài khoản này"
         },
         "info": {
             "Email": "Email",
@@ -109,7 +109,26 @@
             "Location": "Vị trí khoa/phòng",
             "FuncDescription": "Chức năng",
             "Users": "Nhân viên",
-            "AddDepartment": "Tạo thêm khoa/phòng"
+            "AddDepartment": "Tạo thêm khoa/phòng",
+            "UpdateDepartmentTitle": "Cập nhật thông tin khoa/phòng",
+            "DeleteDepartment": "Xóa khoa/phòng",
+            "AskAboutDeleteDepartment": "Bạn muốn xóa khoa/phòng này",
+            "HinderDeleteDepartmentTitle": "Hành vi của bạn không thể thực hiện",
+            "HinderDeleteContent": "Bạn không thể xóa các khoa phòng vẫn còn nhân viên",
+            "CreateDepartment": "Tạo khoa/phòng mới"
+        },
+        "position": {
+            "PositionId": "Mã chức vụ",
+            "PositionName": "Chức vụ",
+            "SalaryCoefficient": "Hệ số lương",
+            "Users": "Nhân viên",
+            "PositionAllowances": "Trợ cấp",
+            "UpdatePositionTitle": "Cập nhật chức vụ",
+            "DeletePositionTitle": "Xóa chức vụ",
+            "AskAboutDeletePosition": "Bạn muốn xóa chức vụ này",
+            "HinderDeletePositionTitle": "Hành vi của bạn không thể thực hiện",
+            "HinderDeletePositionContent": "Bạn không thể xóa chức vụ vẫn đang được áp dụng này",
+            "CreatePosition": "Tạo thêm chức vụ mới"
         },
         "allowance": {
             "TypesOfInsurance": "Các loại bảo hiểm",

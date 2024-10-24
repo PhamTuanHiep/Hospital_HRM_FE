@@ -34,6 +34,7 @@ import UpdateJobModal from "./updateJobModal/UpdateJobModal";
 import DeleteJobModal from "./deleteJobModal/DeleteJobModal";
 import HinderDeleteJobModal from "./hinderDeleteJobModal/HinderDeleteJobModal";
 import { managerChildPaths } from "../../../constants/constant.path";
+import { useTranslation } from "react-i18next";
 
 type DataIndex = keyof PositionColumnType;
 interface TableDataType extends PositionColumnType {}
@@ -41,6 +42,7 @@ interface TableDataType extends PositionColumnType {}
 const JobManagementTable = () => {
   const searchInput = useRef<InputRef>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");
   const [searchedColumn, setSearchedColumn] = useState<string>("");
@@ -56,8 +58,6 @@ const JobManagementTable = () => {
 
   const [positions, setPositions] = useState<PositionDetail[]>([INIT_POSITION]);
   const [position, setPosition] = useState<PositionDetail>(INIT_POSITION);
-  console.log("positions:", positions);
-  console.log("positionAllowances:", positionAllowances);
 
   useEffect(() => {
     fetchPositions();
@@ -236,7 +236,7 @@ const JobManagementTable = () => {
 
   const POSITION_COLUMNS: TableColumnsType<TableDataType> = [
     {
-      title: "positionId",
+      title: t("content.position.PositionId"),
       dataIndex: "positionId",
       sorter: {
         compare: (a, b) => a.positionId.localeCompare(b.positionId),
@@ -244,7 +244,7 @@ const JobManagementTable = () => {
       },
     },
     {
-      title: "positionName",
+      title: t("content.position.PositionName"),
       dataIndex: "positionName",
       sorter: {
         compare: (a, b) => a.positionName.localeCompare(b.positionName),
@@ -253,21 +253,21 @@ const JobManagementTable = () => {
       ...getColumnSearchProps("positionName"),
     },
     {
-      title: "salaryCoefficient",
+      title: t("content.position.SalaryCoefficient"),
       dataIndex: "salaryCoefficient",
     },
     {
-      title: "users",
+      title: t("content.position.Users"),
       dataIndex: "users",
       width: 250,
     },
     {
-      title: "positionAllowances",
+      title: t("content.position.PositionAllowances"),
       dataIndex: "positionAllowances",
       width: 250,
     },
     {
-      title: "Created At",
+      title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
       sorter: {
         compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
@@ -275,7 +275,7 @@ const JobManagementTable = () => {
       },
     },
     {
-      title: "Updated At",
+      title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
       sorter: {
         compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
@@ -283,21 +283,20 @@ const JobManagementTable = () => {
       },
     },
     {
-      title: "Action",
       dataIndex: "actions",
       className: "title_content-center",
       render: (value) => {
         return (
           <Flex justify="space-between" gap={8}>
             <Button onClick={() => handleUpdatePosition(value)} type="primary">
-              Update
+              {t("content.common.Update")}
             </Button>
             <Button
               onClick={() => handleDeletePosition(value)}
               type="primary"
               danger
             >
-              Delete
+              {t("content.common.Delete")}
             </Button>
           </Flex>
         );
@@ -336,7 +335,7 @@ const JobManagementTable = () => {
         className="btn-add-object"
         onClick={() => handleAddPosition()}
       >
-        Add Position
+        {t("content.position.CreatePosition")}
       </Button>
       <Table<TableDataType>
         columns={POSITION_COLUMNS}

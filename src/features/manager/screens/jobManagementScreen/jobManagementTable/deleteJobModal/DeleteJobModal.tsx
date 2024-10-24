@@ -1,6 +1,7 @@
 import { List, Modal } from "antd";
 import { PositionDetail } from "../../../../../../common/common.type";
 import { deletePosition } from "../../../../../../api/apiServices";
+import { useTranslation } from "react-i18next";
 
 interface DeleteJobModalProps {
   isModalOpen: boolean;
@@ -16,6 +17,8 @@ const DeleteJobModal = ({
   position,
   confirmLoading,
 }: DeleteJobModalProps) => {
+  const { t } = useTranslation();
+
   const handleOk = async () => {
     const res = await deletePosition(position.positionId);
     if (res) {
@@ -33,13 +36,20 @@ const DeleteJobModal = ({
 
   return (
     <Modal
-      title="Delete position"
+      title={t("content.position.DeletePositionTitle")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
+      okText={t("content.common.Submit")}
+      cancelText={t("content.common.Cancel")}
     >
-      <List>Would you like delete department: {position.positionName}</List>
+      <List>
+        {" "}
+        {` ${t("content.position.AskAboutDeletePosition")}: ${
+          position.positionName
+        }?`}
+      </List>
     </Modal>
   );
 };

@@ -53,7 +53,7 @@ const HeaderComponent = () => {
           key: "2-sub-2",
           label: (
             <NavLink to={IntroPaths.ORGANIZATION} className="nav-link">
-              {t("homepage.Origanization")}
+              {t("homepage.Organization")}
             </NavLink>
           ),
         },
@@ -96,7 +96,7 @@ const HeaderComponent = () => {
           key: "3-sub-2",
           label: (
             <NavLink to={NewsAndEventsPaths.RESEARCH} className="nav-link">
-              {t("homepage.Reserch")}
+              {t("homepage.Research")}
             </NavLink>
           ),
         },

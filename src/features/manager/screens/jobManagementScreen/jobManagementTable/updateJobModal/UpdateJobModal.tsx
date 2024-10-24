@@ -3,6 +3,7 @@ import { useEffect, useMemo } from "react";
 import { PositionDetail } from "../../../../../../common/common.type";
 import { putPosition } from "../../../../../../api/apiServices";
 import { PositionForm } from "../../../../constants/manager.type";
+import { useTranslation } from "react-i18next";
 
 interface UpdateJobModalProps {
   isModalOpen: boolean;
@@ -19,6 +20,7 @@ const UpdateJobModal = ({
   confirmLoading,
 }: UpdateJobModalProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   const defaultValues = useMemo(() => {
     return {
@@ -57,12 +59,12 @@ const UpdateJobModal = ({
 
   return (
     <Modal
-      title="Update Position"
+      title={t("content.position.UpdatePositionTitle")}
       open={isModalOpen}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       footer={[
-        <Button onClick={handleCancel}>Cancel</Button>,
+        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           form="updatePositionForm"
           key="submit"
@@ -71,7 +73,7 @@ const UpdateJobModal = ({
           style={{ width: "50%" }}
           onClick={handleOk}
         >
-          Submit
+          {t("content.common.Submit")}
         </Button>,
       ]}
     >
@@ -86,12 +88,15 @@ const UpdateJobModal = ({
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<PositionForm> label="positionId" name="positionId">
+        <Form.Item<PositionForm>
+          label={t("content.position.PositionId")}
+          name="positionId"
+        >
           <Input disabled />
         </Form.Item>
 
         <Form.Item<PositionForm>
-          label="positionName"
+          label={t("content.position.PositionName")}
           name="positionName"
           rules={[
             { required: true, message: "Please input your positionName!" },
@@ -101,7 +106,7 @@ const UpdateJobModal = ({
         </Form.Item>
 
         <Form.Item<PositionForm>
-          label="salaryCoefficient"
+          label={t("content.position.SalaryCoefficient")}
           name="salaryCoefficient"
           rules={[
             { required: true, message: "Please input salaryCoefficient!" },
