@@ -109,7 +109,7 @@
             "Location": "Location",
             "FuncDescription": "FuncDescription",
             "Users": "Employees",
-            "AddDepartment": "Create more departments",
+            "AddDepartment": "Create new department",
             "UpdateDepartmentTitle": "Update department information",
             "DeleteDepartment": "Delete department",
             "AskAboutDeleteDepartment": "You want to delete this department",

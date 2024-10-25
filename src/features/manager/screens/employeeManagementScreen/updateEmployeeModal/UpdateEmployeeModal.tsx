@@ -1,13 +1,23 @@
 import { Button, Flex, Form, FormProps, Input, Modal, Select } from "antd";
-import { UserDetail, UserPost } from "../../../../../common/common.type";
-import { useEffect, useMemo } from "react";
-import { GenderId, GenderName } from "../../../../../common/common.constant";
 import {
-  departmentOptions,
-  positionOptions,
-  weeklyScheduleOptions,
-} from "../../../constants/manager.help";
-import { putUser } from "../../../../../api/apiServices";
+  DepartmentDetail,
+  PositionDetail,
+  UserDetail,
+  UserPost,
+} from "../../../../../common/common.type";
+import { useEffect, useMemo, useState } from "react";
+import {
+  GenderId,
+  GenderName,
+  INIT_DEPARTMENT,
+  INIT_POSITION,
+} from "../../../../../common/common.constant";
+import { weeklyScheduleOptions } from "../../../constants/manager.help";
+import {
+  getDepartments,
+  getPositions,
+  putUser,
+} from "../../../../../api/apiServices";
 import { useTranslation } from "react-i18next";
 
 interface UpdateEmployeeModalProps {
@@ -27,6 +37,38 @@ const UpdateEmployeeModal = ({
   const [form] = Form.useForm();
   const { t } = useTranslation();
 
+  const [departments, setDepartments] = useState<DepartmentDetail[]>([
+    INIT_DEPARTMENT,
+  ]);
+  const [positions, setPositions] = useState<PositionDetail[]>([INIT_POSITION]);
+
+  const fetchDepartments = async () => {
+    const res = await getDepartments();
+    if (res) {
+      const departmentsApi = res.data.data as DepartmentDetail[];
+      setDepartments(departmentsApi);
+    }
+  };
+  const fetchPositions = async () => {
+    const res = await getPositions();
+    if (res) {
+      const positionsApi = res.data.data as PositionDetail[];
+      setPositions(positionsApi);
+    }
+  };
+  const departmentOptions = useMemo(() => {
+    return departments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName,
+    }));
+  }, [departments]);
+  const positionOptions = useMemo(() => {
+    return positions.map((position) => ({
+      value: position.positionId,
+      label: position.positionName,
+    }));
+  }, [positions]);
+
   const defaultValues = useMemo(() => {
     return {
       email: employee.account?.email,
@@ -45,10 +87,14 @@ const UpdateEmployeeModal = ({
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
 
+  useEffect(() => {
+    fetchDepartments();
+    fetchPositions();
+  }, []);
+
   const onFinish: FormProps<UserPost>["onFinish"] = async (values) => {
     const { email, ...employeeUpdate } = values as UserPost;
     const res = await putUser(employee.userId, employeeUpdate);
-    console.log(res);
     if (res?.data.affected != 0) {
       setIsModalOpen(false);
       setReset(true);

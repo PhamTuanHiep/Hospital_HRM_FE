@@ -7,16 +7,26 @@ import {
   Select,
   Typography,
 } from "antd";
-import { UserForm, UserPost } from "../../../../../common/common.type";
-import { useEffect, useMemo } from "react";
-import { GenderId, GenderName } from "../../../../../common/common.constant";
-import dayjs from "dayjs";
 import {
-  departmentOptions,
-  positionOptions,
-  weeklyScheduleOptions,
-} from "../../../constants/manager.help";
-import { postUser } from "../../../../../api/apiServices";
+  DepartmentDetail,
+  PositionDetail,
+  UserForm,
+  UserPost,
+} from "../../../../../common/common.type";
+import { useEffect, useMemo, useState } from "react";
+import {
+  GenderId,
+  GenderName,
+  INIT_DEPARTMENT,
+  INIT_POSITION,
+} from "../../../../../common/common.constant";
+import dayjs from "dayjs";
+import { weeklyScheduleOptions } from "../../../constants/manager.help";
+import {
+  getDepartments,
+  getPositions,
+  postUser,
+} from "../../../../../api/apiServices";
 import { useNavigate } from "react-router-dom";
 import { managerPaths } from "../../../constants/constant.path";
 import "./AddUserProfileScreen.scss";
@@ -26,7 +36,40 @@ const AddUserProfileScreen = () => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
 
+  const [departments, setDepartments] = useState<DepartmentDetail[]>([
+    INIT_DEPARTMENT,
+  ]);
+  const [positions, setPositions] = useState<PositionDetail[]>([INIT_POSITION]);
+
+  const fetchDepartments = async () => {
+    const res = await getDepartments();
+    if (res) {
+      const departmentsApi = res.data.data as DepartmentDetail[];
+      setDepartments(departmentsApi);
+    }
+  };
+  const fetchPositions = async () => {
+    const res = await getPositions();
+    if (res) {
+      const positionsApi = res.data.data as PositionDetail[];
+      setPositions(positionsApi);
+    }
+  };
+
   const navigate = useNavigate();
+
+  const departmentOptions = useMemo(() => {
+    return departments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName,
+    }));
+  }, [departments]);
+  const positionOptions = useMemo(() => {
+    return positions.map((position) => ({
+      value: position.positionId,
+      label: position.positionName,
+    }));
+  }, [positions]);
 
   const defaultValues = useMemo(() => {
     return {
@@ -54,6 +97,11 @@ const AddUserProfileScreen = () => {
   useEffect(() => {
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
+
+  useEffect(() => {
+    fetchDepartments();
+    fetchPositions();
+  }, []);
 
   const onFinish: FormProps<UserPost>["onFinish"] = async (values) => {
     values.birthday = dayjs(values.birthday).format("DD/MM/YYYY");
