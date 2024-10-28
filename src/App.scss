@@ -10,9 +10,15 @@
   background-color: grey;
   #hhrm-ui {
     background-color: #f3f5f6;
-    #content {
-      width: 1080px;
-      margin: 0 auto;
+    #container {
+      width: 100%;
+      background-color: white;
+      #content {
+        width: 1080px;
+        margin: 0 auto;
+        background-color: #f3f5f6;
+        padding: 12px;
+      }
     }
   }
 }

@@ -1,0 +1,21 @@
+#public-clinic {
+  .ant-card-body {
+    .list-department {
+      .item-department {
+        width: 320px;
+        padding: 0 4px;
+        .ant-image {
+          height: 200px;
+
+          .ant-image-img {
+            width: 300px;
+            object-fit: cover;
+          }
+        }
+        h5 {
+          margin-top: 14px;
+        }
+      }
+    }
+  }
+}

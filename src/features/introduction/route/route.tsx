@@ -1,9 +1,11 @@
 import { RouteObject } from "react-router-dom";
-import { IntroPaths } from "../constants/constant.path";
-import VisionScreen from "../screens/VisionScreen";
-import OriganizationScreen from "../screens/OriganizationScreen";
-import ManagementScreen from "../screens/ManagementScreen";
-import DepartmentScreen from "../screens/DepartmentScreen";
+import { DepartmentClinic, IntroPaths } from "../constants/constant.path";
+import VisionScreen from "../screens/VisionScreen/VisionScreen";
+import BoardOfDirectorsScreen from "../screens/BoardOfDirectorsScreen";
+import DepartmentScreen from "../screens/Department-Clinic/DepartmentScreen";
+import OrganizationScreen from "../screens/OrganizationScreen/OrganizationScreen";
+import ErrorPage from "../../../error-page";
+import ClinicScreen from "../screens/Department-Clinic/ClinicScreen";
 
 const VISION_ROUTE: RouteObject = {
   path: IntroPaths.VISION,
@@ -11,15 +13,25 @@ const VISION_ROUTE: RouteObject = {
 };
 const ORGANIZATION_ROUTE: RouteObject = {
   path: IntroPaths.ORGANIZATION,
-  element: <OriganizationScreen />,
+  element: <OrganizationScreen />,
 };
 const MANAGEMENT_ROUTE: RouteObject = {
-  path: IntroPaths.MANAGEMENT,
-  element: <ManagementScreen />,
+  path: IntroPaths.BOARD_OF_DIRECTORS,
+  element: <BoardOfDirectorsScreen />,
 };
 const DEPARTMENT_ROUTE: RouteObject = {
-  path: IntroPaths.DEPARTMENT,
-  element: <DepartmentScreen />,
+  path: IntroPaths.DEPARTMENT_CLINIC,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      path: DepartmentClinic.DEPARTMENT,
+      element: <DepartmentScreen />,
+    },
+    {
+      path: DepartmentClinic.CLINIC,
+      element: <ClinicScreen />,
+    },
+  ],
 };
 
 export const INTRO_ROUTES = [

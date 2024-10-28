@@ -2,6 +2,10 @@
 export const IntroPaths = {
   VISION: "intro/vision",
   ORGANIZATION: "intro/organization",
-  BOARDOFDIRECTORS: "intro/board-of-directors",
-  DEPARTMENT: "intro/department",
+  BOARD_OF_DIRECTORS: "intro/board-of-directors",
+  DEPARTMENT_CLINIC: "intro/department-clinic",
+};
+export const DepartmentClinic = {
+  DEPARTMENT: "department",
+  CLINIC: "clinic",
 };

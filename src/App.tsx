@@ -15,8 +15,10 @@ function App() {
       <>
         <Flex vertical id="hhrm-ui">
           <HeaderComponent />
-          <div id="content">
-            <Outlet />
+          <div id="container">
+            <div id="content">
+              <Outlet />
+            </div>
           </div>
           <ToastContainer
             position="top-center"

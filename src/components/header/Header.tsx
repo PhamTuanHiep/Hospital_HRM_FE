@@ -8,7 +8,10 @@ import "./Header.scss";
 
 import { ContactPaths } from "../../features/contact/constants/constant.path";
 import { RecruitmentPaths } from "../../features/recruitment/constants/constant.path";
-import { IntroPaths } from "../../features/introduction/constants/constant.path";
+import {
+  DepartmentClinic,
+  IntroPaths,
+} from "../../features/introduction/constants/constant.path";
 import { NewsAndEventsPaths } from "../../features/newsAndEvents/constants/constant.path";
 import { useAppSelector } from "../../app/hooks";
 import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
@@ -60,7 +63,7 @@ const HeaderComponent = () => {
         {
           key: "2-sub-3",
           label: (
-            <NavLink to={IntroPaths.BOARDOFDIRECTORS} className="nav-link">
+            <NavLink to={IntroPaths.BOARD_OF_DIRECTORS} className="nav-link">
               {t("homepage.BoardOfDirectors")}
             </NavLink>
           ),
@@ -68,10 +71,34 @@ const HeaderComponent = () => {
         {
           key: "2-sub-4",
           label: (
-            <NavLink to={IntroPaths.DEPARTMENT} className="nav-link">
-              {t("homepage.Department")}
+            <NavLink to="#" className="nav-link">
+              {t("homepage.DepartmentClinic")}
             </NavLink>
           ),
+          children: [
+            {
+              key: "2-sub-4-sub-1",
+              label: (
+                <NavLink
+                  to={`${IntroPaths.DEPARTMENT_CLINIC}/${DepartmentClinic.DEPARTMENT}`}
+                  className="nav-link"
+                >
+                  {t("homepage.Department")}
+                </NavLink>
+              ),
+            },
+            {
+              key: "2-sub-4-sub-2",
+              label: (
+                <NavLink
+                  to={`${IntroPaths.DEPARTMENT_CLINIC}/${DepartmentClinic.CLINIC}`}
+                  className="nav-link"
+                >
+                  {t("homepage.Clinic")}
+                </NavLink>
+              ),
+            },
+          ],
         },
       ],
     },
