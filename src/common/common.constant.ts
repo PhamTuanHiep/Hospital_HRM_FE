@@ -2,6 +2,8 @@ import dayjs from "dayjs";
 import {
   AccountDetail,
   AllowanceDetail,
+  ContractDetail,
+  ContractHistoryDetail,
   DepartmentDetail,
   EvaluateDetail,
   InsuranceDetail,
@@ -61,11 +63,12 @@ export const INIT_USER: UserDetail = {
   otherDescription: "-",
   account: null,
   department: null,
-  leaveHistories: null,
-  overtimeHistories: null,
-  userInsurances: null,
+  leaveHistories: [],
+  overtimeHistories: [],
+  userInsurances: [],
   position: null,
   evaluateHistories: [],
+  contractHistories: [],
   status: "-",
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
@@ -90,8 +93,8 @@ export const INIT_POSITION: PositionDetail = {
   positionId: "",
   positionName: "",
   salaryCoefficient: 0,
-  users: null,
-  positionAllowances: null,
+  users: [],
+  positionAllowances: [],
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
 };
@@ -129,14 +132,14 @@ export const INIT_INSURANCE: InsuranceDetail = {
   insuranceType: "-",
   monthlyPercentage: 0,
   note: "-",
-  userInsurances: null,
+  userInsurances: [],
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
 };
 
 export const INIT_EVALUATE: EvaluateDetail = {
   evaluateId: 0,
-  userId: 0,
+  user: null,
   workLoad: 0,
   capacityOfWork: 0,
   quantityOfScientificWorks: 0,
@@ -155,8 +158,8 @@ export const INIT_DEPARTMENT: DepartmentDetail = {
   departmentName: "",
   location: "",
   funcDescription: "",
-  users: null,
-  overtimeHistories: null,
+  users: [],
+  overtimeHistories: [],
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
 };
@@ -222,6 +225,26 @@ export const INIT_NURSING_TRAINING_RESULTS: NursingTrainingResults = {
   patientMonitoringAndAssessmentSkills: 1,
   abilityToAdaptToTheWorkEnvironment: 1,
   averageScore: 1,
+};
+
+export const INIT_CONTRACT: ContractDetail = {
+  contractId: "",
+  contractNameVI: "",
+  contractNameEN: "",
+  note: [],
+  contractHistories: [],
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+};
+export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
+  contractHistoryId: 0,
+  startDay: "",
+  endDay: "",
+  note: "",
+  user: null,
+  contract: null,
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
 };
 
 export enum RoleName {

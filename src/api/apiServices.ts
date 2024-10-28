@@ -1,5 +1,6 @@
 import { AccountForm, QueryParams, UserPost } from "../common/common.type";
 import {
+  ContractHistoryPost,
   DepartmentForm,
   EvaluatePost,
   PositionForm,
@@ -371,6 +372,68 @@ export const getOvertimeHistory = async (overtimeHistoryId: number) => {
   try {
     return await instance.get(
       `${apiPaths.OVERTIME_HISTORIES}/${overtimeHistoryId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+//CONTRACT
+
+export const getContracts = async () => {
+  try {
+    return await instance.get(`${apiPaths.CONTRACTS}`);
+  } catch (error) {
+    console.log("Error calling API getOvertimes :", error);
+  }
+};
+
+export const getContract = async (contractId: string) => {
+  try {
+    return await instance.get(`${apiPaths.CONTRACTS}/${contractId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+//CONTRACT-HISTORIES
+
+export const getContractHistories = async () => {
+  try {
+    return await instance.get(`${apiPaths.CONTRACT_HISTORIES}`);
+  } catch (error) {
+    console.log("Error calling API getOvertimeHistories :", error);
+  }
+};
+
+export const getContractHistory = async (contractHistoryId: number) => {
+  try {
+    return await instance.get(
+      `${apiPaths.CONTRACT_HISTORIES}/${contractHistoryId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putContractHistory = async (
+  contractHistoryId: number,
+  ContractHistory: ContractHistoryPost
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.CONTRACT_HISTORIES}/${contractHistoryId}`,
+      ContractHistory
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteContractHistory = async (contractHistoryId: number) => {
+  try {
+    return await instance.delete(
+      `${apiPaths.CONTRACT_HISTORIES}/${contractHistoryId}`
     );
   } catch (error) {
     console.log("Error calling API:", error);

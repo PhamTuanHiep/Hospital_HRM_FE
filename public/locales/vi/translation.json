@@ -58,7 +58,8 @@
             "ViewAccountTitle": "Xem thông tin tài khoản",
             "UpdateAccountTitle": "Cập nhật thông tin tài khoản",
             "DeleteAccountTitle": "Xóa tài khoản",
-            "AskAboutDeleteAccount": "Bạn muốn xóa tài khoản này"
+            "AskAboutDeleteAccount": "Bạn muốn xóa tài khoản này",
+            "Note": "Ghi chú"
         },
         "info": {
             "Email": "Email",
@@ -129,6 +130,15 @@
             "HinderDeletePositionTitle": "Hành vi của bạn không thể thực hiện",
             "HinderDeletePositionContent": "Bạn không thể xóa chức vụ vẫn đang được áp dụng này",
             "CreatePosition": "Tạo thêm chức vụ mới"
+        },
+        "contract": {
+            "FullName": "Nhân viên",
+            "PositionName": "Chức Vụ",
+            "StartDay": "Ngày bắt đầu",
+            "EndDay": "Ngày kết thúc",
+            "UpdateContractHistoryTitle": "Cập nhật lịch sử hợp đồng",
+            "DeleteContractHistoryTile": "Xóa lịch sử hợp đồng",
+            "AskAboutDeleteContractHistory": "Bạn có muốn xóa lịch sử hợp đồng này"
         },
         "allowance": {
             "TypesOfInsurance": "Các loại bảo hiểm",

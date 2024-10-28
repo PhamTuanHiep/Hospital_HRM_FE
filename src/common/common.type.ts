@@ -106,6 +106,13 @@ interface RoleShortInfo {
   roleName: string;
 }
 
+export interface ContractHistoryShortInfo {
+  contractHistoryId: number;
+  contractId: string;
+  endDay: string;
+  startDay: string;
+}
+
 export interface AccountForm {
   accountId?: number;
   email: string;
@@ -356,11 +363,12 @@ export interface UserDetail {
   otherDescription: string;
   account: AccountShortInfo | null;
   department: DepartmentShortInfo | null;
-  leaveHistories: LeaveHistoryShortInfo[] | null;
-  overtimeHistories: OvertimeHistoryUserShortInfo[] | null;
-  userInsurances: UserInsuranceShortInfo[] | null;
+  leaveHistories: LeaveHistoryShortInfo[] | [];
+  overtimeHistories: OvertimeHistoryUserShortInfo[] | [];
+  userInsurances: UserInsuranceShortInfo[] | [];
   position: PositionShortInfo | null;
   evaluateHistories: EvaluateShortInfo[];
+  contractHistories: ContractHistoryShortInfo[] | [];
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -380,8 +388,8 @@ export interface PositionDetail {
   positionId: string;
   positionName: string;
   salaryCoefficient: number;
-  users: UserShortInfo[] | null;
-  positionAllowances: PositionAllowanceShortInfo[] | null;
+  users: UserShortInfo[] | [];
+  positionAllowances: PositionAllowanceShortInfo[] | [];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -413,12 +421,11 @@ export interface InsuranceDetail {
   note: string;
   createdAt?: Date;
   updatedAt?: Date;
-  userInsurances: UserInsuranceShortInfo[] | null;
+  userInsurances: UserInsuranceShortInfo[] | [];
 }
 
 export interface EvaluateDetail {
   evaluateId: number;
-  userId: number;
   workLoad: number;
   capacityOfWork: number;
   quantityOfScientificWorks: number;
@@ -428,14 +435,14 @@ export interface EvaluateDetail {
   workSpirit: number;
   workResult: number;
   averageScore: number;
-  user: UserShortInfo;
+  user: UserShortInfo | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface DepartmentDetail extends Department {
-  users: UserShortInfo[] | null;
-  overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | null;
+  users: UserShortInfo[] | [];
+  overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | [];
 }
 
 export interface OvertimeDetail extends Overtime {}
@@ -468,6 +475,33 @@ export interface MedicalTrainingResultsDetail {
   patientMonitoringAndCare: number;
   participationInMedicalResearch: number;
   averageScore: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ContractShortInfo {
+  contractId: string;
+  contractNameVI: string;
+  contractNameEN: string;
+}
+
+export interface ContractDetail {
+  contractId: string;
+  contractNameVI: string;
+  contractNameEN: string;
+  note: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  contractHistories: ContractHistoryShortInfo | [];
+}
+
+export interface ContractHistoryDetail {
+  contractHistoryId: number;
+  startDay: string;
+  endDay: string;
+  note: string;
+  user: UserShortInfo | null;
+  contract: ContractShortInfo | null;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -14,6 +14,8 @@ export const apiPaths = {
   ALLOWANCES: "/allowances",
   OVERTIMES: "/overtimes",
   OVERTIME_HISTORIES: "/overtime-histories",
+  CONTRACTS: "/contracts",
+  CONTRACT_HISTORIES: "/contract-histories",
   MEDICAL_TRAINING_RESULTS: "/medical-training-results",
   NURSING_TRAINING_RESULTS: "/nursing-training-results",
 };

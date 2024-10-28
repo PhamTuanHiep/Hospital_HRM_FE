@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
 import {
   AccountDetail,
+  ContractHistoryDetail,
   DepartmentDetail,
   PositionDetail,
   UserDetail,
@@ -99,4 +99,36 @@ export interface EvaluateForm {
 
 export interface EvaluatePost extends EvaluateForm {
   userId: number;
+}
+
+export interface ContractHistoryColumnType {
+  key: React.Key;
+  fullName: string;
+  positionName: string;
+  gender: number;
+  startDay: string;
+  endDay: string;
+  actions: ContractHistoryDetail;
+}
+
+export interface ContractHistoryPost {
+  userId?: number;
+  contractId: string;
+  startDay: string;
+  endDay: string;
+  note: string;
+}
+
+export interface ContractHistoryForm {
+  contractId: string;
+  startDay: string;
+  endDay: string;
+  note: string;
+}
+
+export interface ContractPost {
+  contractId: string;
+  contractNameVI: string;
+  contractNameEN: string;
+  note?: string[];
 }
