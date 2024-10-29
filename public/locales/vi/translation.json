@@ -140,7 +140,11 @@
             "EndDay": "Ngày kết thúc",
             "UpdateContractHistoryTitle": "Cập nhật lịch sử hợp đồng",
             "DeleteContractHistoryTile": "Xóa lịch sử hợp đồng",
-            "AskAboutDeleteContractHistory": "Bạn có muốn xóa lịch sử hợp đồng này"
+            "AskAboutDeleteContractHistory": "Bạn có muốn xóa lịch sử hợp đồng này",
+            "ContractId": "Mã hợp đồng",
+            "ContractName": "Tên hợp đồng",
+            "ContractNameVI": "Tên hợp đồng (Viet Nam)",
+            "ContractNameEN": "Tên hợp đồng (English)"
         },
         "allowance": {
             "TypesOfInsurance": "Các loại bảo hiểm",

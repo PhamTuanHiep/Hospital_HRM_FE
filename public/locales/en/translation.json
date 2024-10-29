@@ -140,7 +140,11 @@
             "EndDay": "End Day",
             "UpdateContractHistoryTitle": "Update Contract History",
             "DeleteContractHistoryTile": "Delete Contract History",
-            "AskAboutDeleteContractHistory": "Do you want to delete this contract history"
+            "AskAboutDeleteContractHistory": "Do you want to delete this contract history",
+            "ContractId": "Contract Id",
+            "ContractName": "Contract Name",
+            "ContractNameVI": "Contract Name (Viet Nam)",
+            "ContractNameEN": "Contract Name (English)"
         },
         "allowance": {
             "TypesOfInsurance": "Types of Insurance",

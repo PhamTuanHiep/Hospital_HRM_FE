@@ -1,5 +1,6 @@
 import {
   AccountDetail,
+  ContractDetail,
   ContractHistoryDetail,
   DepartmentDetail,
   PositionDetail,
@@ -126,9 +127,22 @@ export interface ContractHistoryForm {
   note: string;
 }
 
-export interface ContractPost {
+export interface ContractColumnType {
+  key: React.Key;
   contractId: string;
+  contractName: string;
+  // note: ReactNode;
+  createdAt: string;
+  updatedAt: string;
+  actions: ContractDetail;
+}
+
+export interface ContractPost {
+  contractId?: string;
   contractNameVI: string;
   contractNameEN: string;
-  note?: string[];
+  note: string[];
+}
+export interface ContractForm extends ContractPost {
+  contractId: string;
 }

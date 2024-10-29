@@ -1,6 +1,7 @@
 import { AccountForm, QueryParams, UserPost } from "../common/common.type";
 import {
   ContractHistoryPost,
+  ContractPost,
   DepartmentForm,
   EvaluatePost,
   PositionForm,
@@ -391,6 +392,25 @@ export const getContracts = async () => {
 export const getContract = async (contractId: string) => {
   try {
     return await instance.get(`${apiPaths.CONTRACTS}/${contractId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putContract = async (
+  contractId: string,
+  Contract: ContractPost
+) => {
+  try {
+    return await instance.put(`${apiPaths.CONTRACTS}/${contractId}`, Contract);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteContract = async (contractId: string) => {
+  try {
+    return await instance.delete(`${apiPaths.CONTRACTS}/${contractId}`);
   } catch (error) {
     console.log("Error calling API:", error);
   }

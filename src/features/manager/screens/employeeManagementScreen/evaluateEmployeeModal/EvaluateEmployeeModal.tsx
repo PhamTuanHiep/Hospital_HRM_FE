@@ -109,7 +109,7 @@ const EvaluateEmployeeModal = ({
       open={isModalOpen}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      className="extend-model "
+      className="extend-modal"
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button

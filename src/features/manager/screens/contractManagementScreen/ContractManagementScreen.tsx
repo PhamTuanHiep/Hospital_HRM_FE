@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { getContractHistories } from "../../../../api/apiServices";
 import { Flex } from "antd";
 import ContractHistoryTable from "./contractHistoryTable/ContractHistoryTable";
+import ContractTable from "./contractTable/ContractTable";
 
 const ContractManagementScreen = () => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const ContractManagementScreen = () => {
 
   return (
     <Flex vertical>
+      <ContractTable />
       <ContractHistoryTable />
     </Flex>
   );

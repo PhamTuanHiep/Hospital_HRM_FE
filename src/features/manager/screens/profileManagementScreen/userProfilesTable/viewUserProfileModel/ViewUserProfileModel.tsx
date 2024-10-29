@@ -64,7 +64,7 @@ const ViewUserProfileModel = ({
       onOk={handleOk}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
-      className="extend-model"
+      className="extend-modal"
       okText={t("content.common.Submit")}
       cancelText={t("content.common.Cancel")}
     >
