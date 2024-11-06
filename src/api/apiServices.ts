@@ -5,6 +5,7 @@ import {
   DepartmentForm,
   EvaluatePost,
   PositionForm,
+  SalaryHistoryPost,
 } from "../features/manager/constants/manager.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
@@ -399,10 +400,10 @@ export const getContract = async (contractId: string) => {
 
 export const putContract = async (
   contractId: string,
-  Contract: ContractPost
+  contract: ContractPost
 ) => {
   try {
-    return await instance.put(`${apiPaths.CONTRACTS}/${contractId}`, Contract);
+    return await instance.put(`${apiPaths.CONTRACTS}/${contractId}`, contract);
   } catch (error) {
     console.log("Error calling API:", error);
   }
@@ -438,12 +439,12 @@ export const getContractHistory = async (contractHistoryId: number) => {
 
 export const putContractHistory = async (
   contractHistoryId: number,
-  ContractHistory: ContractHistoryPost
+  contractHistory: ContractHistoryPost
 ) => {
   try {
     return await instance.put(
       `${apiPaths.CONTRACT_HISTORIES}/${contractHistoryId}`,
-      ContractHistory
+      contractHistory
     );
   } catch (error) {
     console.log("Error calling API:", error);
@@ -494,6 +495,56 @@ export const getNursingTrainingResult = async (trainingResultsId: number) => {
   try {
     return await instance.get(
       `${apiPaths.NURSING_TRAINING_RESULTS}/${trainingResultsId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+//SALARY-HISTORIES
+
+export const getSalaryHistories = async () => {
+  try {
+    return await instance.get(`${apiPaths.SALARY_HISTORY}`);
+  } catch (error) {
+    console.log("Error calling API getOvertimes :", error);
+  }
+};
+
+export const getSalaryHistory = async (salaryHistoryId: number) => {
+  try {
+    return await instance.get(`${apiPaths.SALARY_HISTORY}/${salaryHistoryId}`);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postSalaryHistory = async (salaryHistory: SalaryHistoryPost) => {
+  try {
+    return await instance.post(`${apiPaths.SALARY_HISTORY}`, salaryHistory);
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putSalaryHistory = async (
+  salaryHistoryId: number,
+  salaryHistory: SalaryHistoryPost
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.SALARY_HISTORY}/${salaryHistoryId}`,
+      salaryHistory
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteSalaryHistory = async (salaryHistoryId: number) => {
+  try {
+    return await instance.delete(
+      `${apiPaths.SALARY_HISTORY}/${salaryHistoryId}`
     );
   } catch (error) {
     console.log("Error calling API:", error);

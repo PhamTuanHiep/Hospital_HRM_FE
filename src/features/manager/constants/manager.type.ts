@@ -4,6 +4,7 @@ import {
   ContractHistoryDetail,
   DepartmentDetail,
   PositionDetail,
+  SalaryHistoryShortInfo,
   UserDetail,
 } from "../../../common/common.type";
 
@@ -145,4 +146,86 @@ export interface ContractPost {
 }
 export interface ContractForm extends ContractPost {
   contractId: string;
+}
+
+export interface AttendanceData {
+  employeeId: number;
+  employeeName: string;
+  sickLeave: number; //nghi om
+  compensatoryLeave: number; //nghi bu //nghi ko luong
+  annualLeave: number; //nghi phep
+  publicHoliday: number; //nghi le
+  leaveOfAbsence: number; //nghi che do
+  unpaidLeave: number; //nghi khong luong
+  attendance: number;
+  standardWorkDays: number;
+  bonus: number;
+}
+
+export interface SalaryHistoryColumnData {
+  key: React.Key;
+  userId: number;
+  employeeName: string;
+  departmentName: string;
+  positionName: string;
+  time: string;
+  paidLeave: number;
+  unpaidLeave: number;
+  attendance: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
+  actions: SalaryHistoryPost;
+  // actions: SalaryHistoryDetail;
+}
+export interface SalaryHistoryColumnType {
+  employeeName: string;
+  departmentName: string;
+  positionName: string;
+  time: string;
+  paidLeave: number;
+  unpaidLeave: number;
+  attendance: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
+  actions: SalaryHistoryPost;
+}
+
+export interface SalaryHistoryPost {
+  userId: number;
+  month: string;
+  year: string;
+  attendance: number;
+  paidLeave: number;
+  unpaidLeave: number;
+  numOfDaysOff: number;
+  standardWorkDays: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
+}
+
+export interface PaidPayrollColumnData {
+  key: React.Key;
+  userId: number;
+  employeeName: string;
+  departmentName: string;
+  positionName: string;
+  time: string;
+  paidLeave: number;
+  unpaidLeave: number;
+  attendance: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
+  actions: SalaryHistoryShortInfo;
+}
+
+export interface UnPaidPayrollColumnData {
+  key: React.Key;
+  userId: number;
+  employeeName: string;
+  departmentName: string;
+  positionName: string;
 }

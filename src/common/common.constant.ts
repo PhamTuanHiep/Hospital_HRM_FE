@@ -18,6 +18,7 @@ import {
   PositionDetail,
   QueryParams,
   RoleDetail,
+  SalaryHistoryDetail,
   UserDetail,
   UserInsuranceDetail,
 } from "./common.type";
@@ -69,6 +70,7 @@ export const INIT_USER: UserDetail = {
   position: null,
   evaluateHistories: [],
   contractHistories: [],
+  salaryHistories: [],
   status: "-",
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
@@ -101,8 +103,10 @@ export const INIT_POSITION: PositionDetail = {
 
 export const INIT_LEAVE_HISTORY_DETAIL: LeaveHistoryDetail = {
   leaveHistoryId: 0,
-  startDay: "",
-  endDay: "",
+  month: "",
+  year: "",
+  numOfDaysOff: 0,
+  dayOffList: [],
   user: null,
   leave: null,
   createdAt: dayjs("2000-01-01").toDate(),
@@ -245,6 +249,21 @@ export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
   contract: null,
   createdAt: dayjs("2000-01-01").toDate(),
   updatedAt: dayjs("2000-01-01").toDate(),
+};
+
+export const INIT_SALARY_HISTORY: SalaryHistoryDetail = {
+  salaryHistoryId: 0,
+  userId: 0,
+  month: "",
+  year: "",
+  attendance: 0,
+  paidLeave: 0,
+  unpaidLeave: 0,
+  numOfDaysOff: 0,
+  standardWorkDays: 0,
+  bonus: 0,
+  allowance: 0,
+  salary: 0,
 };
 
 export enum RoleName {

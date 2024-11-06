@@ -113,8 +113,8 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <MoneyCollectOutlined />,
-      text: "Quản lý phúc lợi",
-      path: managerPaths.BENEFITS_MANAGEMENT,
+      text: "Quản lý lương, thưởng, phúc lợi",
+      path: managerPaths.SALARY_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },

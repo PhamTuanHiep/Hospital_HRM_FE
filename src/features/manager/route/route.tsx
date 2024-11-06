@@ -5,7 +5,6 @@ import AccountManagementScreen from "../screens/accountManagementScreen/AccountM
 import ProfileManagementScreen from "../screens/profileManagementScreen/ProfileManagementScreen";
 import DepartmentManagementScreen from "../screens/departmentManagementScreen/DepartmentManagementScreen";
 import JobManagementScreen from "../screens/jobManagementScreen/JobManagementScreen";
-import BenefitsManagementScreen from "../screens/benefitsManagementScreen/BenefitsManagementScreen";
 import ContractManagementScreen from "../screens/contractManagementScreen/ContractManagementScreen";
 import RecruitmentManagementScreen from "../screens/recruitmentManagementScreen/RecruitmentManagementScreen";
 import TrainingScreen from "../screens/trainingScreen/TrainingScreen";
@@ -18,6 +17,9 @@ import AddDepartmentScreen from "../screens/departmentManagementScreen/addDepart
 import DepartmentManagementTable from "../screens/departmentManagementScreen/departmentManagementTable/DepartmentManagementTable";
 import JobManagementTable from "../screens/jobManagementScreen/jobManagementTable/JobManagementTable";
 import AddJobScreen from "../screens/jobManagementScreen/addJobScreen/AddJobScreen";
+import SalaryManagementScreen from "../screens/salaryManagementScreen/SalaryManagementScreen";
+import SalaryManagement from "../screens/salaryManagementScreen/salaryManagement/SalaryManagement";
+import BenefitsManagementScreen from "../screens/salaryManagementScreen/benefitsManagementScreen/BenefitsManagementScreen";
 
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -83,8 +85,19 @@ const JOB_MANAGEMENTS_ROUTE: RouteObject = {
 };
 
 const BENEFITS_MANAGEMENT_ROUTE: RouteObject = {
-  path: managerPaths.BENEFITS_MANAGEMENT,
-  element: <BenefitsManagementScreen />,
+  path: managerPaths.SALARY_MANAGEMENT,
+  element: <SalaryManagementScreen />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: <SalaryManagement />,
+    },
+    {
+      path: managerChildPaths.BENEFITS_MANAGEMENT,
+      element: <BenefitsManagementScreen />,
+    },
+  ],
 };
 
 const RECRUITMENT_MANAGEMENT_ROUTE: RouteObject = {

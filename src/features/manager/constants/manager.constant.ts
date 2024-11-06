@@ -166,3 +166,5 @@ export const OVERTIME_SCHEDULE_COLUMNS = [
     key: overtimeScheduleIndex.sunday,
   },
 ];
+
+export const SALARY_BASE = 2340000;

@@ -14,7 +14,7 @@ export const getFormatNumberToString = (num: number, char: string) => {
 };
 
 export const addSuffix = (value: number | string, suffix: string) => {
-  return value.toString() + suffix;
+  return value.toString() + " " + suffix;
 };
 
 export const getDDMMYYYYfromISO8601DateString = (date: Date | undefined) => {

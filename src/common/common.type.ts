@@ -29,8 +29,10 @@ interface RoleShortInfo {
 interface LeaveHistoryShortInfo {
   leaveHistoryId: number;
   leaveId: string;
-  startDay: string;
-  endDay: string;
+  month: string;
+  year: string;
+  numOfDaysOff: number;
+  dayOffList: number[];
 }
 export interface OvertimeHistoryUserShortInfo {
   overtimeHistoryId: number;
@@ -197,9 +199,10 @@ export interface LeaveHistory {
   leaveHistoryId: number;
   userId: number;
   leaveId: string;
-  startDay: string;
-  endDay: string;
-  note?: string;
+  month: string;
+  year: string;
+  numOfDaysOff: number;
+  dayOffList: number[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -244,6 +247,20 @@ export interface EvaluateShortInfo {
   averageScore: number;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface SalaryHistoryShortInfo {
+  salaryHistoryId: number;
+  month: string;
+  year: string;
+  attendance: number;
+  paidLeave: number;
+  unpaidLeave: number;
+  numOfDaysOff: number;
+  standardWorkDays: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
 }
 
 export interface Department {
@@ -369,6 +386,7 @@ export interface UserDetail {
   position: PositionShortInfo | null;
   evaluateHistories: EvaluateShortInfo[];
   contractHistories: ContractHistoryShortInfo[] | [];
+  salaryHistories: SalaryHistoryShortInfo[] | [];
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -398,11 +416,14 @@ export interface LeaveHistoryDetail {
   leaveHistoryId: number;
   createdAt: Date;
   updatedAt: Date;
-  startDay: string;
-  endDay: string;
+  month: string;
+  year: string;
+  numOfDaysOff: number;
+  dayOffList: number[];
   user: UserShortInfo | null;
   leave: LeaveShortInfo | null;
 }
+
 export interface LeaveDetail extends Leave {}
 
 export interface UserInsuranceDetail {
@@ -504,4 +525,19 @@ export interface ContractHistoryDetail {
   contract: ContractShortInfo | null;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface SalaryHistoryDetail {
+  salaryHistoryId: number;
+  userId: number;
+  month: string;
+  year: string;
+  attendance: number;
+  paidLeave: number;
+  unpaidLeave: number;
+  numOfDaysOff: number;
+  standardWorkDays: number;
+  bonus: number;
+  allowance: number;
+  salary: number;
 }

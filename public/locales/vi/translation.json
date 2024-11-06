@@ -161,6 +161,20 @@
             "ByRate": "Theo tỷ lệ",
             "ByLevel": "Theo mức"
         },
+        "salary": {
+            "UserId": "User ID",
+            "EmployeeName": "Employee Name",
+            "DepartmentName": "Department Name",
+            "PositionName": "Position Name",
+            "MonthlySalary": "Monthly Salary",
+            "PaidLeave": "Paid Leave",
+            "UnpaidLeave": "Unpaid Leave",
+            "Attendance": "Attendance",
+            "StandardWorkDays": "Standard Work Days",
+            "Bonus": "Bonus",
+            "Allowance": "Allowance",
+            "Salary": "Salary"
+        },
         "other": {
             "Male": "Nam",
             "Female": "Nữ"

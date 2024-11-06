@@ -7,8 +7,8 @@ import {
   positionName,
 } from "../../../common/common.constant";
 import {
-  EvaluateDetail,
   EvaluateShortInfo,
+  LeaveHistoryDetail,
   UserDetail,
 } from "../../../common/common.type";
 import dayjs from "dayjs";
@@ -105,4 +105,80 @@ export const isUpdateEvaluate = (
     return getNowEvaluateHistory(evaluateHistories)?.averageScore !== 0;
   }
   return false;
+};
+
+export const getNowMonth = (): string => {
+  return (dayjs().month() + 1).toString();
+};
+
+export const getNowYear = (): string => {
+  return dayjs().year().toString();
+};
+
+//tong so ngay da nghi
+export const getTotalNumberOfDaysOff = (
+  leaveHistories: LeaveHistoryDetail[],
+  userId: number
+): number => {
+  const myLeaveHistories = leaveHistories.filter(
+    (leaveHistory) => leaveHistory.user?.userId === userId
+  );
+  const totalDaysOff = myLeaveHistories.reduce(
+    (total, currentMyLeaveHistory) =>
+      total + currentMyLeaveHistory.numOfDaysOff,
+    0
+  );
+  return totalDaysOff;
+};
+
+//so ngay co the nghi
+export const getTotalNumberOfAllowableDaysOff = (user: UserDetail): number => {
+  const startMonth = dayjs(user.createdAt).month() + 1;
+  const startYear = dayjs(user.createdAt).year();
+  const nowMonth = Number(getNowMonth());
+  const nowYear = Number(getNowYear());
+  let countDaysOff = 0;
+  if (startYear === nowYear) {
+    countDaysOff = nowMonth - startMonth + 1;
+  } else {
+    countDaysOff = nowMonth;
+  }
+  return countDaysOff;
+};
+
+export interface NumberOfDaysOffTypes {
+  paidLeave: number;
+  unpaidLeave: number;
+  numOfDaysOff: number;
+}
+export const getNumberOfDaysOffTypes = (
+  leaveHistories: LeaveHistoryDetail[],
+  user: UserDetail,
+  numOfDaysOff: number
+): NumberOfDaysOffTypes => {
+  const totalNumberOfDaysOff = getTotalNumberOfDaysOff(
+    leaveHistories,
+    user.userId
+  );
+  const totalNumberOfAllowableDaysOff = getTotalNumberOfAllowableDaysOff(user);
+  let paidLeave = 0;
+  let unpaidLeave = 0;
+  const difference = totalNumberOfAllowableDaysOff - totalNumberOfDaysOff;
+  if (difference) {
+    if (numOfDaysOff > difference) {
+      paidLeave = difference;
+      unpaidLeave = numOfDaysOff - difference;
+    } else {
+      paidLeave = numOfDaysOff;
+      unpaidLeave = 0;
+    }
+  } else {
+    paidLeave = 0;
+    unpaidLeave = numOfDaysOff;
+  }
+  return {
+    paidLeave,
+    unpaidLeave,
+    numOfDaysOff,
+  };
 };
