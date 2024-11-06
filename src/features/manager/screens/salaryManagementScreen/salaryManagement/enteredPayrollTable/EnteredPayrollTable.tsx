@@ -313,18 +313,18 @@ const EnteredPayrollTable = ({
       title: t("content.salary.EmployeeName"),
       dataIndex: "employeeName",
       key: "employeeName",
-      width: 130,
-
+      width: 150,
       sorter: {
         compare: (a, b) => a.employeeName.localeCompare(b.employeeName),
         multiple: 4,
       },
+      ...getColumnSearchProps("employeeName"),
     },
     {
       title: t("content.salary.DepartmentName"),
       dataIndex: "departmentName",
       key: "departmentName",
-      width: 130,
+      width: 150,
 
       sorter: {
         compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
@@ -347,19 +347,19 @@ const EnteredPayrollTable = ({
       title: t("content.salary.MonthlySalary"),
       dataIndex: "time",
       key: "time",
-      width: 100,
+      width: 150,
     },
     {
       title: t("content.salary.PaidLeave"),
       dataIndex: "paidLeave",
       key: "paidLeave",
-      width: 100,
+      width: 150,
     },
     {
       title: t("content.salary.UnpaidLeave"),
       dataIndex: "unpaidLeave",
       key: "unpaidLeave",
-      width: 100,
+      width: 150,
     },
     {
       title: t("content.salary.Attendance"),
@@ -377,21 +377,25 @@ const EnteredPayrollTable = ({
       title: t("content.salary.Bonus"),
       dataIndex: "bonus",
       key: "bonus",
-      width: 150,
+      width: 140,
+      render: (value) =>
+        addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
     },
     {
       title: t("content.salary.Allowance"),
       dataIndex: "allowance",
       key: "allowance",
-      width: 150,
+      width: 140,
+      render: (value) =>
+        addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
     },
     {
       title: t("content.salary.Salary"),
       dataIndex: "salary",
       key: "salary",
-      width: 150,
+      width: 140,
       render: (value) =>
-        addSuffix(getFormatNumberToString(Math.round(value), ","), "vnd"),
+        addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
     },
     {
       dataIndex: "actions",

@@ -162,18 +162,18 @@
             "ByLevel": "Theo mức"
         },
         "salary": {
-            "UserId": "User ID",
-            "EmployeeName": "Employee Name",
-            "DepartmentName": "Department Name",
-            "PositionName": "Position Name",
-            "MonthlySalary": "Monthly Salary",
-            "PaidLeave": "Paid Leave",
-            "UnpaidLeave": "Unpaid Leave",
-            "Attendance": "Attendance",
-            "StandardWorkDays": "Standard Work Days",
-            "Bonus": "Bonus",
-            "Allowance": "Allowance",
-            "Salary": "Salary"
+            "UserId": "Mã nhân viên ",
+            "EmployeeName": "Tên nhân viên",
+            "DepartmentName": " Khoa/phòng",
+            "PositionName": "Chức vụ ",
+            "MonthlySalary": "Tháng tính lương",
+            "PaidLeave": "Nghỉ tính lương",
+            "UnpaidLeave": "Nghỉ không tính lương",
+            "Attendance": "Số ngày làm việc",
+            "StandardWorkDays": "Số ngày làm việc theo tiêu chuẩn",
+            "Bonus": "Thưởng ",
+            "Allowance": "Trợ cáp",
+            "Salary": "Lương"
         },
         "other": {
             "Male": "Nam",
