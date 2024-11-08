@@ -19,4 +19,6 @@ export const apiPaths = {
   MEDICAL_TRAINING_RESULTS: "/medical-training-results",
   NURSING_TRAINING_RESULTS: "/nursing-training-results",
   SALARY_HISTORY: "/salary-histories",
+  RECRUITMENT_POSTS: "/recruitment-posts",
+  ANNOUNCEMENT_POSTS: "/announcement-posts",
 };

@@ -1,10 +1,13 @@
 import { AccountForm, QueryParams, UserPost } from "../common/common.type";
 import {
+  AnnouncementPostUpdate,
   ContractHistoryPost,
   ContractPost,
   DepartmentForm,
   EvaluatePost,
   PositionForm,
+  RecruitmentPostCreate,
+  RecruitmentPostUpdate,
   SalaryHistoryPost,
 } from "../features/manager/constants/manager.type";
 import instance from "./api";
@@ -545,6 +548,120 @@ export const deleteSalaryHistory = async (salaryHistoryId: number) => {
   try {
     return await instance.delete(
       `${apiPaths.SALARY_HISTORY}/${salaryHistoryId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+//RECRUITMENT_POST
+
+export const getRecruitmentPosts = async () => {
+  try {
+    return await instance.get(`${apiPaths.RECRUITMENT_POSTS}`);
+  } catch (error) {
+    console.log("Error calling API getRecruitmentPosts :", error);
+  }
+};
+
+export const getRecruitmentPost = async (recruitmentPostId: number) => {
+  try {
+    return await instance.get(
+      `${apiPaths.RECRUITMENT_POSTS}/${recruitmentPostId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postRecruitmentPost = async (
+  recruitmentPostCreate: RecruitmentPostCreate
+) => {
+  try {
+    return await instance.post(
+      `${apiPaths.RECRUITMENT_POSTS}`,
+      recruitmentPostCreate
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putRecruitmentPost = async (
+  recruitmentPostId: number,
+  recruitmentPostUpdate: RecruitmentPostUpdate
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.RECRUITMENT_POSTS}/${recruitmentPostId}`,
+      recruitmentPostUpdate
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteRecruitmentPost = async (recruitmentPostId: number) => {
+  try {
+    return await instance.delete(
+      `${apiPaths.RECRUITMENT_POSTS}/${recruitmentPostId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+//ANNOUNCEMENT_POSTS
+
+export const getAnnouncementPosts = async () => {
+  try {
+    return await instance.get(`${apiPaths.ANNOUNCEMENT_POSTS}`);
+  } catch (error) {
+    console.log("Error calling API getAnnouncementPosts :", error);
+  }
+};
+
+export const getAnnouncementPost = async (announcementPostId: number) => {
+  try {
+    return await instance.get(
+      `${apiPaths.ANNOUNCEMENT_POSTS}/${announcementPostId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const createAnnouncementPost = async (
+  recruitmentPostCreate: RecruitmentPostCreate
+) => {
+  try {
+    return await instance.post(
+      `${apiPaths.ANNOUNCEMENT_POSTS}`,
+      recruitmentPostCreate
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const updateAnnouncementPost = async (
+  announcementPostId: number,
+  announcementPostUpdate: AnnouncementPostUpdate
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.ANNOUNCEMENT_POSTS}/${announcementPostId}`,
+      announcementPostUpdate
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteAnnouncementPost = async (announcementPostId: number) => {
+  try {
+    return await instance.delete(
+      `${apiPaths.ANNOUNCEMENT_POSTS}/${announcementPostId}`
     );
   } catch (error) {
     console.log("Error calling API:", error);

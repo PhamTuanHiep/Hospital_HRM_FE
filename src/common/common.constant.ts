@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import {
   AccountDetail,
   AllowanceDetail,
+  AnnouncementPostDetail,
   ContractDetail,
   ContractHistoryDetail,
   DepartmentDetail,
@@ -17,6 +18,7 @@ import {
   PositionAllowanceDetail,
   PositionDetail,
   QueryParams,
+  RecruitmentPostDetail,
   RoleDetail,
   SalaryHistoryDetail,
   UserDetail,
@@ -264,6 +266,33 @@ export const INIT_SALARY_HISTORY: SalaryHistoryDetail = {
   bonus: 0,
   allowance: 0,
   salary: 0,
+};
+
+export const INIT_RECRUITMENT_POST_DETAIL: RecruitmentPostDetail = {
+  recruitmentPostId: 0,
+  title: "",
+  subtitle: "",
+  generalRequirements: "",
+  benefits: "",
+  requiredDocuments: "",
+  contact: "",
+  image: "",
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+  user: null,
+};
+
+export const INIT_ANNOUNCEMENT_POST_DETAIL: AnnouncementPostDetail = {
+  announcementPostId: 0,
+  title: "",
+  abstract: "",
+  notificationType: "",
+  contentDetail: "",
+  contact: "",
+  image: "",
+  createdAt: dayjs("2000-01-01").toDate(),
+  updatedAt: dayjs("2000-01-01").toDate(),
+  user: null,
 };
 
 export enum RoleName {

@@ -541,3 +541,30 @@ export interface SalaryHistoryDetail {
   allowance: number;
   salary: number;
 }
+
+export interface RecruitmentPostDetail {
+  recruitmentPostId: number;
+  title: string;
+  subtitle: string;
+  generalRequirements: string;
+  benefits: string;
+  requiredDocuments: string;
+  contact: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: UserShortInfo | null;
+}
+
+export interface AnnouncementPostDetail {
+  announcementPostId: number;
+  title: string;
+  abstract: string;
+  notificationType: string;
+  contentDetail: string;
+  contact: string;
+  image: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: UserShortInfo | null;
+}
