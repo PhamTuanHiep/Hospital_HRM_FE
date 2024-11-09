@@ -7,6 +7,7 @@ import {
   SalaryHistoryShortInfo,
   UserDetail,
 } from "../../../common/common.type";
+import { RcFile } from "antd/es/upload";
 
 export interface AccountsData {
   key: React.Key;
@@ -237,7 +238,7 @@ export interface RecruitmentPostCreate {
   benefits: string;
   requiredDocuments: string;
   contact: string;
-  image: string;
+  image: RcFile | undefined;
   userId: number;
 }
 
@@ -271,3 +272,17 @@ export interface AnnouncementPostUpdate {
   image?: string;
   userId?: number;
 }
+
+// export interface RecruitmentPostDetail {
+//   recruitmentPostId: number;
+//   title: string;
+//   subtitle: string;
+//   generalRequirements: string;
+//   benefits: string;
+//   requiredDocuments: string;
+//   contact: string;
+//   image: string;
+//   createdAt: Date;
+//   updatedAt: Date;
+//   user: UserShortInfo | null;
+// }

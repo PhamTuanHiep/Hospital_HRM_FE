@@ -175,6 +175,16 @@
             "Allowance": "Allowance",
             "Salary": "Salary"
         },
+        "recruitmentPost": {
+            "Title": "Title",
+            "Subtitle": "Subtitle",
+            "GeneralRequirements": "General Requirements",
+            "Benefits": "Benefits",
+            "RequiredDocuments": "Required Documents",
+            "Contact": "Contact",
+            "Image": "Image",
+            "Author": "Author"
+        },
         "other": {
             "Male": "Male",
             "Female": "Female"

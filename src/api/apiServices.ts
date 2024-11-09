@@ -577,11 +577,23 @@ export const getRecruitmentPost = async (recruitmentPostId: number) => {
 export const postRecruitmentPost = async (
   recruitmentPostCreate: RecruitmentPostCreate
 ) => {
+  const formData = new FormData();
+
+  formData.append("image", recruitmentPostCreate.image);
+  formData.append("title", recruitmentPostCreate.title);
+  formData.append("subtitle", recruitmentPostCreate.subtitle);
+  formData.append(
+    "generalRequirements",
+    recruitmentPostCreate.generalRequirements
+  );
+  formData.append("requiredDocuments", recruitmentPostCreate.requiredDocuments);
+  formData.append("contact", recruitmentPostCreate.contact);
+  formData.append("benefits", recruitmentPostCreate.benefits);
+
+  formData.append("userId", recruitmentPostCreate.userId.toString());
+
   try {
-    return await instance.post(
-      `${apiPaths.RECRUITMENT_POSTS}`,
-      recruitmentPostCreate
-    );
+    return await instance.post(`${apiPaths.RECRUITMENT_POSTS}`, formData);
   } catch (error) {
     console.log("Error calling API:", error);
   }

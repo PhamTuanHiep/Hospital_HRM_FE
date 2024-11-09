@@ -175,6 +175,16 @@
             "Allowance": "Trợ cáp",
             "Salary": "Lương"
         },
+        "recruitmentPost": {
+            "Title": "Tiêu đề",
+            "Subtitle": "Phụ đề",
+            "GeneralRequirements": "Yêu cầu chung",
+            "Benefits": "Quyền lợi ",
+            "RequiredDocuments": "Yêu cầu về hồ sơ ",
+            "Contact": "Liên hệ",
+            "Image": "Ảnh bìa",
+            "Author": "Tác giả"
+        },
         "other": {
             "Male": "Nam",
             "Female": "Nữ"

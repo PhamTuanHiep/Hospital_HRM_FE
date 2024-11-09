@@ -1,18 +1,24 @@
 import { RecruitmentPostDetail } from "../../../../../common/common.type";
 import { Button, Flex, Image, Typography } from "antd";
-import "./RecruitmentPost.scss";
+import "./RecruitmentPoster.scss";
 
 const { Text, Title } = Typography;
-interface RecruitmentPostProps {
+interface RecruitmentPosterProps {
   reset: Boolean;
   setReset: Function;
   recruitmentPost: RecruitmentPostDetail;
 }
-const RecruitmentPost = ({
+const RecruitmentPoster = ({
   reset,
   setReset,
   recruitmentPost,
-}: RecruitmentPostProps) => {
+}: RecruitmentPosterProps) => {
+  const handleDeleteRecruitmentPoster = () => {
+    alert("delete");
+  };
+  const handleUpdateRecruitmentPoster = () => {
+    alert("update");
+  };
   return (
     <Flex className="item-post" align="center" justify="space-between" gap={12}>
       <Flex className="item-content" align="flex-start" gap={12}>
@@ -28,10 +34,14 @@ const RecruitmentPost = ({
         </Flex>
       </Flex>
       <Flex className="item-btn" align="center" gap={8}>
-        <Button className="btn-delete">Delete</Button>
-        <Button className="btn-edit">Update</Button>
+        <Button className="btn-delete" onClick={handleDeleteRecruitmentPoster}>
+          Delete
+        </Button>
+        <Button className="btn-edit" onClick={handleUpdateRecruitmentPoster}>
+          Update
+        </Button>
       </Flex>
     </Flex>
   );
 };
-export default RecruitmentPost;
+export default RecruitmentPoster;
