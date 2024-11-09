@@ -4,44 +4,53 @@ import "./RecruitmentPoster.scss";
 
 const { Text, Title } = Typography;
 interface RecruitmentPosterProps {
-  reset: Boolean;
-  setReset: Function;
   recruitmentPost: RecruitmentPostDetail;
+  handleUpdateRecruitmentPoster: Function;
+  handleDeleteRecruitmentPoster: Function;
 }
 const RecruitmentPoster = ({
-  reset,
-  setReset,
   recruitmentPost,
+  handleUpdateRecruitmentPoster,
+  handleDeleteRecruitmentPoster,
 }: RecruitmentPosterProps) => {
-  const handleDeleteRecruitmentPoster = () => {
-    alert("delete");
-  };
-  const handleUpdateRecruitmentPoster = () => {
-    alert("update");
-  };
   return (
-    <Flex className="item-post" align="center" justify="space-between" gap={12}>
-      <Flex className="item-content" align="flex-start" gap={12}>
-        <Image preview={false} src={recruitmentPost.image} />
-        <Flex
-          className="item-text"
-          vertical
-          justify="flex-start"
-          align="flex-start"
-        >
-          <Title level={5}>{recruitmentPost.title}</Title>
-          <Text className="item-subtitle">{recruitmentPost.subtitle}</Text>
+    <div>
+      <Flex
+        className="item-post"
+        align="center"
+        justify="space-between"
+        gap={12}
+      >
+        <Flex className="item-content" align="flex-start" gap={12}>
+          <Image preview={false} src={recruitmentPost.image} />
+          <Flex
+            className="item-text"
+            vertical
+            justify="flex-start"
+            align="flex-start"
+          >
+            <Title level={5}>{recruitmentPost.title}</Title>
+            <Text className="item-subtitle">{recruitmentPost.subtitle}</Text>
+          </Flex>
+        </Flex>
+        <Flex className="item-btn" align="center" gap={8}>
+          <Button
+            key="delete"
+            className="btn-delete"
+            onClick={(e) => handleDeleteRecruitmentPoster(recruitmentPost)}
+          >
+            Delete
+          </Button>
+          <Button
+            key="edit"
+            className="btn-edit"
+            onClick={(e) => handleUpdateRecruitmentPoster(recruitmentPost)}
+          >
+            Update
+          </Button>
         </Flex>
       </Flex>
-      <Flex className="item-btn" align="center" gap={8}>
-        <Button className="btn-delete" onClick={handleDeleteRecruitmentPoster}>
-          Delete
-        </Button>
-        <Button className="btn-edit" onClick={handleUpdateRecruitmentPoster}>
-          Update
-        </Button>
-      </Flex>
-    </Flex>
+    </div>
   );
 };
 export default RecruitmentPoster;

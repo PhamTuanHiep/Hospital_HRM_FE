@@ -70,7 +70,7 @@ const UpdateContractModal = ({
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
-          form="updateContractHistoryForm"
+          form="update_contract_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -83,8 +83,8 @@ const UpdateContractModal = ({
     >
       <Form
         form={form}
-        id="updateContractHistoryForm"
-        name="basic"
+        id="update_contract_form"
+        name="update_contract_form"
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 14 }}
         style={{ maxWidth: 600 }}

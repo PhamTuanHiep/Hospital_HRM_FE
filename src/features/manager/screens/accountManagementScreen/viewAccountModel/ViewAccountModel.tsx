@@ -51,7 +51,7 @@ const ViewAccountModal = ({
     >
       <Form
         form={form}
-        name="basic"
+        name="view_account_modal"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         style={{ maxWidth: 600 }}

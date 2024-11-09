@@ -70,7 +70,7 @@ const ViewUserProfileModel = ({
     >
       <Form
         form={form}
-        name="basic"
+        name="view_account"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         autoComplete="off"

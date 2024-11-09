@@ -1,51 +1,78 @@
-import { Button, Form, FormProps, Input, Modal } from "antd";
-
-import { useEffect, useMemo } from "react";
-import { DepartmentDetail } from "../../../../../../common/common.type";
-import { DepartmentForm } from "../../../../constants/manager.type";
-import { putDepartment } from "../../../../../../api/apiServices";
+import {
+  Button,
+  Form,
+  FormProps,
+  Input,
+  Modal,
+  Typography,
+  UploadFile,
+} from "antd";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import TextArea from "antd/es/input/TextArea";
+import { putRecruitmentPost } from "../../../../../api/apiServices";
+import FileUpload from "../../../../../components/fileUpload/FileUpload";
+import { RecruitmentPostDetail } from "../../../../../common/common.type";
+import { RecruitmentPostUpdate } from "../../../constants/manager.type";
 
 interface UpdateRecruitmentPostModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
   setReset: Function;
-  department: DepartmentDetail;
+  recruitmentPost: RecruitmentPostDetail;
   confirmLoading: boolean;
 }
 const UpdateRecruitmentPostModal = ({
   isModalOpen,
   setIsModalOpen,
   setReset,
-  department,
+  recruitmentPost,
   confirmLoading,
 }: UpdateRecruitmentPostModalProps) => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
 
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+
   const defaultValues = useMemo(() => {
     return {
-      departmentId: `${department.departmentId}`,
-      departmentName: `${department.departmentName}`,
-      location: `${department.location}`,
-      funcDescription: `${department.funcDescription}`,
+      userId: recruitmentPost.user?.userId || "",
+      title: recruitmentPost.title || "",
+      subtitle: recruitmentPost.subtitle || "",
+      generalRequirements: recruitmentPost.generalRequirements || "",
+      benefits: recruitmentPost.benefits || "",
+      requiredDocuments: recruitmentPost.recruitmentPostId || "",
+      contact: recruitmentPost.contact || "",
     };
-  }, [department]);
+  }, [recruitmentPost]);
 
   useEffect(() => {
     form.setFieldsValue(defaultValues);
   }, [form, defaultValues]);
 
-  const onFinish: FormProps<DepartmentForm>["onFinish"] = async (values) => {
-    const departmentUpdate = values as DepartmentForm;
-    const res = await putDepartment(department.departmentId, departmentUpdate);
+  useEffect(() => {
+    form.setFieldValue("image", fileList);
+  }, [fileList]);
+
+  const onFinish: FormProps<RecruitmentPostUpdate>["onFinish"] = async (
+    values
+  ) => {
+    if (fileList.length) {
+      values.image = fileList[0].originFileObj;
+    }
+    values.image = undefined;
+
+    const res = await putRecruitmentPost(
+      recruitmentPost.recruitmentPostId,
+      values
+    );
     if (res) {
       setIsModalOpen(false);
       setReset(true);
     }
   };
 
-  const onFinishFailed: FormProps<DepartmentForm>["onFinishFailed"] = (
+  const onFinishFailed: FormProps<RecruitmentPostUpdate>["onFinishFailed"] = (
     errorInfo
   ) => {
     console.log("Failed:", errorInfo);
@@ -62,13 +89,16 @@ const UpdateRecruitmentPostModal = ({
   return (
     <Modal
       title={t("content.department.UpdateDepartmentTitle")}
+      className="extend-modal_one-column"
       open={isModalOpen}
       onCancel={handleCancel}
       confirmLoading={confirmLoading}
       footer={[
-        <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
+        <Button key="cancel" onClick={handleCancel}>
+          {t("content.common.Cancel")}
+        </Button>,
         <Button
-          form="updateDepartmentForm"
+          form="update_recruitment-post_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -80,45 +110,101 @@ const UpdateRecruitmentPostModal = ({
     >
       <Form
         form={form}
-        id="updateDepartmentForm"
-        name="basic"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 18 }}
-        style={{ maxWidth: 600 }}
+        id="update_recruitment-post_form"
+        name="update_recruitment-post_form"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 20 }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item<DepartmentForm>
-          label={t("content.department.DepartmentId")}
-          name="departmentId"
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Title")}
+          name="title"
+          key="title"
+          rules={[{ required: true, message: "Please input your Title!" }]}
         >
-          <Input disabled />
+          <Input />
         </Form.Item>
 
-        <Form.Item<DepartmentForm>
-          label={t("content.department.DepartmentName")}
-          name="departmentName"
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Subtitle")}
+          name="subtitle"
+          key="subtitle"
+          rules={[{ required: true, message: "Please input your subtitle!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.GeneralRequirements")}
+          name="generalRequirements"
+          key="generalRequirements"
           rules={[
-            { required: true, message: "Please input your departmentName!" },
+            { required: true, message: "Please input General Requirements!" },
           ]}
         >
-          <Input />
+          <TextArea
+            placeholder="Autosize height with minimum and maximum number of lines"
+            autoSize={{ minRows: 4, maxRows: 6 }}
+            rows={4}
+            maxLength={1000}
+          />
         </Form.Item>
-
-        <Form.Item<DepartmentForm>
-          label={t("content.department.Location")}
-          name="location"
-          rules={[{ required: true, message: "Please input location!" }]}
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Benefits")}
+          name="benefits"
+          key="benefits"
+          rules={[{ required: true, message: "Please input Benefits!" }]}
         >
-          <Input />
+          <TextArea
+            placeholder="Autosize height with minimum and maximum number of lines"
+            autoSize={{ minRows: 4, maxRows: 6 }}
+            rows={4}
+            maxLength={1000}
+          />
         </Form.Item>
-        <Form.Item<DepartmentForm>
-          label={t("content.department.FuncDescription")}
-          name="funcDescription"
-          rules={[{ required: true, message: "Please input funcDescription!" }]}
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.RequiredDocuments")}
+          name="requiredDocuments"
+          key="requiredDocuments"
+          rules={[
+            { required: true, message: "Please input Required Documents!" },
+          ]}
         >
-          <Input />
+          <TextArea
+            placeholder="Autosize height with minimum and maximum number of lines"
+            autoSize={{ minRows: 4, maxRows: 6 }}
+            rows={4}
+            maxLength={1000}
+          />
+        </Form.Item>
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Contact")}
+          name="contact"
+          key="contact"
+          rules={[{ required: true, message: "Please input Contact!" }]}
+        >
+          <TextArea
+            placeholder="Autosize height with minimum and maximum number of lines"
+            autoSize={{ minRows: 4, maxRows: 6 }}
+            rows={4}
+            maxLength={500}
+          />
+        </Form.Item>
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Image")}
+          name="image"
+          key="image"
+        >
+          <FileUpload fileList={fileList} setFileList={setFileList} />
+        </Form.Item>
+        <Form.Item<RecruitmentPostUpdate>
+          label={t("content.recruitmentPost.Author")}
+          name="userId"
+          key="userId"
+        >
+          <Typography.Text> {recruitmentPost.user?.fullName}</Typography.Text>
         </Form.Item>
       </Form>
     </Modal>

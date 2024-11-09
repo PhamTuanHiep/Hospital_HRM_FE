@@ -67,7 +67,7 @@ const UpdateAccountModal = ({
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
-          form="updateAccountForm"
+          form="update_account_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -80,8 +80,8 @@ const UpdateAccountModal = ({
     >
       <Form
         form={form}
-        id="updateAccountForm"
-        name="basic"
+        id="update_account_form"
+        name="update_account_form"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         style={{ maxWidth: 600 }}

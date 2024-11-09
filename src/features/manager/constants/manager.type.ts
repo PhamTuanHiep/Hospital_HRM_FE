@@ -242,6 +242,17 @@ export interface RecruitmentPostCreate {
   userId: number;
 }
 
+export interface RecruitmentPostUpdate {
+  title: string;
+  subtitle: string;
+  generalRequirements: string;
+  benefits: string;
+  requiredDocuments: string;
+  contact: string;
+  image?: RcFile | undefined;
+  userId: number;
+}
+
 export interface AnnouncementPostCreate {
   title: string;
   abstract: string;
@@ -250,17 +261,6 @@ export interface AnnouncementPostCreate {
   contact: string;
   image: string;
   userId: number;
-}
-
-export interface RecruitmentPostUpdate {
-  title?: string;
-  subtitle?: string;
-  generalRequirements?: string;
-  benefits?: string;
-  requiredDocuments?: string;
-  contact?: string;
-  image?: string;
-  userId?: number;
 }
 
 export interface AnnouncementPostUpdate {

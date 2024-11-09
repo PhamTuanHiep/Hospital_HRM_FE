@@ -127,7 +127,7 @@ const UpdateEmployeeModal = ({
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
-          form="updateEmployeeForm"
+          form="update_employee_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -139,8 +139,8 @@ const UpdateEmployeeModal = ({
     >
       <Form
         form={form}
-        id="updateEmployeeForm"
-        name="basic"
+        id="update_employee_form"
+        name="update_employee_form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
         onFinish={onFinish}

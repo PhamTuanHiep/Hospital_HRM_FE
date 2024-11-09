@@ -68,7 +68,7 @@ const UpdateDepartmentModal = ({
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
-          form="updateDepartmentForm"
+          form="update_department_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -80,8 +80,8 @@ const UpdateDepartmentModal = ({
     >
       <Form
         form={form}
-        id="updateDepartmentForm"
-        name="basic"
+        id="update_department_form"
+        name="update_department_form"
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 18 }}
         style={{ maxWidth: 600 }}

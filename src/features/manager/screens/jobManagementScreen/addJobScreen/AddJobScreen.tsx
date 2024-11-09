@@ -72,8 +72,8 @@ const AddJobScreen = () => {
       </Typography.Title>
       <Form
         form={form}
-        id="addPositionForm"
-        name="basic"
+        id="add_job_form"
+        name="add_job_form"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 19 }}
         style={{ maxWidth: "100%" }}

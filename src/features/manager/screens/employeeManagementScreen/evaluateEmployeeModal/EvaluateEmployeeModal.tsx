@@ -86,7 +86,7 @@ const EvaluateEmployeeModal = ({
   const handleDisable = (values: any) => {
     console.log("values:", values);
     const evaluateForm = document.getElementById(
-      "evaluateForm"
+      "evaluate_form"
     ) as HTMLFormElement;
     const submitButton = document.getElementById(
       "submitButton"
@@ -114,7 +114,7 @@ const EvaluateEmployeeModal = ({
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
           id="submitButton"
-          form="evaluateForm"
+          form="evaluate_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -164,8 +164,8 @@ const EvaluateEmployeeModal = ({
         <Card>
           <Form
             form={form}
-            id="evaluateForm"
-            name="basic"
+            id="evaluate_form"
+            name="evaluate_form"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             onFinish={onFinish}

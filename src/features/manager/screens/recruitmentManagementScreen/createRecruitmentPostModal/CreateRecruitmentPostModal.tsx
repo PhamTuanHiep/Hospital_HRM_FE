@@ -93,7 +93,7 @@ const CreateRecruitmentPostModal = ({
       footer={[
         <Button onClick={handleCancel}>{t("content.common.Cancel")}</Button>,
         <Button
-          form="updateRecruitmentPostCreate"
+          form="create_recruitment-post_form"
           key="submit"
           type="primary"
           htmlType="submit"
@@ -105,8 +105,8 @@ const CreateRecruitmentPostModal = ({
     >
       <Form
         form={form}
-        id="updateRecruitmentPostCreate"
-        name="basic"
+        id="create_recruitment-post_form"
+        name="create_recruitment-post_form"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 20 }}
         onFinish={onFinish}

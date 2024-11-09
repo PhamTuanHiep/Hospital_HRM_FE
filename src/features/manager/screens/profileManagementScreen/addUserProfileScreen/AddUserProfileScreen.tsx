@@ -137,8 +137,8 @@ const AddUserProfileScreen = () => {
       <Typography.Title>Create new User Profile</Typography.Title>
       <Form
         form={form}
-        id="addUserForm"
-        name="basic"
+        id="add_user_form"
+        name="add_user_form"
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 19 }}
         style={{ maxWidth: "100%" }}
