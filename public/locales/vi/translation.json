@@ -183,7 +183,13 @@
             "RequiredDocuments": "Yêu cầu về hồ sơ ",
             "Contact": "Liên hệ",
             "Image": "Ảnh bìa",
-            "Author": "Tác giả"
+            "Author": "Tác giả",
+            "RecruitmentManagementTitle": "Quản lý tuyển dụng",
+            "AddPost": "Thêm bài đăng",
+            "Create_RecruitmentPostTitle": "Tạo bài đăng tin tuyển dụng",
+            "UpdateRecruitmentTitle": "Cập nhật bài đăng tuyển dụng",
+            "DeleteRecruitment": "Xóa bài đăng tuyển dụng",
+            "AskAboutDeleteRecruitmentPost": "Bạn có muốn xóa bài đăng tuyển dụng việc làm này"
         },
         "other": {
             "Male": "Nam",

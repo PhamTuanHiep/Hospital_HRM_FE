@@ -1,24 +1,27 @@
 import { List, Modal } from "antd";
 import { useTranslation } from "react-i18next";
+import { RecruitmentPostDetail } from "../../../../../common/common.type";
+import { deleteRecruitmentPost } from "../../../../../api/apiServices";
 
 interface DeleteRecruitmentPostModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Function;
   setReset: Function;
-  department: DepartmentDetail;
+  recruitmentPost: RecruitmentPostDetail;
   confirmLoading: boolean;
 }
 const DeleteRecruitmentPostModal = ({
   isModalOpen,
   setIsModalOpen,
   setReset,
-  department,
+  recruitmentPost,
   confirmLoading,
 }: DeleteRecruitmentPostModalProps) => {
   const { t } = useTranslation();
 
   const handleOk = async () => {
-    const res = await deleteDepartment(department.departmentId);
+    const res = await deleteRecruitmentPost(recruitmentPost.recruitmentPostId);
+
     if (res) {
       setIsModalOpen(false);
       setReset(true);
@@ -34,7 +37,7 @@ const DeleteRecruitmentPostModal = ({
 
   return (
     <Modal
-      title={t("content.department.DeleteDepartment")}
+      title={t("content.recruitmentPost.DeleteRecruitment")}
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
@@ -42,8 +45,8 @@ const DeleteRecruitmentPostModal = ({
       okText={t("content.common.Submit")}
       cancelText={t("content.common.Cancel")}
     >
-      <List>{`${t("content.department.AskAboutDeleteDepartment")}: ${
-        department.departmentName
+      <List>{`${t("content.recruitmentPost.AskAboutDeleteRecruitmentPost")}: ${
+        recruitmentPost.title
       }`}</List>
     </Modal>
   );

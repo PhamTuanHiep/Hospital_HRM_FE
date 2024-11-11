@@ -88,7 +88,7 @@ const UpdateRecruitmentPostModal = ({
 
   return (
     <Modal
-      title={t("content.department.UpdateDepartmentTitle")}
+      title={t("content.recruitmentPost.UpdateRecruitmentTitle")}
       className="extend-modal_one-column"
       open={isModalOpen}
       onCancel={handleCancel}
@@ -145,7 +145,6 @@ const UpdateRecruitmentPostModal = ({
           ]}
         >
           <TextArea
-            placeholder="Autosize height with minimum and maximum number of lines"
             autoSize={{ minRows: 4, maxRows: 6 }}
             rows={4}
             maxLength={1000}
@@ -158,7 +157,6 @@ const UpdateRecruitmentPostModal = ({
           rules={[{ required: true, message: "Please input Benefits!" }]}
         >
           <TextArea
-            placeholder="Autosize height with minimum and maximum number of lines"
             autoSize={{ minRows: 4, maxRows: 6 }}
             rows={4}
             maxLength={1000}
@@ -173,7 +171,6 @@ const UpdateRecruitmentPostModal = ({
           ]}
         >
           <TextArea
-            placeholder="Autosize height with minimum and maximum number of lines"
             autoSize={{ minRows: 4, maxRows: 6 }}
             rows={4}
             maxLength={1000}
@@ -186,7 +183,6 @@ const UpdateRecruitmentPostModal = ({
           rules={[{ required: true, message: "Please input Contact!" }]}
         >
           <TextArea
-            placeholder="Autosize height with minimum and maximum number of lines"
             autoSize={{ minRows: 4, maxRows: 6 }}
             rows={4}
             maxLength={500}

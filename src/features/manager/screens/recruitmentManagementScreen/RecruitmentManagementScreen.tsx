@@ -7,8 +7,12 @@ import "./RecruitmentManagementScreen.scss";
 import CreateRecruitmentPostModal from "./createRecruitmentPostModal/CreateRecruitmentPostModal";
 import RecruitmentPoster from "./recruitmentPoster/RecruitmentPoster";
 import UpdateRecruitmentPostModal from "./updateRecruitmentPostModal/UpdateRecruitmentPostModal";
+import DeleteRecruitmentPostModal from "./deleteRecruitmentPostModal/DeleteRecruitmentPostModal";
+import { useTranslation } from "react-i18next";
 
 const RecruitmentManagementScreen = () => {
+  const { t } = useTranslation();
+
   const [recruitmentPosts, setRecruitmentPosts] = useState<
     RecruitmentPostDetail[]
   >([INIT_RECRUITMENT_POST_DETAIL]);
@@ -48,18 +52,18 @@ const RecruitmentManagementScreen = () => {
     recruitmentPost: RecruitmentPostDetail
   ) => {
     console.log("recruitmentPost-delete:", recruitmentPost);
-    // setIsModalOpenUpdate(true);
+    setNowRecruitmentPost(recruitmentPost);
+    setIsModalOpenDelete(true);
   };
-  console.log("nowRecruitmentPost:", nowRecruitmentPost);
 
   return (
     <div>
       <Card
         id="recruitment-posts"
-        title="Quan ly tuyen dung"
+        title={t("content.recruitmentPost.RecruitmentManagementTitle")}
         extra={
           <Button className="btn-create" onClick={handleCreateRecruitmentPost}>
-            Add Post
+            {t("content.recruitmentPost.AddPost")}
           </Button>
         }
       >
@@ -93,6 +97,13 @@ const RecruitmentManagementScreen = () => {
       <UpdateRecruitmentPostModal
         isModalOpen={isModalOpenUpdate}
         setIsModalOpen={setIsModalOpenUpdate}
+        setReset={setReset}
+        recruitmentPost={nowRecruitmentPost}
+        confirmLoading={!nowRecruitmentPost}
+      />
+      <DeleteRecruitmentPostModal
+        isModalOpen={isModalOpenDelete}
+        setIsModalOpen={setIsModalOpenDelete}
         setReset={setReset}
         recruitmentPost={nowRecruitmentPost}
         confirmLoading={!nowRecruitmentPost}

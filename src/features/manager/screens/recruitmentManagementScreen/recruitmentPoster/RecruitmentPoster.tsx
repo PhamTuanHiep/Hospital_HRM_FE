@@ -1,6 +1,7 @@
 import { RecruitmentPostDetail } from "../../../../../common/common.type";
 import { Button, Flex, Image, Typography } from "antd";
 import "./RecruitmentPoster.scss";
+import { useTranslation } from "react-i18next";
 
 const { Text, Title } = Typography;
 interface RecruitmentPosterProps {
@@ -13,6 +14,8 @@ const RecruitmentPoster = ({
   handleUpdateRecruitmentPoster,
   handleDeleteRecruitmentPoster,
 }: RecruitmentPosterProps) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Flex
@@ -39,14 +42,14 @@ const RecruitmentPoster = ({
             className="btn-delete"
             onClick={(e) => handleDeleteRecruitmentPoster(recruitmentPost)}
           >
-            Delete
+            {t("content.common.Delete")}
           </Button>
           <Button
             key="edit"
             className="btn-edit"
             onClick={(e) => handleUpdateRecruitmentPoster(recruitmentPost)}
           >
-            Update
+            {t("content.common.Update")}
           </Button>
         </Flex>
       </Flex>

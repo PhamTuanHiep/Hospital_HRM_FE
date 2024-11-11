@@ -183,7 +183,13 @@
             "RequiredDocuments": "Required Documents",
             "Contact": "Contact",
             "Image": "Image",
-            "Author": "Author"
+            "Author": "Author",
+            "RecruitmentManagementTitle": "Recruitment Management",
+            "AddPost": "Add Post",
+            "Create_RecruitmentPostTitle": "Create Recruitment Post",
+            "UpdateRecruitmentTitle": "Update Recruitment Post",
+            "DeleteRecruitment": "Delete Recruitment Post",
+            "AskAboutDeleteRecruitmentPost": "Do you want to delete this recruitment posting"
         },
         "other": {
             "Male": "Male",

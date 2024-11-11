@@ -59,11 +59,9 @@ const CreateRecruitmentPostModal = ({
   const onFinish: FormProps<RecruitmentPostCreate>["onFinish"] = async (
     values
   ) => {
-    console.log("values:", values);
-    console.log("fileList:", fileList);
     values.image = fileList[0].originFileObj;
     const res = await postRecruitmentPost(values);
-    console.log("res:", res);
+
     if (res) {
       setIsModalOpen(false);
       setReset(true);
@@ -86,7 +84,7 @@ const CreateRecruitmentPostModal = ({
 
   return (
     <Modal
-      title={t("content.department.UpdateDepartmentTitle")}
+      title={t("content.recruitmentPost.Create_RecruitmentPostTitle")}
       className="extend-modal_one-column"
       open={isModalOpen}
       onCancel={handleCancel}
