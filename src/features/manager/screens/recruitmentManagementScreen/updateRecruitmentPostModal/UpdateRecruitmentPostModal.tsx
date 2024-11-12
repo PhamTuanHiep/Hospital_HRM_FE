@@ -41,7 +41,7 @@ const UpdateRecruitmentPostModal = ({
       subtitle: recruitmentPost.subtitle || "",
       generalRequirements: recruitmentPost.generalRequirements || "",
       benefits: recruitmentPost.benefits || "",
-      requiredDocuments: recruitmentPost.recruitmentPostId || "",
+      requiredDocuments: recruitmentPost.requiredDocuments || "",
       contact: recruitmentPost.contact || "",
     };
   }, [recruitmentPost]);
@@ -59,8 +59,9 @@ const UpdateRecruitmentPostModal = ({
   ) => {
     if (fileList.length) {
       values.image = fileList[0].originFileObj;
+    } else {
+      values.image = undefined;
     }
-    values.image = undefined;
 
     const res = await putRecruitmentPost(
       recruitmentPost.recruitmentPostId,
@@ -69,6 +70,7 @@ const UpdateRecruitmentPostModal = ({
     if (res) {
       setIsModalOpen(false);
       setReset(true);
+      setFileList([]);
     }
   };
 

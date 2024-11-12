@@ -580,21 +580,21 @@ export const postRecruitmentPost = async (
   try {
     const formData = new FormData();
 
-    formData.append("image", recruitmentPostCreate.image as Blob);
     formData.append("title", recruitmentPostCreate.title);
     formData.append("subtitle", recruitmentPostCreate.subtitle);
     formData.append(
       "generalRequirements",
       recruitmentPostCreate.generalRequirements
     );
+    formData.append("benefits", recruitmentPostCreate.benefits);
     formData.append(
       "requiredDocuments",
       recruitmentPostCreate.requiredDocuments
     );
     formData.append("contact", recruitmentPostCreate.contact);
-    formData.append("benefits", recruitmentPostCreate.benefits);
 
     formData.append("userId", recruitmentPostCreate.userId.toString());
+    formData.append("image", recruitmentPostCreate.image as Blob);
     return await instance.post(`${apiPaths.RECRUITMENT_POSTS}`, formData);
   } catch (error) {
     console.log("Error calling API:", error);
@@ -608,26 +608,25 @@ export const putRecruitmentPost = async (
   try {
     const formData = new FormData();
 
-    formData.append("title", recruitmentPostUpdate?.title);
-    formData.append("subtitle", recruitmentPostUpdate?.subtitle);
+    formData.append("title", recruitmentPostUpdate.title);
+    formData.append("subtitle", recruitmentPostUpdate.subtitle);
     formData.append(
       "generalRequirements",
-      recruitmentPostUpdate?.generalRequirements
+      recruitmentPostUpdate.generalRequirements
     );
+    formData.append("benefits", recruitmentPostUpdate.benefits);
     formData.append(
       "requiredDocuments",
-      recruitmentPostUpdate?.requiredDocuments
+      recruitmentPostUpdate.requiredDocuments
     );
-    formData.append("contact", recruitmentPostUpdate?.contact);
-    formData.append("benefits", recruitmentPostUpdate?.benefits);
-    formData.append("userId", recruitmentPostUpdate?.userId.toString());
-
-    recruitmentPostUpdate?.image ??
+    formData.append("contact", recruitmentPostUpdate.contact);
+    formData.append("userId", recruitmentPostUpdate.userId.toString());
+    if (!!recruitmentPostUpdate?.image) {
       formData.append("image", recruitmentPostUpdate?.image as Blob);
-
+    }
     return await instance.put(
       `${apiPaths.RECRUITMENT_POSTS}/${recruitmentPostId}`,
-      recruitmentPostUpdate
+      formData
     );
   } catch (error) {
     console.log("Error calling API:", error);

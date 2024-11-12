@@ -1,7 +1,9 @@
+import { Outlet } from "react-router-dom";
+
 const RecruitmentScreen = () => {
   return (
     <div>
-      <h1>RecruitmentScreen</h1>
+      <Outlet />
     </div>
   );
 };

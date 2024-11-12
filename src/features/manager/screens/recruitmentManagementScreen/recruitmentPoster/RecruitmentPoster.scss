@@ -6,6 +6,12 @@ $post-btn-width: 170px;
   border: solid 1px rgb(184, 181, 181);
   height: $post-image-width;
   width: 100%;
+  &:hover {
+    position: relative;
+    bottom: 4px;
+    border: solid 1px rgba(0, 0, 0, 0.508);
+    box-shadow: 2px 3px 7px;
+  }
   .item-content {
     width: calc(100% - $post-btn-width);
 

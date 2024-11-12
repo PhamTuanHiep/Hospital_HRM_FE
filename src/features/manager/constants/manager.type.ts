@@ -249,7 +249,7 @@ export interface RecruitmentPostUpdate {
   benefits: string;
   requiredDocuments: string;
   contact: string;
-  image?: RcFile | undefined;
+  image?: RcFile;
   userId: number;
 }
 

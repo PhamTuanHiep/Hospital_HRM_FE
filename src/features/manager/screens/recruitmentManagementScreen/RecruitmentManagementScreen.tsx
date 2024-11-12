@@ -1,5 +1,5 @@
 import { Button, Card, Flex } from "antd";
-import { useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { getRecruitmentPosts } from "../../../../api/apiServices";
 import { RecruitmentPostDetail } from "../../../../common/common.type";
 import { INIT_RECRUITMENT_POST_DETAIL } from "../../../../common/common.constant";
@@ -9,9 +9,12 @@ import RecruitmentPoster from "./recruitmentPoster/RecruitmentPoster";
 import UpdateRecruitmentPostModal from "./updateRecruitmentPostModal/UpdateRecruitmentPostModal";
 import DeleteRecruitmentPostModal from "./deleteRecruitmentPostModal/DeleteRecruitmentPostModal";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { recruitmentPaths } from "../../../recruitment/constants/constant.path";
 
 const RecruitmentManagementScreen = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [recruitmentPosts, setRecruitmentPosts] = useState<
     RecruitmentPostDetail[]
@@ -34,7 +37,6 @@ const RecruitmentManagementScreen = () => {
 
   useEffect(() => {
     fetchRecruitmentPosts();
-    setReset(false);
   }, [reset]);
 
   const handleCreateRecruitmentPost = () => {
@@ -42,20 +44,34 @@ const RecruitmentManagementScreen = () => {
   };
 
   const handleUpdateRecruitmentPoster = (
+    event: MouseEvent<HTMLElement, MouseEvent>,
     recruitmentPost: RecruitmentPostDetail
   ) => {
-    console.log("recruitmentPost-update:", recruitmentPost);
+    event.stopPropagation();
+
     setNowRecruitmentPost(recruitmentPost);
     setIsModalOpenUpdate(true);
-  };
-  const handleDeleteRecruitmentPoster = (
-    recruitmentPost: RecruitmentPostDetail
-  ) => {
-    console.log("recruitmentPost-delete:", recruitmentPost);
-    setNowRecruitmentPost(recruitmentPost);
-    setIsModalOpenDelete(true);
+    setReset(false);
   };
 
+  const handleDeleteRecruitmentPoster = (
+    event: MouseEvent<HTMLElement, MouseEvent>,
+    recruitmentPost: RecruitmentPostDetail
+  ) => {
+    event.stopPropagation();
+
+    setNowRecruitmentPost(recruitmentPost);
+    setIsModalOpenDelete(true);
+    setReset(false);
+  };
+
+  const handleAccessRecruitmentPost = (
+    recruitmentPost: RecruitmentPostDetail
+  ) => {
+    navigate(
+      `${recruitmentPaths.RECRUITMENT}${recruitmentPost.recruitmentPostId}`
+    );
+  };
   return (
     <div>
       <Card
@@ -80,6 +96,8 @@ const RecruitmentManagementScreen = () => {
                     handleDeleteRecruitmentPoster={
                       handleDeleteRecruitmentPoster
                     }
+                    isManagement
+                    handleAccessRecruitmentPost={handleAccessRecruitmentPost}
                   />
                 </div>
               );

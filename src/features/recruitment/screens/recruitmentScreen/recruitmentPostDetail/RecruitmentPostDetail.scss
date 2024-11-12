@@ -1,0 +1,53 @@
+#card_recruitment-post-detail {
+  .ant-card-bordered {
+    .ant-card-head {
+      .ant-card-head-wrapper {
+        border-bottom: 1px solid #0a6aa8;
+        .ant-card-head-title {
+          .card_recruitment-detail-title {
+            .ant-typography {
+              text-align: left;
+              h5 {
+                margin: 4px 0;
+              }
+            }
+            article {
+              width: 100%;
+              div {
+                font-weight: 400;
+              }
+            }
+          }
+        }
+      }
+    }
+    .ant-card-body {
+      .ant-image {
+        height: 600px;
+        width: 100%;
+        .ant-image-img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .ant-flex {
+        article {
+          div {
+            font-size: 16px;
+            font-weight: 0500;
+          }
+        }
+        .ant-typography {
+          text-align: left;
+          .section {
+            color: #0a5399;
+          }
+          h5 {
+            margin: 4px 0;
+          }
+        }
+      }
+    }
+  }
+}

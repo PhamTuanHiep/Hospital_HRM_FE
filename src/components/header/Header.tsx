@@ -7,7 +7,7 @@ import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import "./Header.scss";
 
 import { ContactPaths } from "../../features/contact/constants/constant.path";
-import { RecruitmentPaths } from "../../features/recruitment/constants/constant.path";
+
 import {
   DepartmentClinic,
   IntroPaths,
@@ -17,6 +17,7 @@ import { useAppSelector } from "../../app/hooks";
 import ManagementDrawerScreen from "../managemet-drawer/ManagementDrawerScreen";
 import { useTranslation } from "react-i18next";
 import Language from "./Language";
+import { recruitmentPaths } from "../../features/recruitment/constants/constant.path";
 
 const HeaderComponent = () => {
   // const navigate = useNavigate();
@@ -156,7 +157,7 @@ const HeaderComponent = () => {
         {
           key: "5-sub-1",
           label: (
-            <NavLink to={RecruitmentPaths.RECRUITMENT} className="nav-link">
+            <NavLink to={recruitmentPaths.RECRUITMENT} className="nav-link">
               {t("homepage.Recruitment")}
             </NavLink>
           ),
@@ -164,7 +165,7 @@ const HeaderComponent = () => {
         {
           key: "5-sub-2",
           label: (
-            <NavLink to={RecruitmentPaths.TRAIN} className="nav-link">
+            <NavLink to={recruitmentPaths.TRAIN} className="nav-link">
               {t("homepage.Train")}
             </NavLink>
           ),

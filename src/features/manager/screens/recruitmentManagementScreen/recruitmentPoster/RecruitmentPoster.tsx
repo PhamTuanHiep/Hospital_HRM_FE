@@ -6,13 +6,17 @@ import { useTranslation } from "react-i18next";
 const { Text, Title } = Typography;
 interface RecruitmentPosterProps {
   recruitmentPost: RecruitmentPostDetail;
-  handleUpdateRecruitmentPoster: Function;
-  handleDeleteRecruitmentPoster: Function;
+  handleUpdateRecruitmentPoster?: Function;
+  handleDeleteRecruitmentPoster?: Function;
+  handleAccessRecruitmentPost?: Function;
+  isManagement?: boolean;
 }
 const RecruitmentPoster = ({
   recruitmentPost,
   handleUpdateRecruitmentPoster,
   handleDeleteRecruitmentPoster,
+  handleAccessRecruitmentPost,
+  isManagement,
 }: RecruitmentPosterProps) => {
   const { t } = useTranslation();
 
@@ -23,6 +27,7 @@ const RecruitmentPoster = ({
         align="center"
         justify="space-between"
         gap={12}
+        onClick={(e) => handleAccessRecruitmentPost?.(recruitmentPost)}
       >
         <Flex className="item-content" align="flex-start" gap={12}>
           <Image preview={false} src={recruitmentPost.image} />
@@ -36,22 +41,30 @@ const RecruitmentPoster = ({
             <Text className="item-subtitle">{recruitmentPost.subtitle}</Text>
           </Flex>
         </Flex>
-        <Flex className="item-btn" align="center" gap={8}>
-          <Button
-            key="delete"
-            className="btn-delete"
-            onClick={(e) => handleDeleteRecruitmentPoster(recruitmentPost)}
-          >
-            {t("content.common.Delete")}
-          </Button>
-          <Button
-            key="edit"
-            className="btn-edit"
-            onClick={(e) => handleUpdateRecruitmentPoster(recruitmentPost)}
-          >
-            {t("content.common.Update")}
-          </Button>
-        </Flex>
+        {isManagement ? (
+          <Flex className="item-btn" align="center" gap={8}>
+            <Button
+              key="delete"
+              className="btn-delete"
+              onClick={(event) =>
+                handleDeleteRecruitmentPoster?.(event, recruitmentPost)
+              }
+            >
+              {t("content.common.Delete")}
+            </Button>
+            <Button
+              key="edit"
+              className="btn-edit"
+              onClick={(event) =>
+                handleUpdateRecruitmentPoster?.(event, recruitmentPost)
+              }
+            >
+              {t("content.common.Update")}
+            </Button>
+          </Flex>
+        ) : (
+          <div></div>
+        )}
       </Flex>
     </div>
   );
