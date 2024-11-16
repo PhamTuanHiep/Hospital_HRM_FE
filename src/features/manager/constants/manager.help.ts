@@ -4,6 +4,7 @@ import { ColumnFilterItem } from "antd/es/table/interface";
 import {
   dayOfWeekVN,
   departmentName,
+  notificationName,
   positionName,
 } from "../../../common/common.constant";
 import {
@@ -55,6 +56,15 @@ export const filterPositionOptions = positionOptions.map((positionOption) => {
     value: positionOption.label,
   } as ColumnFilterItem;
 });
+
+export const notificationOptions = Object.entries(notificationName).map(
+  ([key, value]) => {
+    return {
+      label: value,
+      value: key,
+    };
+  }
+);
 
 export interface ResultAccordingYear {
   averageScore: number | null;

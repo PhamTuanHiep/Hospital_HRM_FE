@@ -424,3 +424,21 @@ export const positionName = {
   [PositionId.P009]: "Y tá chính",
   [PositionId.P010]: "Y tá",
 };
+
+export enum NotificationType {
+  N001 = "N001",
+  N002 = "N002",
+  N003 = "N003",
+  N004 = "N004",
+  N005 = "N005",
+  N006 = "N006",
+}
+
+export const notificationName = {
+  [NotificationType.N001]: "Tin đào tạo",
+  [NotificationType.N002]: "Tin tức y học",
+  [NotificationType.N003]: "Sự kiện",
+  [NotificationType.N004]: "Tin tức bệnh viện",
+  [NotificationType.N005]: "Quy định",
+  [NotificationType.N006]: "Tin tức nhà nước",
+};

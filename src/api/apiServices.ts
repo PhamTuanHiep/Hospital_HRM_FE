@@ -1,5 +1,6 @@
 import { AccountForm, QueryParams, UserPost } from "../common/common.type";
 import {
+  AnnouncementPostCreate,
   AnnouncementPostUpdate,
   ContractHistoryPost,
   ContractPost,
@@ -664,13 +665,23 @@ export const getAnnouncementPost = async (announcementPostId: number) => {
 };
 
 export const createAnnouncementPost = async (
-  recruitmentPostCreate: RecruitmentPostCreate
+  announcementPostCreate: AnnouncementPostCreate
 ) => {
   try {
-    return await instance.post(
-      `${apiPaths.ANNOUNCEMENT_POSTS}`,
-      recruitmentPostCreate
+    const formData = new FormData();
+
+    formData.append("title", announcementPostCreate.title);
+    formData.append("abstract", announcementPostCreate.abstract);
+    formData.append(
+      "notificationType",
+      announcementPostCreate.notificationType
     );
+    formData.append("contentDetail", announcementPostCreate.contentDetail);
+    formData.append("contact", announcementPostCreate.contact);
+    formData.append("userId", announcementPostCreate.userId.toString());
+    formData.append("image", announcementPostCreate.image as Blob);
+
+    return await instance.post(`${apiPaths.ANNOUNCEMENT_POSTS}`, formData);
   } catch (error) {
     console.log("Error calling API:", error);
   }
@@ -681,9 +692,23 @@ export const updateAnnouncementPost = async (
   announcementPostUpdate: AnnouncementPostUpdate
 ) => {
   try {
+    const formData = new FormData();
+
+    formData.append("title", announcementPostUpdate.title);
+    formData.append("abstract", announcementPostUpdate.abstract);
+    formData.append(
+      "notificationType",
+      announcementPostUpdate.notificationType
+    );
+    formData.append("contentDetail", announcementPostUpdate.contentDetail);
+    formData.append("contact", announcementPostUpdate.contact);
+    formData.append("userId", announcementPostUpdate.userId.toString());
+    if (!!announcementPostUpdate?.image) {
+      formData.append("image", announcementPostUpdate?.image as Blob);
+    }
     return await instance.put(
       `${apiPaths.ANNOUNCEMENT_POSTS}/${announcementPostId}`,
-      announcementPostUpdate
+      formData
     );
   } catch (error) {
     console.log("Error calling API:", error);

@@ -191,6 +191,21 @@
             "DeleteRecruitment": "Xóa bài đăng tuyển dụng",
             "AskAboutDeleteRecruitmentPost": "Bạn có muốn xóa bài đăng tuyển dụng việc làm này"
         },
+        "announcementPost": {
+            "Title": "Tiêu đề",
+            "Abstract": "Tóm tắt",
+            "NotificationName": "Loại thông báo",
+            "ContentDetail": "Nội dung chi tiết",
+            "Contact": "Liên hệ",
+            "Image": "Ảnh bìa",
+            "Author": "Tác giả",
+            "AnnouncementManagementTitle": "Quản lí thông báo",
+            "AddPost": "Thêm bài đăng",
+            "Create_AnnouncementPostTitle": "Tạo bài đăng thông báo",
+            "UpdateAnnouncementTitle": "Cập nhật bài đăng thông báo",
+            "DeleteAnnouncement": "Xóa bài đăng thông báo",
+            "AskAboutDeleteAnnouncementPost": "Bạn có muốn xóa bài đăng thông báo này"
+        },
         "other": {
             "Male": "Nam",
             "Female": "Nữ"

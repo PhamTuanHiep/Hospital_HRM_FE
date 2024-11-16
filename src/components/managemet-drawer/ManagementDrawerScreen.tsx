@@ -129,8 +129,8 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <SnippetsOutlined />,
-      text: "Đào tạo",
-      path: managerPaths.TRAINING,
+      text: "Quản lý thông báo",
+      path: managerPaths.ANNOUNCEMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },

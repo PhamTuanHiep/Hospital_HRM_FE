@@ -8,7 +8,7 @@ export const managerPaths = {
   JOB_MANAGEMENT: "/manager/job-management",
   SALARY_MANAGEMENT: "/manager/salary-management",
   RECRUITMENT_MANAGEMENT: "/manager/recruitment-management",
-  TRAINING: "/manager/training",
+  ANNOUNCEMENT_MANAGEMENT: "/manager/announcement-management",
 };
 
 export const managerChildPaths = {

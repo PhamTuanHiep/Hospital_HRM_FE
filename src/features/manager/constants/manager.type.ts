@@ -259,18 +259,18 @@ export interface AnnouncementPostCreate {
   notificationType: string;
   contentDetail: string;
   contact: string;
-  image: string;
+  image?: RcFile;
   userId: number;
 }
 
 export interface AnnouncementPostUpdate {
-  title?: string;
-  abstract?: string;
-  notificationType?: string;
-  contentDetail?: string;
-  contact?: string;
-  image?: string;
-  userId?: number;
+  title: string;
+  abstract: string;
+  notificationType: string;
+  contentDetail: string;
+  contact: string;
+  image?: RcFile;
+  userId: number;
 }
 
 // export interface RecruitmentPostDetail {

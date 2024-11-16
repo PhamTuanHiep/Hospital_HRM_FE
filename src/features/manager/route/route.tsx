@@ -7,7 +7,6 @@ import DepartmentManagementScreen from "../screens/departmentManagementScreen/De
 import JobManagementScreen from "../screens/jobManagementScreen/JobManagementScreen";
 import ContractManagementScreen from "../screens/contractManagementScreen/ContractManagementScreen";
 import RecruitmentManagementScreen from "../screens/recruitmentManagementScreen/RecruitmentManagementScreen";
-import TrainingScreen from "../screens/trainingScreen/TrainingScreen";
 
 import ErrorPage from "../../../error-page";
 import EmployeeManagementScreen from "../screens/employeeManagementScreen/EmployeeManagementScreen";
@@ -20,6 +19,7 @@ import AddJobScreen from "../screens/jobManagementScreen/addJobScreen/AddJobScre
 import SalaryManagementScreen from "../screens/salaryManagementScreen/SalaryManagementScreen";
 import SalaryManagement from "../screens/salaryManagementScreen/salaryManagement/SalaryManagement";
 import BenefitsManagementScreen from "../screens/salaryManagementScreen/benefitsManagementScreen/BenefitsManagementScreen";
+import AnnouncementManagementScreen from "../screens/announcementManagementScreen/AnnouncementManagementScreen";
 
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -106,8 +106,8 @@ const RECRUITMENT_MANAGEMENT_ROUTE: RouteObject = {
 };
 
 const TRAINING_ROUTE: RouteObject = {
-  path: managerPaths.TRAINING,
-  element: <TrainingScreen />,
+  path: managerPaths.ANNOUNCEMENT_MANAGEMENT,
+  element: <AnnouncementManagementScreen />,
 };
 
 // const ADD_USER_ROUTE: RouteObject = {
