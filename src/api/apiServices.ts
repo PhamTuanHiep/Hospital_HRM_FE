@@ -1,4 +1,8 @@
-import { AccountForm, QueryParams, UserPost } from "../common/common.type";
+import {
+  AccountForm,
+  CommonQueryParams,
+  UserPost,
+} from "../common/common.type";
 import {
   AnnouncementPostCreate,
   AnnouncementPostUpdate,
@@ -276,7 +280,7 @@ export const putEvaluate = async (
 
 //DEPARTMENTS
 
-export const getDepartments = async (queryParams?: QueryParams) => {
+export const getDepartments = async (queryParams?: CommonQueryParams) => {
   try {
     if (queryParams) {
       return await instance.get(`${apiPaths.DEPARTMENTS}`, {
@@ -557,9 +561,11 @@ export const deleteSalaryHistory = async (salaryHistoryId: number) => {
 
 //RECRUITMENT_POST
 
-export const getRecruitmentPosts = async () => {
+export const getRecruitmentPosts = async (query: CommonQueryParams) => {
   try {
-    return await instance.get(`${apiPaths.RECRUITMENT_POSTS}`);
+    return await instance.get(`${apiPaths.RECRUITMENT_POSTS}`, {
+      params: query,
+    });
   } catch (error) {
     console.log("Error calling API getRecruitmentPosts :", error);
   }
@@ -646,9 +652,11 @@ export const deleteRecruitmentPost = async (recruitmentPostId: number) => {
 
 //ANNOUNCEMENT_POSTS
 
-export const getAnnouncementPosts = async () => {
+export const getAnnouncementPosts = async (query: CommonQueryParams) => {
   try {
-    return await instance.get(`${apiPaths.ANNOUNCEMENT_POSTS}`);
+    return await instance.get(`${apiPaths.ANNOUNCEMENT_POSTS}`, {
+      params: query,
+    });
   } catch (error) {
     console.log("Error calling API getAnnouncementPosts :", error);
   }

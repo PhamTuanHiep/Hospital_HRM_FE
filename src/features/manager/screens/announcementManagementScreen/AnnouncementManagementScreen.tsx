@@ -7,13 +7,22 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 import AnnouncementPosterScreen from "./announcementPoster/AnnouncementPosterScreen";
-import { AnnouncementPostDetail } from "../../../../common/common.type";
-import { INIT_ANNOUNCEMENT_POST_DETAIL } from "../../../../common/common.constant";
+import {
+  AnnouncementPostDetail,
+  CommonQueryParams,
+  PageResponse,
+} from "../../../../common/common.type";
+import {
+  INIT_ANNOUNCEMENT_POST_DETAIL,
+  INIT_PAGE_RESPONSE,
+  QueryParamsWithListPosts,
+} from "../../../../common/common.constant";
 import { getAnnouncementPosts } from "../../../../api/apiServices";
 import CreateAnnouncementPostModal from "./createAnnouncementPostModal/CreateAnnouncementPostModal";
 import UpdateAnnouncementPostModal from "./updateAnnouncementPostModal/UpdateAnnouncementPostModal";
 import DeleteAnnouncementPostModal from "./deleteAnnouncementPostModal/DeleteRecruitmentPostModal";
 import { NewsAndEventsPaths } from "../../../newsAndEvents/constants/constant.path";
+import PaginationAntd from "../../../../components/paginationAntd/PaginationAntd";
 
 const AnnouncementManagementScreen = () => {
   const { t } = useTranslation();
@@ -31,16 +40,27 @@ const AnnouncementManagementScreen = () => {
 
   const [reset, setReset] = useState<boolean>(false);
 
+  const [queryParams, setQueryParams] = useState<CommonQueryParams>({
+    page: QueryParamsWithListPosts.DEFAULT_CURRENT_PAGE,
+    items_per_page: QueryParamsWithListPosts.PER_PAGE,
+    search: "",
+  });
+  const [customPageParam, setCustomPageParam] =
+    useState<PageResponse>(INIT_PAGE_RESPONSE);
+
   const fetchAnnouncementPosts = async () => {
-    const res = await getAnnouncementPosts();
+    const res = await getAnnouncementPosts(queryParams);
+
     if (res) {
-      setAnnouncementPosts(res.data.data);
+      const { data: announcementPostsApi, ...pageResponse } = res.data;
+      setAnnouncementPosts(announcementPostsApi);
+      setCustomPageParam(pageResponse);
     }
   };
 
   useEffect(() => {
     fetchAnnouncementPosts();
-  }, [reset]);
+  }, [reset, queryParams]);
 
   const handleCreateRecruitmentPost = () => {
     setIsModalOpenCreate(true);
@@ -87,25 +107,40 @@ const AnnouncementManagementScreen = () => {
           </Button>
         }
       >
-        <Flex vertical gap={8}>
-          {announcementPosts ? (
-            announcementPosts.map((announcementPost, index) => {
-              return (
-                <div key={index}>
-                  <AnnouncementPosterScreen
-                    announcementPost={announcementPost}
-                    handleUpdateAnnouncementPoster={
-                      handleUpdateAnnouncementPoster
-                    }
-                    handleDeleteAnnouncementPoster={
-                      handleDeleteAnnouncementPoster
-                    }
-                    isManagement
-                    handleAccessAnnouncementPost={handleAccessAnnouncementPost}
-                  />
-                </div>
-              );
-            })
+        <Flex vertical gap={12}>
+          <Flex vertical gap={8}>
+            {announcementPosts ? (
+              announcementPosts.map((announcementPost, index) => {
+                return (
+                  <div key={index}>
+                    <AnnouncementPosterScreen
+                      announcementPost={announcementPost}
+                      handleUpdateAnnouncementPoster={
+                        handleUpdateAnnouncementPoster
+                      }
+                      handleDeleteAnnouncementPoster={
+                        handleDeleteAnnouncementPoster
+                      }
+                      isManagement
+                      handleAccessAnnouncementPost={
+                        handleAccessAnnouncementPost
+                      }
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div></div>
+            )}
+          </Flex>
+          {customPageParam.total ? (
+            <PaginationAntd
+              defaultCurrent={queryParams.page}
+              total={customPageParam.total}
+              pageSize={queryParams.items_per_page}
+              queryParams={queryParams}
+              setQueryParams={setQueryParams}
+            />
           ) : (
             <div></div>
           )}

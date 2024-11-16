@@ -1,8 +1,16 @@
 import { Button, Card, Flex } from "antd";
 import { MouseEvent, useEffect, useState } from "react";
 import { getRecruitmentPosts } from "../../../../api/apiServices";
-import { RecruitmentPostDetail } from "../../../../common/common.type";
-import { INIT_RECRUITMENT_POST_DETAIL } from "../../../../common/common.constant";
+import {
+  CommonQueryParams,
+  PageResponse,
+  RecruitmentPostDetail,
+} from "../../../../common/common.type";
+import {
+  INIT_PAGE_RESPONSE,
+  INIT_RECRUITMENT_POST_DETAIL,
+  QueryParamsWithListPosts,
+} from "../../../../common/common.constant";
 import "./RecruitmentManagementScreen.scss";
 import CreateRecruitmentPostModal from "./createRecruitmentPostModal/CreateRecruitmentPostModal";
 import RecruitmentPoster from "./recruitmentPoster/RecruitmentPoster";
@@ -11,6 +19,7 @@ import DeleteRecruitmentPostModal from "./deleteRecruitmentPostModal/DeleteRecru
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { recruitmentPaths } from "../../../recruitment/constants/constant.path";
+import PaginationAntd from "../../../../components/paginationAntd/PaginationAntd";
 
 const RecruitmentManagementScreen = () => {
   const { t } = useTranslation();
@@ -28,16 +37,26 @@ const RecruitmentManagementScreen = () => {
 
   const [reset, setReset] = useState<boolean>(false);
 
+  const [queryParams, setQueryParams] = useState<CommonQueryParams>({
+    page: QueryParamsWithListPosts.DEFAULT_CURRENT_PAGE,
+    items_per_page: QueryParamsWithListPosts.PER_PAGE,
+    search: "",
+  });
+  const [customPageParam, setCustomPageParam] =
+    useState<PageResponse>(INIT_PAGE_RESPONSE);
+
   const fetchRecruitmentPosts = async () => {
-    const res = await getRecruitmentPosts();
+    const res = await getRecruitmentPosts(queryParams);
     if (res) {
-      setRecruitmentPosts(res.data.data);
+      const { data: recruitmentPostsApi, ...pageResponse } = res.data;
+      setCustomPageParam(pageResponse);
+      setRecruitmentPosts(recruitmentPostsApi);
     }
   };
 
   useEffect(() => {
     fetchRecruitmentPosts();
-  }, [reset]);
+  }, [reset, queryParams]);
 
   const handleCreateRecruitmentPost = () => {
     setIsModalOpenCreate(true);
@@ -83,25 +102,38 @@ const RecruitmentManagementScreen = () => {
           </Button>
         }
       >
-        <Flex vertical gap={8}>
-          {recruitmentPosts ? (
-            recruitmentPosts.map((recruitmentPost, index) => {
-              return (
-                <div key={index}>
-                  <RecruitmentPoster
-                    recruitmentPost={recruitmentPost}
-                    handleUpdateRecruitmentPoster={
-                      handleUpdateRecruitmentPoster
-                    }
-                    handleDeleteRecruitmentPoster={
-                      handleDeleteRecruitmentPoster
-                    }
-                    isManagement
-                    handleAccessRecruitmentPost={handleAccessRecruitmentPost}
-                  />
-                </div>
-              );
-            })
+        <Flex vertical gap={12}>
+          <Flex vertical gap={8}>
+            {recruitmentPosts ? (
+              recruitmentPosts.map((recruitmentPost, index) => {
+                return (
+                  <div key={index}>
+                    <RecruitmentPoster
+                      recruitmentPost={recruitmentPost}
+                      handleUpdateRecruitmentPoster={
+                        handleUpdateRecruitmentPoster
+                      }
+                      handleDeleteRecruitmentPoster={
+                        handleDeleteRecruitmentPoster
+                      }
+                      isManagement
+                      handleAccessRecruitmentPost={handleAccessRecruitmentPost}
+                    />
+                  </div>
+                );
+              })
+            ) : (
+              <div></div>
+            )}
+          </Flex>
+          {customPageParam.total ? (
+            <PaginationAntd
+              defaultCurrent={queryParams.page}
+              total={customPageParam.total}
+              pageSize={queryParams.items_per_page}
+              queryParams={queryParams}
+              setQueryParams={setQueryParams}
+            />
           ) : (
             <div></div>
           )}

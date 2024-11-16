@@ -17,15 +17,16 @@ import {
   Pagination,
   PositionAllowanceDetail,
   PositionDetail,
-  QueryParams,
+  CommonQueryParams,
   RecruitmentPostDetail,
   RoleDetail,
   SalaryHistoryDetail,
   UserDetail,
   UserInsuranceDetail,
+  PageResponse,
 } from "./common.type";
 
-export const INIT_QUERY_PARAMS: QueryParams = {
+export const INIT_QUERY_PARAMS: CommonQueryParams = {
   page: 1,
   items_per_page: 4,
 };
@@ -35,6 +36,19 @@ export const INIT_PAGINATION: Pagination = {
   pageSize: 4,
   total: 8,
 };
+
+export const INIT_PAGE_RESPONSE: PageResponse = {
+  currentPage: null,
+  lastPage: null,
+  nextPage: null,
+  perPage: null,
+  prevPage: null,
+  total: null,
+};
+export enum QueryParamsWithListPosts {
+  DEFAULT_CURRENT_PAGE = 1,
+  PER_PAGE = 5,
+}
 
 export const INIT_ACCOUNT: AccountDetail = {
   accountId: 0,

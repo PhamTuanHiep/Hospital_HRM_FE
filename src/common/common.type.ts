@@ -1,7 +1,16 @@
-export interface QueryParams {
+export interface CommonQueryParams {
   page?: number;
   items_per_page?: number;
   search?: string;
+}
+
+export interface PageResponse {
+  currentPage: number | null;
+  lastPage: number | null;
+  nextPage: number | null;
+  perPage: number | null;
+  prevPage: number | null;
+  total: number | null;
 }
 
 export interface Pagination {

@@ -106,7 +106,7 @@ const HeaderComponent = () => {
     {
       key: "3",
       label: (
-        <NavLink to="/" className="nav-link">
+        <NavLink to="#" className="nav-link">
           {t("homepage.NewsAndEvents")}
         </NavLink>
       ),

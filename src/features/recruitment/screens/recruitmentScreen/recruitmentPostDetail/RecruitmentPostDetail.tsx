@@ -51,7 +51,7 @@ const RecruitmentPostDetail = () => {
                     recruitmentPost.createdAt
                   )}`}
                 </Text>
-                <Text>{`${t("content.recruitmentPost.Author")}:${
+                <Text>{`${t("content.recruitmentPost.Author")}: ${
                   recruitmentPost.user?.fullName
                 }`}</Text>
               </Flex>
