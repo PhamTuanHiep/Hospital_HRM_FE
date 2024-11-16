@@ -62,7 +62,11 @@ const RecruitmentPostDetail = () => {
         <Flex vertical>
           <Flex vertical align="center">
             {recruitmentPost.image ? (
-              <Image preview={false} src={recruitmentPost.image}></Image>
+              <Image
+                preview={false}
+                src={recruitmentPost.image}
+                alt="ảnh bìa đăng tuyển"
+              ></Image>
             ) : (
               <div></div>
             )}

@@ -1,17 +1,32 @@
 import { RouteObject } from "react-router-dom";
-import { NewsAndEventsPaths } from "../constants/constant.path";
-import NewsScreen from "../screens/NewsScreen";
-import ReseachScreen from "../screens/ReseachScreen";
+import { NewsAndEventsPaths, newsPath } from "../constants/constant.path";
+
 import NutritionScreen from "../screens/NutritionScreen";
+import ErrorPage from "../../../error-page";
+import AnnouncementScreen from "../screens/announcementScreen/AnnouncementScreen";
+import AnnouncementPostDetail from "../screens/announcementScreen/announcementPostDetail/AnnouncementPostDetail";
+import AnnouncementPosts from "../screens/announcementScreen/announcementPosts/AnnouncementPosts";
+import ResearchScreen from "../screens/ResearchScreen";
 
 const NEWS_ROUTE: RouteObject = {
   path: NewsAndEventsPaths.NEWS,
-  element: <NewsScreen />,
+  element: <AnnouncementScreen />,
+  errorElement: <ErrorPage />,
+  children: [
+    {
+      index: true,
+      element: <AnnouncementPosts />,
+    },
+    {
+      path: newsPath.ANNOUNCEMENT_DETAIL,
+      element: <AnnouncementPostDetail />,
+    },
+  ],
 };
 
 const RESEARCH_ROUTE: RouteObject = {
   path: NewsAndEventsPaths.RESEARCH,
-  element: <ReseachScreen />,
+  element: <ResearchScreen />,
 };
 const NUTRITION_ROUTE: RouteObject = {
   path: NewsAndEventsPaths.NUTRITION,

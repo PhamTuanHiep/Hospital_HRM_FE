@@ -13,6 +13,7 @@ import { getAnnouncementPosts } from "../../../../api/apiServices";
 import CreateAnnouncementPostModal from "./createAnnouncementPostModal/CreateAnnouncementPostModal";
 import UpdateAnnouncementPostModal from "./updateAnnouncementPostModal/UpdateAnnouncementPostModal";
 import DeleteAnnouncementPostModal from "./deleteAnnouncementPostModal/DeleteRecruitmentPostModal";
+import { NewsAndEventsPaths } from "../../../newsAndEvents/constants/constant.path";
 
 const AnnouncementManagementScreen = () => {
   const { t } = useTranslation();
@@ -29,7 +30,7 @@ const AnnouncementManagementScreen = () => {
   const [isModalOpenDelete, setIsModalOpenDelete] = useState<boolean>(false);
 
   const [reset, setReset] = useState<boolean>(false);
-  console.log("announcementPosts:", announcementPosts);
+
   const fetchAnnouncementPosts = async () => {
     const res = await getAnnouncementPosts();
     if (res) {
@@ -67,13 +68,14 @@ const AnnouncementManagementScreen = () => {
     setReset(false);
   };
 
-  // const handleAccessAnnouncementPost = (
-  //   announcementPost: AnnouncementPostDetail
-  // ) => {
-  //   navigate(
-  //     `${recruitmentPaths.RECRUITMENT}${announcementPost.announcementPostId}`
-  //   );
-  // };
+  const handleAccessAnnouncementPost = (
+    announcementPost: AnnouncementPostDetail
+  ) => {
+    navigate(
+      `${NewsAndEventsPaths.NEWS}${announcementPost.announcementPostId}`
+    );
+  };
+
   return (
     <div>
       <Card
@@ -99,7 +101,7 @@ const AnnouncementManagementScreen = () => {
                       handleDeleteAnnouncementPoster
                     }
                     isManagement
-                    // handleAccessAnnouncementPost={handleAccessAnnouncementPost}
+                    handleAccessAnnouncementPost={handleAccessAnnouncementPost}
                   />
                 </div>
               );
