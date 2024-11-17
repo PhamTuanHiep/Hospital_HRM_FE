@@ -11,11 +11,13 @@ import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.help
 import { getUser } from "../../../../api/apiServices";
 import { GenderId, INIT_USER } from "../../../../common/common.constant";
 import { USER_INFO_COLUMNS } from "../../constants/user.constant";
+import i18n from "../../../../utils/i18n";
 
 const RecordScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
   const [user, setUser] = useState<UserDetail>(INIT_USER);
   const { t } = useTranslation();
+  const isVN = useMemo(() => i18n.language === "vi", [i18n.language]);
 
   useEffect(() => {
     fetchUser();
@@ -32,26 +34,30 @@ const RecordScreen = () => {
     }
   };
 
-  const userData: UserInfo[] = [
-    { label: t("content.info.Email"), content: currentAccount.email },
-    {
-      label: t("content.info.Role"),
-      content: currentAccount.role?.roleName || "",
-    },
-    {
-      label: t("content.info.UserName"),
-      content: currentAccount.user?.fullName || "",
-    },
-    {
-      label: t("content.info.Gender"),
-      content:
-        user.gender === GenderId.MALE
-          ? t("content.other.Male")
-          : t("content.other.Female"),
-    },
-    { label: t("content.info.PhoneNumber"), content: user.phoneNumber },
-    { label: t("content.info.Birthday"), content: user.birthday },
-  ];
+  const userData = useMemo(
+    () =>
+      [
+        { label: t("content.info.Email"), content: currentAccount.email },
+        {
+          label: t("content.info.Role"),
+          content: currentAccount.role?.roleName || "",
+        },
+        {
+          label: t("content.info.UserName"),
+          content: currentAccount.user?.fullName || "",
+        },
+        {
+          label: t("content.info.Gender"),
+          content:
+            user.gender === GenderId.MALE
+              ? t("content.other.Male")
+              : t("content.other.Female"),
+        },
+        { label: t("content.info.PhoneNumber"), content: user.phoneNumber },
+        { label: t("content.info.Birthday"), content: user.birthday },
+      ] as UserInfo[],
+    [currentAccount, user, isVN]
+  );
 
   interface AddUserInfo {
     selfInfo: string;
@@ -85,7 +91,7 @@ const RecordScreen = () => {
       },
     ];
     return infoShow;
-  }, [user]);
+  }, [user, isVN]);
 
   return (
     <Flex vertical={false} id="record-screen" gap={24}>

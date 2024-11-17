@@ -1,18 +1,12 @@
 import { RouteObject } from "react-router-dom";
 import { UserPaths } from "../constants/constant.path";
-import AccountInfoScreen from "../screens/accountInfoScreen/AccountInfoScreen";
 import BenefitsScreen from "../screens/benefitsScreen/BenefitsScreen";
 import NotificationScreen from "../screens/notificationScreen/NotificationScreen";
 import RecordScreen from "../screens/recordScreen/RecordScreen";
 import ScheduleScreen from "../screens/scheduleScreen/ScheduleScreen";
-import TrainingResulsScreen from "../screens/trainingResulsScreen/TrainingResulsScreen";
 import WorkPerformanceScreen from "../screens/workPerformanceScreen/WorkPerformanceScreen";
 import ContractScreen from "../screens/contractScreen/ContractScreen";
-
-const ACCOUNT_INFO: RouteObject = {
-  path: UserPaths.ACCOUNT_INFO,
-  element: <AccountInfoScreen />,
-};
+import TrainingResultsScreen from "../screens/trainingResultsScreen/TrainingResultsScreen";
 
 const BENEFITS_ROUTE: RouteObject = {
   path: UserPaths.BENEFITS,
@@ -41,7 +35,7 @@ const SCHEDULE_ROUTE: RouteObject = {
 
 const TRAINING_RESULTS_ROUTE: RouteObject = {
   path: UserPaths.TRAINING_RESULTS,
-  element: <TrainingResulsScreen />,
+  element: <TrainingResultsScreen />,
 };
 
 const WORK_PERFORMANCE_SCREEN_ROUTE: RouteObject = {
@@ -50,7 +44,6 @@ const WORK_PERFORMANCE_SCREEN_ROUTE: RouteObject = {
 };
 
 export const USER_ROUTES = [
-  ACCOUNT_INFO,
   BENEFITS_ROUTE,
   CONTRACT_ROUTE,
   NOTIFICATION_ROUTE,

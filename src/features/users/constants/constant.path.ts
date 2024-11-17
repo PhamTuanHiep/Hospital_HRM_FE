@@ -1,6 +1,5 @@
-//conenct paths
+//connect paths
 export const UserPaths = {
-  ACCOUNT_INFO: "/user/account-info",
   BENEFITS: "/user/benefits",
   CONTRACT: "/user/contract",
   NOTIFICATION: "/user/notification",

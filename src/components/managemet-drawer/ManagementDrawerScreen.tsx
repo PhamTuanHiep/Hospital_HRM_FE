@@ -1,4 +1,4 @@
-import { Avatar, Drawer, Flex, List } from "antd";
+import { Avatar, Drawer, Flex, List, Typography } from "antd";
 import { useAppSelector } from "../../app/hooks";
 import "./ManagementDrawerScreen.scss";
 import {
@@ -25,7 +25,9 @@ import { UserPaths } from "../../features/users/constants/constant.path";
 import { useTranslation } from "react-i18next";
 import { RoleId } from "../../common/common.constant";
 import { managerPaths } from "../../features/manager/constants/constant.path";
+import { useMemo } from "react";
 
+const { Title } = Typography;
 interface ManagementDrawerProps {
   open: boolean;
   setOpen: Function;
@@ -49,15 +51,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
   const adminFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
-      text: t("content.feature.AccountInfo"),
-      path: UserPaths.ACCOUNT_INFO,
-      fn: (e: any) => {
-        setOpen(false);
-      },
-    },
-    {
-      icon: <FileOutlined />,
-      text: t("content.feature.Record"),
+      text: t("content.feature.PersonalProfile"),
       path: UserPaths.RECORD,
       fn: (e: any) => {
         setOpen(false);
@@ -65,7 +59,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <AccountBookOutlined />,
-      text: "Quản lý tài khoản",
+      text: t("content.feature.AccountManagement"),
       path: managerPaths.ACCOUNT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -73,7 +67,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <UsergroupAddOutlined />,
-      text: "Quản lý nhân viên",
+      text: t("content.feature.EmployeeManagement"),
       path: managerPaths.EMPLOYEE_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -81,7 +75,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <FileOutlined />,
-      text: "Quản lý hồ sơ",
+      text: t("content.feature.ProfileManagement"),
       path: managerPaths.PROFILE_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -89,7 +83,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <FileTextOutlined />,
-      text: "Quản lý hợp đồng",
+      text: t("content.feature.ContractManagement"),
       path: managerPaths.CONTRACT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -97,7 +91,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <ApartmentOutlined />,
-      text: "Quản lý phòng ban",
+      text: t("content.feature.AccountManagement"),
       path: managerPaths.DEPARTMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -105,7 +99,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <InsertRowAboveOutlined />,
-      text: "Quản lý công việc ",
+      text: t("content.feature.WorkManagement"),
       path: managerPaths.JOB_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -113,7 +107,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <MoneyCollectOutlined />,
-      text: "Quản lý lương, thưởng, phúc lợi",
+      text: t("content.feature.SalaryManagement"),
       path: managerPaths.SALARY_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -121,7 +115,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <FileSearchOutlined />,
-      text: "Quản lý tuyển dụng",
+      text: t("content.feature.RecruitmentManagement"),
       path: managerPaths.RECRUITMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
@@ -129,56 +123,48 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <SnippetsOutlined />,
-      text: "Quản lý thông báo",
+      text: t("content.feature.AnnouncementManagement"),
       path: managerPaths.ANNOUNCEMENT_MANAGEMENT,
       fn: (e: any) => {
         setOpen(false);
       },
     },
-    {
-      icon: <LogoutOutlined />,
-      text: "Đăng xuất",
-      fn: (e: any) => {
-        dispatch(doLogout(currentAccount));
-        setOpen(false);
-        navigate("/");
-      },
-    },
+    // {
+    //   icon: <LogoutOutlined />,
+    //   text: t("homepage.Logout"),
+    //   fn: (e: any) => {
+    //     dispatch(doLogout(currentAccount));
+    //     setOpen(false);
+    //     navigate("/");
+    //   },
+    // },
   ];
 
   const userFeature: FeatureName[] = [
     {
       icon: <UserOutlined />,
-      text: t("content.feature.AccountInfo"),
-      path: UserPaths.ACCOUNT_INFO,
-      fn: (e: any) => {
-        setOpen(false);
-      },
-    },
-    {
-      icon: <FileOutlined />,
-      text: t("content.feature.Record"),
+      text: t("content.feature.PersonalProfile"),
       path: UserPaths.RECORD,
       fn: (e: any) => {
         setOpen(false);
       },
     },
-    {
-      icon: <FileTextOutlined />,
-      text: t("content.feature.Contract"),
-      path: UserPaths.CONTRACT,
-      fn: (e: any) => {
-        setOpen(false);
-      },
-    },
-    {
-      icon: <MoneyCollectOutlined />,
-      text: t("content.feature.Benefits"),
-      path: UserPaths.BENEFITS,
-      fn: (e: any) => {
-        setOpen(false);
-      },
-    },
+    // {
+    //   icon: <FileTextOutlined />,
+    //   text: t("content.feature.Contract"),
+    //   path: UserPaths.CONTRACT,
+    //   fn: (e: any) => {
+    //     setOpen(false);
+    //   },
+    // },
+    // {
+    //   icon: <MoneyCollectOutlined />,
+    //   text: t("content.feature.Benefits"),
+    //   path: UserPaths.BENEFITS,
+    //   fn: (e: any) => {
+    //     setOpen(false);
+    //   },
+    // },
     {
       icon: <InsertRowAboveOutlined />,
       text: t("content.feature.WorkSchedule"),
@@ -212,6 +198,9 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
         setOpen(false);
       },
     },
+  ];
+
+  const logoutFeature: FeatureName[] = [
     {
       icon: <LogoutOutlined />,
       text: t("homepage.Logout"),
@@ -222,10 +211,12 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       },
     },
   ];
+  const isUser = useMemo(
+    () => currentAccount?.role?.roleId === RoleId.USER,
+    [currentAccount]
+  );
 
-  const featureNames =
-    currentAccount?.role?.roleId === RoleId.USER ? userFeature : adminFeature;
-  const featureList = featureNames.map((featureName) => (
+  const userFeatureList = userFeature.map((featureName) => (
     <NavLink to={featureName.path || "#"}>
       <Flex onClick={(e) => featureName.fn(e)}>
         <div className="item-icon">{featureName.icon}</div>
@@ -233,6 +224,25 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       </Flex>
     </NavLink>
   ));
+
+  const adminFeatureList = adminFeature.map((featureName) => (
+    <NavLink to={featureName.path || "#"}>
+      <Flex onClick={(e) => featureName.fn(e)}>
+        <div className="item-icon">{featureName.icon}</div>
+        <div className="item-content">{featureName.text}</div>
+      </Flex>
+    </NavLink>
+  ));
+  const logoutFeatureName = logoutFeature.map((featureName) => (
+    <NavLink to={featureName.path || "#"}>
+      <Flex onClick={(e) => featureName.fn(e)}>
+        <div className="item-icon">{featureName.icon}</div>
+        <div className="item-content">{featureName.text}</div>
+      </Flex>
+    </NavLink>
+  ));
+
+  const handleChooseList = (e: any) => {};
 
   return (
     <>
@@ -253,10 +263,39 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
           </div>
         }
       >
-        <List
-          dataSource={featureList}
-          renderItem={(item) => <List.Item>{item}</List.Item>}
-        />
+        {isUser ? (
+          <Flex vertical>
+            <Title level={5}>{t("content.feature.Personal")}</Title>
+            <List
+              dataSource={userFeatureList}
+              renderItem={(item) => <List.Item>{item}</List.Item>}
+            />
+          </Flex>
+        ) : (
+          <Flex vertical>
+            <Title onClick={handleChooseList} level={5}>
+              {t("content.feature.Personal")}
+            </Title>
+            <List
+              dataSource={userFeatureList}
+              renderItem={(item) => <List.Item>{item}</List.Item>}
+            />
+            <Title onClick={handleChooseList} level={5}>
+              {t("content.feature.Management")}
+            </Title>
+            <List
+              dataSource={adminFeatureList}
+              renderItem={(item) => <List.Item>{item}</List.Item>}
+            />
+          </Flex>
+        )}
+        <Flex vertical>
+          <List
+            className="logout"
+            dataSource={logoutFeatureName}
+            renderItem={(item) => <List.Item>{item}</List.Item>}
+          />
+        </Flex>
       </Drawer>
     </>
   );

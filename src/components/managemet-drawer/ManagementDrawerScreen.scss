@@ -1,5 +1,9 @@
 #management-drawer {
+  background-color: #f3f5f6;
+
   .ant-drawer-header {
+    border-bottom: 1px solid #00000045;
+
     .avatar-box {
       width: 35px;
       height: 35px;
@@ -17,27 +21,39 @@
   }
   .ant-drawer-body {
     padding-top: 0;
-    .ant-list {
-      .ant-list-item {
-        padding: 8px 0 8px 8px;
-        &:hover {
-          background-color: rgb(97, 133, 148);
-          cursor: pointer;
-          color: white;
-        }
-        a {
-          width: 100%;
-          .ant-flex {
-            font-size: 14px;
-            font-weight: 400;
-            color: rgb(59 70 108);
-            .item-icon {
-              padding: 0 12px 0 0;
-            }
-            .item-content {
+    background-color: white;
+    .ant-flex {
+      h5 {
+        margin: 2px 0;
+        padding: 8px;
+      }
+
+      .ant-list {
+        border-bottom: 1px solid #00000045;
+        .ant-list-item {
+          padding: 8px 0 8px 8px;
+          &:hover {
+            background-color: rgb(97, 133, 148);
+            cursor: pointer;
+            color: white;
+          }
+          a {
+            width: 100%;
+            .ant-flex {
+              font-size: 14px;
+              font-weight: 400;
+              color: rgb(59 70 108);
+              .item-icon {
+                padding: 0 12px 0 0;
+              }
+              .item-content {
+              }
             }
           }
         }
+      }
+      .logout {
+        border: none;
       }
     }
   }

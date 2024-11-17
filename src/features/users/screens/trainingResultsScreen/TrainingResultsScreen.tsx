@@ -6,11 +6,11 @@ import { MedicalTrainingResultsDetail } from "../../../../common/common.type";
 import { INIT_MEDICAL_TRAINING_RESULTS } from "../../../../common/common.constant";
 import dayjs from "dayjs";
 import CommonBarChart from "./CommonBarChart";
-import "./TrainingResulsScreen.scss";
+import "./TrainingResultsScreen.scss";
 import { Button, Card, Dropdown, MenuProps, Space } from "antd";
 import { DownOutlined, ScheduleOutlined } from "@ant-design/icons";
 
-const TrainingResulsScreen = () => {
+const TrainingResultsScreen = () => {
   const currentAccount = useAppSelector((state) => state.account_user.account);
 
   const [year, setYear] = useState<number>(dayjs().year());
@@ -138,4 +138,4 @@ const TrainingResulsScreen = () => {
     </div>
   );
 };
-export default TrainingResulsScreen;
+export default TrainingResultsScreen;

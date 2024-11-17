@@ -15,14 +15,10 @@ const HomePage = () => {
           autoplaySpeed={2000}
         >
           <div>
-            <img src="https://wallpapers.com/images/high/beautiful-husky-dog-with-tongue-out-uu6gzwkw0uytavi0.webp" />
+            <img src="https://firebasestorage.googleapis.com/v0/b/images-of-hhrm-system.appspot.com/o/homepage%2Fslide1.jpg?alt=media&token=4b6c8d23-9760-4e94-89f0-bacdfdc482e4" />
           </div>
           <div>
-            <img src="https://wallpapers.com/images/hd/sweet-labrador-puppies-bhb8xtbnldjje5fa.webp"></img>
-          </div>
-
-          <div>
-            <img src="https://wallpapers.com/images/high/corgi-on-blue-lake-view-p78670a3jnjqd2kz.webp" />
+            <img src="https://firebasestorage.googleapis.com/v0/b/images-of-hhrm-system.appspot.com/o/homepage%2Fslide2.jpg?alt=media&token=d26d9cae-acf7-4717-af7e-43e9adb6e794" />
           </div>
         </Carousel>
         <Row gutter={16}>
