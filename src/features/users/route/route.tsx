@@ -1,6 +1,6 @@
 import { RouteObject } from "react-router-dom";
 import { UserPaths } from "../constants/constant.path";
-import BenefitsScreen from "../screens/benefitsScreen/BenefitsScreen";
+// import BenefitsScreen from "../screens/benefitsScreen/BenefitsScreen";
 import NotificationScreen from "../screens/notificationScreen/NotificationScreen";
 import RecordScreen from "../screens/recordScreen/RecordScreen";
 import ScheduleScreen from "../screens/scheduleScreen/ScheduleScreen";
@@ -8,10 +8,10 @@ import WorkPerformanceScreen from "../screens/workPerformanceScreen/WorkPerforma
 import ContractScreen from "../screens/contractScreen/ContractScreen";
 import TrainingResultsScreen from "../screens/trainingResultsScreen/TrainingResultsScreen";
 
-const BENEFITS_ROUTE: RouteObject = {
-  path: UserPaths.BENEFITS,
-  element: <BenefitsScreen />,
-};
+// const BENEFITS_ROUTE: RouteObject = {
+//   path: UserPaths.BENEFITS,
+//   element: <BenefitsScreen />,
+// };
 
 const CONTRACT_ROUTE: RouteObject = {
   path: UserPaths.CONTRACT,
@@ -44,7 +44,7 @@ const WORK_PERFORMANCE_SCREEN_ROUTE: RouteObject = {
 };
 
 export const USER_ROUTES = [
-  BENEFITS_ROUTE,
+  // BENEFITS_ROUTE,
   CONTRACT_ROUTE,
   NOTIFICATION_ROUTE,
   RECORD_ROUTE,

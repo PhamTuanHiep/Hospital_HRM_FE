@@ -3,7 +3,7 @@ import { APIHHRM } from "./api.constant";
 
 const instance = axios.create({
   baseURL: APIHHRM,
-  timeout: 8000,
+  timeout: 48000,
   headers: {
     Accept: "application/json",
     // "Content-Type": "application/json",

@@ -122,9 +122,7 @@ const UpdateContractHisotryModal = ({
         <Form.Item<ContractHistoryPost>
           label={t("content.common.Note")}
           name="note"
-          rules={[
-            { required: true, message: "Please input salaryCoefficient!" },
-          ]}
+          rules={[{ required: true, message: "Please input note!" }]}
         >
           <Input />
         </Form.Item>

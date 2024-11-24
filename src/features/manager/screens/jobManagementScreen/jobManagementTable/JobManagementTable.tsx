@@ -197,7 +197,6 @@ const JobManagementTable = () => {
         key: position.positionId,
         positionId: position.positionId,
         positionName: position.positionName,
-        salaryCoefficient: position.salaryCoefficient,
 
         users:
           position.users && position.users.length > 0 ? (
@@ -251,10 +250,6 @@ const JobManagementTable = () => {
         multiple: 3,
       },
       ...getColumnSearchProps("positionName"),
-    },
-    {
-      title: t("content.position.SalaryCoefficient"),
-      dataIndex: "salaryCoefficient",
     },
     {
       title: t("content.position.Users"),

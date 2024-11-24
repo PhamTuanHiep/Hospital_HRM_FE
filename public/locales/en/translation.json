@@ -87,6 +87,7 @@
             "MotherBirthday": "Mother Birthday",
             "DateOfJoining": "Date Of Joining",
             "FullName": "Full Name",
+            "SalaryCoefficient": "Salary Coefficient",
             "DepartmentName": "Department Name",
             "PositionName": "Position Name",
             "WeeklySchedule": "Weekly Schedule",
@@ -129,7 +130,6 @@
         "position": {
             "PositionId": "PositionId",
             "PositionName": "PositionName",
-            "SalaryCoefficient": "Salary Coefficient",
             "Users": "Employees",
             "PositionAllowances": "Allowances",
             "UpdatePositionTitle": "Update Position",

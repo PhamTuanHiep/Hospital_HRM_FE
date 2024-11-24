@@ -26,7 +26,6 @@ const UpdateJobModal = ({
     return {
       positionId: `${position.positionId}`,
       positionName: `${position.positionName}`,
-      salaryCoefficient: `${position.salaryCoefficient}`,
     };
   }, [position]);
 
@@ -100,16 +99,6 @@ const UpdateJobModal = ({
           name="positionName"
           rules={[
             { required: true, message: "Please input your positionName!" },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item<PositionForm>
-          label={t("content.position.SalaryCoefficient")}
-          name="salaryCoefficient"
-          rules={[
-            { required: true, message: "Please input salaryCoefficient!" },
           ]}
         >
           <Input />

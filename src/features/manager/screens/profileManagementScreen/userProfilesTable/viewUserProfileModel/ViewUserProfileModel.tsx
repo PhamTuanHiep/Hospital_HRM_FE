@@ -23,7 +23,7 @@ const ViewUserProfileModel = ({
   const defaultValues = useMemo(() => {
     return {
       fullName: `${user.fullName}`,
-      email: `${user.account?.email}`,
+      email: `${user.account?.email || ""}`,
       gender: `${user.gender}`,
       address: `${user.address}`,
       phoneNumber: `${user.phoneNumber}`,
@@ -37,8 +37,10 @@ const ViewUserProfileModel = ({
       motherBirthday: `${user.motherBirthday}`,
       weeklySchedule: `${user.weeklySchedule}`,
 
-      positionName: `${user.position?.positionName}`,
-      departmentName: `${user.department?.departmentName}`,
+      positionName: `${user.position?.positionName || ""}`,
+      salaryCoefficient: `${user.salaryCoefficient}`,
+
+      departmentName: `${user.department?.departmentName || ""}`,
       jobDescription: `${user.jobDescription}`,
       otherDescription: `${user.otherDescription}`,
       status: user.status ? `${user.status}` : "",
@@ -56,6 +58,7 @@ const ViewUserProfileModel = ({
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  type UserKeys = keyof UserForm;
 
   return (
     <Modal
@@ -78,11 +81,13 @@ const ViewUserProfileModel = ({
         <Flex vertical={false} justify="space-between" wrap>
           {Object.entries(defaultValues).map(([key, value]) => {
             const keyName = key as string;
+            console.log("value:", value);
+
             return (
               <div className="container-form-item">
                 <Form.Item<UserForm>
                   label={t(`content.info.${transformCamelToPascal(keyName)}`)}
-                  name={keyName}
+                  name={keyName as UserKeys}
                 >
                   <Input disabled />
                 </Form.Item>

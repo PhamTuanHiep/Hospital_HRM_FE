@@ -30,6 +30,7 @@ export interface UsersData {
   nation: string;
   birthday: string;
   departmentName: string;
+  salaryCoefficient: number;
   positionName: string;
   status: string;
   createdAt: string;
@@ -43,6 +44,7 @@ export interface EmployeeColumnType {
   fullName: string;
   gender: number;
   departmentName: string;
+  salaryCoefficient: number;
   positionName: string;
   // averageScore: ReactNode;
   status: string;
@@ -74,7 +76,6 @@ export interface PositionColumnType {
   key: React.Key;
   positionId: string;
   positionName: string;
-  salaryCoefficient: number;
   // users: UserShortInfo[] | null;
   // positionAllowances: PositionAllowanceShortInfo[] | null;
   createdAt: string;
@@ -86,7 +87,6 @@ export interface PositionForm {
   key: React.Key;
   positionId: string;
   positionName: string;
-  salaryCoefficient: number;
 }
 
 export interface EvaluateForm {

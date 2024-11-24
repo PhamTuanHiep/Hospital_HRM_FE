@@ -27,7 +27,7 @@ const RecruitmentPoster = ({
         align="center"
         justify="space-between"
         gap={12}
-        onClick={(e) => handleAccessRecruitmentPost?.(recruitmentPost)}
+        onClick={() => handleAccessRecruitmentPost?.(recruitmentPost)}
       >
         <Flex className="item-content" align="flex-start" gap={12}>
           <Image preview={false} src={recruitmentPost.image} />

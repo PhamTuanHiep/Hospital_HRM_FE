@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as XLSX from "xlsx";
 
 interface ExcelData {
@@ -8,7 +8,7 @@ interface ExcelComponentProps {
   setExcelData: Function;
 }
 const ExcelComponent = ({ setExcelData }: ExcelComponentProps) => {
-  const [data, setData] = useState<ExcelData[]>([]);
+  // const [data, setData] = useState<ExcelData[]>([]);
 
   // Hàm đọc file Excel và chuyển đổi thành JSON
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ const ExcelComponent = ({ setExcelData }: ExcelComponentProps) => {
           const workbook = XLSX.read(binaryStr, { type: "binary" });
           const worksheet = workbook.Sheets[workbook.SheetNames[0]];
           const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          setData(jsonData as ExcelData[]);
+          // setData(jsonData as ExcelData[]);
           setExcelData(jsonData as ExcelData[]);
         }
       };

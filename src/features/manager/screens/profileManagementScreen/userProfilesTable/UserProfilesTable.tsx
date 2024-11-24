@@ -186,6 +186,7 @@ const UserProfilesTable = () => {
         nation: user.nation,
         birthday: user.birthday,
         departmentName: user.department?.departmentName || "",
+        salaryCoefficient: user.salaryCoefficient,
         positionName: user.position?.positionName || "",
         status: user.status,
         createdAt: dayjs(user.createdAt).format("DD-MM-YYYY") || "",
@@ -239,6 +240,10 @@ const UserProfilesTable = () => {
       title: t("content.info.DepartmentName"),
       dataIndex: "departmentName",
       ...getColumnSearchProps("departmentName"),
+    },
+    {
+      title: t("content.info.SalaryCoefficient"),
+      dataIndex: "salaryCoefficient",
     },
     {
       title: t("content.info.PositionName"),

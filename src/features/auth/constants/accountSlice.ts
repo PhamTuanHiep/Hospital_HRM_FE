@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "../../../app/store";
 import { AccountDetail } from "../../../common/common.type";
 import { INIT_ACCOUNT } from "../../../common/common.constant";
 
@@ -22,6 +21,7 @@ export const accountSlice = createSlice({
       state.isAuthen = true;
     },
     doLogout: (state, action: PayloadAction<AccountDetail>) => {
+      console.log("action:", action);
       state.account = initialState.account;
       state.isAuthen = false;
     },

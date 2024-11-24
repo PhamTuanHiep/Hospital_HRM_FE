@@ -93,14 +93,6 @@ const AddJobScreen = () => {
         >
           <Input className="input-profile-item" placeholder="Tên chức vụ mới" />
         </Form.Item>
-
-        <Form.Item<PositionForm>
-          label={t("content.position.SalaryCoefficient")}
-          name="salaryCoefficient"
-        >
-          <Input className="input-profile-item" />
-        </Form.Item>
-
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit" className="btn-submit-post">
             {t("content.common.Submit")}

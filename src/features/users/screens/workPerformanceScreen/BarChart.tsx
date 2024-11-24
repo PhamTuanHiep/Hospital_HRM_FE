@@ -1,7 +1,6 @@
 import { ChartType } from "chart.js";
 
-import React from "react";
-import { Bar, Chart } from "react-chartjs-2";
+import { Chart } from "react-chartjs-2";
 import {
   getDataSetsByYear,
   getQuarterLabels,

@@ -27,7 +27,7 @@ const AnnouncementPosterScreen = ({
         align="center"
         justify="space-between"
         gap={12}
-        onClick={(e) => handleAccessAnnouncementPost?.(announcementPost)}
+        onClick={() => handleAccessAnnouncementPost?.(announcementPost)}
       >
         <Flex className="item-content" align="flex-start" gap={12}>
           <Image preview={false} src={announcementPost.image} />

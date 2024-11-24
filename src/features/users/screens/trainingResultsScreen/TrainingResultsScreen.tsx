@@ -33,7 +33,6 @@ const TrainingResultsScreen = () => {
           return (
             medicalTrainingResult.user?.userId === currentAccount.user?.userId
           );
-          return;
         }
       );
       setMedicalTrainingResults(yoursMedicalTrainingResults);

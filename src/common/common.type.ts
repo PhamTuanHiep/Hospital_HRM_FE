@@ -57,7 +57,6 @@ interface UserInsuranceShortInfo {
 interface PositionShortInfo {
   positionId: string;
   positionName: string;
-  salaryCoefficient: number;
 }
 
 interface AllowanceShortInfo {
@@ -146,6 +145,7 @@ export interface UserPost {
   hometown: string;
   positionId: string;
   departmentId: string;
+  salaryCoefficient: number;
   birthday: string;
   fatherFullName: string;
   fatherBirthday: string;
@@ -159,6 +159,7 @@ export interface UserPost {
 
 export interface UserForm {
   userId?: number;
+  email: string;
   fullName: string;
   gender: number;
   address: string;
@@ -173,6 +174,7 @@ export interface UserForm {
   motherBirthday: string;
   weeklySchedule: number[];
   positionName: string;
+  salaryCoefficient: number;
   departmentName: string;
   jobDescription: string[];
   otherDescription: string;
@@ -199,7 +201,6 @@ export interface PositionAllowance {
 export interface Position {
   positionId: string;
   positionName: string;
-  salaryCoefficient: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -297,7 +298,6 @@ export interface Overtime {
   overtimeId: string;
   overtimeName: string;
   overtimePay: number;
-  note: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -306,7 +306,7 @@ export interface OvertimeHistoryAccordingDepartment {
   overtimeHistoryId: number;
   userId: number;
   overtimeId: string;
-  note?: string;
+  note?: string[];
   startDay: string;
   endDay: string;
   createdAt?: Date;
@@ -389,6 +389,7 @@ export interface UserDetail {
   otherDescription: string;
   account: AccountShortInfo | null;
   department: DepartmentShortInfo | null;
+  salaryCoefficient: number;
   leaveHistories: LeaveHistoryShortInfo[] | [];
   overtimeHistories: OvertimeHistoryUserShortInfo[] | [];
   userInsurances: UserInsuranceShortInfo[] | [];
@@ -396,6 +397,8 @@ export interface UserDetail {
   evaluateHistories: EvaluateShortInfo[];
   contractHistories: ContractHistoryShortInfo[] | [];
   salaryHistories: SalaryHistoryShortInfo[] | [];
+  medicalTrainingResults: MedicalTrainingResultsDetail[] | [];
+  nursingTrainingResults: NursingTrainingResults[] | [];
   createdAt?: Date;
   updatedAt?: Date;
   status: string;
@@ -414,7 +417,6 @@ export interface PositionAllowanceDetail {
 export interface PositionDetail {
   positionId: string;
   positionName: string;
-  salaryCoefficient: number;
   users: UserShortInfo[] | [];
   positionAllowances: PositionAllowanceShortInfo[] | [];
   createdAt?: Date;
@@ -479,7 +481,7 @@ export interface OvertimeDetail extends Overtime {}
 
 export interface OvertimeHistoryDetail {
   overtimeHistoryId: number;
-  note: string;
+  note: string[];
   startDay: string;
   endDay: string;
   user: UserShortInfo | null;

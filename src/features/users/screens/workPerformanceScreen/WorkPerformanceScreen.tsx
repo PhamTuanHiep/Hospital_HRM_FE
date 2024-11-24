@@ -24,7 +24,7 @@ export const WorkPerformanceScreen = () => {
     if (res) {
       const evaluatesData = res.data.data as EvaluateDetail[];
       let userEvaluates = evaluatesData.filter((evaluateData) => {
-        return evaluateData.userId === currentAccount.user?.userId;
+        return evaluateData.user?.userId === currentAccount.user?.userId;
       });
 
       setEvaluates(userEvaluates);
@@ -36,7 +36,7 @@ export const WorkPerformanceScreen = () => {
     let userDataSets = evaluates.map((evaluate) => {
       const {
         evaluateId,
-        userId,
+        user,
         createdAt,
         updatedAt,
         averageScore,

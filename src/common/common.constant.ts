@@ -26,6 +26,9 @@ import {
   PageResponse,
 } from "./common.type";
 
+const DEFAULT_CREATED_AT = dayjs("2000-01-01").toDate();
+const DEFAULT_UPDATED_AT = dayjs("2000-01-01").toDate();
+
 export const INIT_QUERY_PARAMS: CommonQueryParams = {
   page: 1,
   items_per_page: 4,
@@ -57,8 +60,8 @@ export const INIT_ACCOUNT: AccountDetail = {
   avatar: "",
   role: null,
   user: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_USER: UserDetail = {
@@ -80,6 +83,7 @@ export const INIT_USER: UserDetail = {
   otherDescription: "-",
   account: null,
   department: null,
+  salaryCoefficient: 0,
   leaveHistories: [],
   overtimeHistories: [],
   userInsurances: [],
@@ -87,34 +91,35 @@ export const INIT_USER: UserDetail = {
   evaluateHistories: [],
   contractHistories: [],
   salaryHistories: [],
+  medicalTrainingResults: [],
+  nursingTrainingResults: [],
   status: "-",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_ROLE: RoleDetail = {
   roleId: "user",
   roleName: "User",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_POSITION_ALLOWANCE_DETAIL: PositionAllowanceDetail = {
   id: 0,
   position: null,
   allowance: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_POSITION: PositionDetail = {
   positionId: "",
   positionName: "",
-  salaryCoefficient: 0,
   users: [],
   positionAllowances: [],
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_LEAVE_HISTORY_DETAIL: LeaveHistoryDetail = {
@@ -125,8 +130,8 @@ export const INIT_LEAVE_HISTORY_DETAIL: LeaveHistoryDetail = {
   dayOffList: [],
   user: null,
   leave: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_LEAVE: LeaveDetail = {
@@ -134,16 +139,16 @@ export const INIT_LEAVE: LeaveDetail = {
   leaveTypes: "",
   maxLeaveEntitlement: 0,
   unit: "day",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_USER_INSURANCE_DETAIL: UserInsuranceDetail = {
   id: 0,
   user: null,
   insurance: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_INSURANCE: InsuranceDetail = {
@@ -153,8 +158,8 @@ export const INIT_INSURANCE: InsuranceDetail = {
   monthlyPercentage: 0,
   note: "-",
   userInsurances: [],
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_EVALUATE: EvaluateDetail = {
@@ -169,8 +174,8 @@ export const INIT_EVALUATE: EvaluateDetail = {
   workSpirit: 0,
   workResult: 0,
   averageScore: 0,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_DEPARTMENT: DepartmentDetail = {
@@ -180,29 +185,29 @@ export const INIT_DEPARTMENT: DepartmentDetail = {
   funcDescription: "",
   users: [],
   overtimeHistories: [],
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_OVERTIME: OvertimeDetail = {
   overtimeId: "",
   overtimeName: "",
   overtimePay: 0,
-  note: [""],
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_OVERTIME_HISTORY: OvertimeHistoryDetail = {
   overtimeHistoryId: 1,
-  note: "",
+  note: [""],
   startDay: "",
   endDay: "",
   user: null,
   department: null,
   overtime: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_ALLOWANCE: AllowanceDetail = {
@@ -213,8 +218,8 @@ export const INIT_ALLOWANCE: AllowanceDetail = {
   allowanceRate: 0,
   allowanceFee: 0,
   note: "-",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_MEDICAL_TRAINING_RESULTS: MedicalTrainingResultsDetail = {
@@ -253,8 +258,8 @@ export const INIT_CONTRACT: ContractDetail = {
   contractNameEN: "",
   note: [],
   contractHistories: [],
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
   contractHistoryId: 0,
@@ -263,8 +268,8 @@ export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
   note: "",
   user: null,
   contract: null,
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
 };
 
 export const INIT_SALARY_HISTORY: SalaryHistoryDetail = {
@@ -291,8 +296,8 @@ export const INIT_RECRUITMENT_POST_DETAIL: RecruitmentPostDetail = {
   requiredDocuments: "",
   contact: "",
   image: "",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
   user: null,
 };
 
@@ -304,8 +309,8 @@ export const INIT_ANNOUNCEMENT_POST_DETAIL: AnnouncementPostDetail = {
   contentDetail: "",
   contact: "",
   image: "",
-  createdAt: dayjs("2000-01-01").toDate(),
-  updatedAt: dayjs("2000-01-01").toDate(),
+  createdAt: DEFAULT_CREATED_AT,
+  updatedAt: DEFAULT_UPDATED_AT,
   user: null,
 };
 

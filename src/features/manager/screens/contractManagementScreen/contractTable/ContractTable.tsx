@@ -16,8 +16,6 @@ import { FilterDropdownProps } from "antd/es/table/interface";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 
-import { useNavigate } from "react-router-dom";
-
 import { useTranslation } from "react-i18next";
 import { getContracts } from "../../../../../api/apiServices";
 import { ContractDetail } from "../../../../../common/common.type";
@@ -33,7 +31,6 @@ interface TableDataType extends ContractColumnType {}
 
 const ContractTable = () => {
   const searchInput = useRef<InputRef>(null);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");

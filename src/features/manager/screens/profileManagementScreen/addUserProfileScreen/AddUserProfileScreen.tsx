@@ -88,6 +88,7 @@ const AddUserProfileScreen = () => {
       weeklySchedule: [2, 3, 4, 5, 6],
       positionId: "P010",
       departmentId: "D003",
+      salaryCoefficient: 0,
       jobDescription: ["Làm việc các ngày trong tuần"],
       otherDescription: "Sẽ có tăng ca hàng tháng",
       status: "Đang làm",
@@ -241,6 +242,15 @@ const AddUserProfileScreen = () => {
             placeholder="Please select"
             options={departmentOptions}
           />
+        </Form.Item>
+        <Form.Item<UserPost>
+          label={t("content.info.SalaryCoefficient")}
+          name="salaryCoefficient"
+          rules={[
+            { required: true, message: "Please input salaryCoefficient!" },
+          ]}
+        >
+          <Input />
         </Form.Item>
         <Form.Item<UserPost>
           label={t("content.info.WeeklySchedule")}

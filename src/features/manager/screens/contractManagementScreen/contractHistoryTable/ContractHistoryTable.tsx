@@ -10,13 +10,10 @@ import {
   TableColumnType,
   TableColumnsType,
   TableProps,
-  Tag,
 } from "antd";
 import { FilterDropdownProps } from "antd/es/table/interface";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-
-import { useNavigate } from "react-router-dom";
 
 import { useTranslation } from "react-i18next";
 import {
@@ -46,7 +43,6 @@ interface TableDataType extends ContractHistoryColumnType {}
 
 const ContractHistoryTable = () => {
   const searchInput = useRef<InputRef>(null);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");

@@ -1,11 +1,4 @@
-import ExcelComponent from "./ExcelComponent";
-
 const BenefitsManagementScreen = () => {
-  return (
-    <div>
-      BenefitsManagementScreen
-      <ExcelComponent />
-    </div>
-  );
+  return <div>BenefitsManagementScreen</div>;
 };
 export default BenefitsManagementScreen;

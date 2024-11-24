@@ -15,7 +15,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+
 import {
   LeaveHistoryDetail,
   PositionAllowanceDetail,
@@ -63,7 +63,7 @@ const EnteredPayrollTable = ({
   attendanceData,
 }: EnteredPayrollTableProps) => {
   const searchInput = useRef<InputRef>(null);
-  const navigate = useNavigate();
+
   const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");
@@ -258,7 +258,7 @@ const EnteredPayrollTable = ({
 
       const employeeSalary =
         (SALARY_BASE *
-          (user.position?.salaryCoefficient || 0) *
+          (user.salaryCoefficient || 0) *
           (totalPaidLeave + attendanceDatum.attendance) +
           totalEmployeeAllowance) /
           attendanceDatum.standardWorkDays +

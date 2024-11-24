@@ -27,7 +27,7 @@ const CreateRecruitmentPostModal = ({
 }: CreateRecruitmentPostModalProps) => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
-  const { account: currentAccount, isAuthen } = useAppSelector(
+  const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
   const [fileList, setFileList] = useState<UploadFile[]>([]);

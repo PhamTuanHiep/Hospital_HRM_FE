@@ -87,6 +87,7 @@
             "MotherBirthday": "Ngày sinh mẹ",
             "DateOfJoining": "Ngày tham gia",
             "FullName": "Họ và tên",
+            "SalaryCoefficient": "Hệ số lương",
             "DepartmentName": "Khoa/phòng",
             "PositionName": "Chức vụ",
             "WeeklySchedule": "Lịch làm việc hàng tuần",
@@ -129,7 +130,6 @@
         "position": {
             "PositionId": "Mã chức vụ",
             "PositionName": "Chức vụ",
-            "SalaryCoefficient": "Hệ số lương",
             "Users": "Nhân viên",
             "PositionAllowances": "Trợ cấp",
             "UpdatePositionTitle": "Cập nhật chức vụ",

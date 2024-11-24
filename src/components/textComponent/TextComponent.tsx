@@ -5,14 +5,12 @@ interface TextComponentProps {
 }
 const TextComponent = ({ text }: TextComponentProps) => {
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b/g;
-  const websiteRegex =
-    /\b(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,7}(?:\/\S*)?\b/g;
+
   const facebookRegex =
     /\b(?:https?:\/\/)?(?:www\.)?facebook\.com\/[@A-Za-z0-9._-]+/g;
 
   // Tìm kiếm các chuỗi phù hợp
   const emails = text.match(emailRegex) || [];
-  const websites = text.match(websiteRegex) || [];
   const facebookPages = text.match(facebookRegex) || [];
 
   // Kết quả

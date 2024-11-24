@@ -15,7 +15,7 @@ import { useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
 
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+
 import {
   SalaryHistoryDetail,
   SalaryHistoryShortInfo,
@@ -43,7 +43,7 @@ const PaidPayrollTable = ({
   users,
 }: PaidPayrollTableProps) => {
   const searchInput = useRef<InputRef>(null);
-  const navigate = useNavigate();
+
   const { t } = useTranslation();
 
   const [searchText, setSearchText] = useState<string>("");

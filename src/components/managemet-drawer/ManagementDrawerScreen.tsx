@@ -53,7 +53,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <UserOutlined />,
       text: t("content.feature.PersonalProfile"),
       path: UserPaths.RECORD,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -61,7 +61,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <AccountBookOutlined />,
       text: t("content.feature.AccountManagement"),
       path: managerPaths.ACCOUNT_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -69,7 +69,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <UsergroupAddOutlined />,
       text: t("content.feature.EmployeeManagement"),
       path: managerPaths.EMPLOYEE_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -77,7 +77,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <FileOutlined />,
       text: t("content.feature.ProfileManagement"),
       path: managerPaths.PROFILE_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -85,7 +85,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <FileTextOutlined />,
       text: t("content.feature.ContractManagement"),
       path: managerPaths.CONTRACT_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -93,7 +93,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <ApartmentOutlined />,
       text: t("content.feature.AccountManagement"),
       path: managerPaths.DEPARTMENT_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -101,7 +101,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <InsertRowAboveOutlined />,
       text: t("content.feature.WorkManagement"),
       path: managerPaths.JOB_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -109,7 +109,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <MoneyCollectOutlined />,
       text: t("content.feature.SalaryManagement"),
       path: managerPaths.SALARY_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -117,7 +117,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <FileSearchOutlined />,
       text: t("content.feature.RecruitmentManagement"),
       path: managerPaths.RECRUITMENT_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -125,19 +125,10 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <SnippetsOutlined />,
       text: t("content.feature.AnnouncementManagement"),
       path: managerPaths.ANNOUNCEMENT_MANAGEMENT,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
-    // {
-    //   icon: <LogoutOutlined />,
-    //   text: t("homepage.Logout"),
-    //   fn: (e: any) => {
-    //     dispatch(doLogout(currentAccount));
-    //     setOpen(false);
-    //     navigate("/");
-    //   },
-    // },
   ];
 
   const userFeature: FeatureName[] = [
@@ -145,7 +136,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <UserOutlined />,
       text: t("content.feature.PersonalProfile"),
       path: UserPaths.RECORD,
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -153,7 +144,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     //   icon: <FileTextOutlined />,
     //   text: t("content.feature.Contract"),
     //   path: UserPaths.CONTRACT,
-    //   fn: (e: any) => {
+    //   fn: () => {
     //     setOpen(false);
     //   },
     // },
@@ -161,7 +152,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     //   icon: <MoneyCollectOutlined />,
     //   text: t("content.feature.Benefits"),
     //   path: UserPaths.BENEFITS,
-    //   fn: (e: any) => {
+    //   fn: () => {
     //     setOpen(false);
     //   },
     // },
@@ -170,7 +161,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       text: t("content.feature.WorkSchedule"),
       path: UserPaths.SCHEDULE,
 
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -178,7 +169,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <BellOutlined />,
       path: UserPaths.NOTIFICATION,
       text: t("content.feature.Notification"),
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -186,7 +177,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <FileDoneOutlined />,
       path: UserPaths.TRAINING_RESULTS,
       text: t("content.feature.TrainingResults"),
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -194,7 +185,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
       icon: <ProfileOutlined />,
       path: UserPaths.WORK_PERFORMANCE_SCREEN,
       text: t("content.feature.WorkPerformance"),
-      fn: (e: any) => {
+      fn: () => {
         setOpen(false);
       },
     },
@@ -204,7 +195,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <LogoutOutlined />,
       text: t("homepage.Logout"),
-      fn: (e: any) => {
+      fn: () => {
         dispatch(doLogout(currentAccount));
         setOpen(false);
         navigate("/");
@@ -242,8 +233,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     </NavLink>
   ));
 
-  const handleChooseList = (e: any) => {};
-
   return (
     <>
       <Drawer
@@ -273,16 +262,12 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
           </Flex>
         ) : (
           <Flex vertical>
-            <Title onClick={handleChooseList} level={5}>
-              {t("content.feature.Personal")}
-            </Title>
+            <Title level={5}>{t("content.feature.Personal")}</Title>
             <List
               dataSource={userFeatureList}
               renderItem={(item) => <List.Item>{item}</List.Item>}
             />
-            <Title onClick={handleChooseList} level={5}>
-              {t("content.feature.Management")}
-            </Title>
+            <Title level={5}>{t("content.feature.Management")}</Title>
             <List
               dataSource={adminFeatureList}
               renderItem={(item) => <List.Item>{item}</List.Item>}

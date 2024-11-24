@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 import { useMemo } from "react";

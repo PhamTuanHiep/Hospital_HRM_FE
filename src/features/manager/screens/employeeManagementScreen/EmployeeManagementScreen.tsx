@@ -200,6 +200,7 @@ const EmployeeManagementScreen = () => {
         fullName: employee.fullName,
         gender: employee.gender || 1,
         departmentName: employee.department?.departmentName || "",
+        salaryCoefficient: employee.salaryCoefficient,
         positionName: employee.position?.positionName || "",
         weeklySchedule: employee.weeklySchedule || [],
         averageScore: getAverageScoreToObject(employee).map((object) => {
@@ -223,6 +224,7 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.info.Email"),
       dataIndex: "email",
+      key: "email",
       width: 100,
       sorter: {
         compare: (a, b) => a.email.localeCompare(b.email),
@@ -232,6 +234,7 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.info.FullName"),
       dataIndex: "fullName",
+      key: "fullName",
       width: 150,
 
       sorter: {
@@ -243,6 +246,7 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.info.Gender"),
       dataIndex: "gender",
+      key: "gender",
       width: 100,
       render: (value) => {
         return value === GenderId.MALE
@@ -251,8 +255,15 @@ const EmployeeManagementScreen = () => {
       },
     },
     {
+      title: t("content.info.SalaryCoefficient"),
+      dataIndex: "salaryCoefficient",
+      key: "salaryCoefficient",
+      width: 100,
+    },
+    {
       title: t("content.info.DepartmentName"),
       dataIndex: "departmentName",
+      key: "departmentName",
       width: 200,
       sorter: {
         compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
@@ -265,6 +276,7 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.info.PositionName"),
       dataIndex: "positionName",
+      key: "positionName",
       width: 130,
       sorter: {
         compare: (a, b) => a.positionName.localeCompare(b.positionName),
@@ -278,22 +290,26 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.info.WeeklySchedule"),
       dataIndex: "weeklySchedule",
+      key: "weeklySchedule",
       width: 220,
       render: (value) => getDayNameFromNumber(value),
     },
     {
       title: t("content.info.AverageScore"),
       dataIndex: "averageScore",
+      key: "averageScore",
       width: 220,
     },
     {
       title: t("content.info.Status"),
       dataIndex: "status",
+      key: "status",
       width: 100,
     },
     {
       title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
+      key: "createdAt",
       width: 130,
       sorter: {
         compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
@@ -303,6 +319,7 @@ const EmployeeManagementScreen = () => {
     {
       title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
+      key: "updatedAt",
       width: 130,
       sorter: {
         compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
@@ -312,6 +329,7 @@ const EmployeeManagementScreen = () => {
     {
       title: "",
       dataIndex: "actions",
+      key: "actions",
       className: "title_content-center",
       render: (value) => {
         return (
@@ -356,7 +374,7 @@ const EmployeeManagementScreen = () => {
     console.log(key);
   };
 
-  const handleGotoAction = (values: any) => {
+  const handleGotoAction = () => {
     const goToTableCard = document.getElementById("employee-table");
     goToTableCard?.scrollIntoView({ behavior: "instant", block: "start" });
 

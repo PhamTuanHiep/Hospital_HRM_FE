@@ -12,6 +12,7 @@ interface FileUploadProps {
 //Because of the limit of uploading 1 file
 const FileUpload = ({ apiUrl, fileList, setFileList }: FileUploadProps) => {
   // Kiểm tra loại file và kích thước trước khi upload
+  console.log("apiUrl:", apiUrl);
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const beforeUpload = (file: RcFile) => {

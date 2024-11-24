@@ -1,4 +1,4 @@
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Flex, List, Space } from "antd";
 import "./ContractScreen.scss";
 import { useAppSelector } from "../../../../app/hooks";

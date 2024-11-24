@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Flex, Pagination } from "antd";
+import { Card, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import { getAnnouncementPosts } from "../../../../../api/apiServices";
 import {
