@@ -328,7 +328,7 @@ export const enum RoleId {
 
 export const enum GenderId {
   FEMALE = 0,
-  MALE,
+  MALE = 1,
 }
 
 export const enum GenderName {

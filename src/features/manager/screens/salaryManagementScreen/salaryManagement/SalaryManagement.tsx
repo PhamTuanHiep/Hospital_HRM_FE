@@ -93,7 +93,7 @@ const SalaryManagement = () => {
 
   return (
     <Flex vertical gap={12}>
-      <Card title="Nhập lương tháng X">
+      <Card title="Lương tháng 12">
         {excelData.length > 0 ? (
           unCorrectData.length > 0 ? (
             <div>

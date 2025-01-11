@@ -10,7 +10,7 @@ import {
 import { RcFile } from "antd/es/upload";
 
 export interface AccountsData {
-  key: React.Key;
+  // key: React.Key;
   email: string;
   password: string;
   roleName: string;

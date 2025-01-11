@@ -33,7 +33,6 @@ const Login = () => {
     if (res?.status === 200) {
       const accountsData = res.data.data;
       console.log("accountsData:", accountsData);
-
       setAccounts(accountsData);
     }
   };

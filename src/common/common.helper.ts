@@ -1,13 +1,31 @@
-import { CustomDataSets, Overtime, UserDetail } from "./common.type";
+import {
+  AccountDetail,
+  CustomDataSets,
+  Overtime,
+  UserDetail,
+} from "./common.type";
 import dayjs, { Dayjs } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import isBetween from "dayjs/plugin/isBetween"; // Import plugin từ dayjs
 import isoWeek from "dayjs/plugin/isoWeek"; // Import plugin isoWeek
-import { DayOfWeek, RoleName, dayOfWeek } from "./common.constant";
+import { DayOfWeek, RoleId, RoleName, dayOfWeek } from "./common.constant";
 
 dayjs.extend(isBetween);
 dayjs.extend(isoWeek);
 
+export const filterAccountsByRole = (
+  accountsApi: AccountDetail[],
+  currentAccount: AccountDetail
+) => {
+  const accounts = accountsApi.filter((accountApi): boolean => {
+    return accountApi.accountId !== currentAccount.accountId;
+  });
+  if (currentAccount.role?.roleId === RoleId.ADMIN) {
+    return accounts.filter((account) => account.role?.roleId !== RoleId.ADMIN);
+  } else if (currentAccount.role?.roleId === RoleId.MANAGER) {
+    return accounts.filter((account) => account.role?.roleId === RoleId.USER);
+  } else return [];
+};
 export const getFormatNumberToString = (num: number, char: string) => {
   let strNum = num.toLocaleString();
   return strNum.split(",").join(char);

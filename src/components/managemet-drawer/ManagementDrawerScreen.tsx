@@ -50,14 +50,6 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
 
   const adminFeature: FeatureName[] = [
     {
-      icon: <UserOutlined />,
-      text: t("content.feature.PersonalProfile"),
-      path: UserPaths.RECORD,
-      fn: () => {
-        setOpen(false);
-      },
-    },
-    {
       icon: <AccountBookOutlined />,
       text: t("content.feature.AccountManagement"),
       path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -91,7 +83,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <ApartmentOutlined />,
-      text: t("content.feature.AccountManagement"),
+      text: t("content.feature.DepartmentManagement"),
       path: managerPaths.DEPARTMENT_MANAGEMENT,
       fn: () => {
         setOpen(false);

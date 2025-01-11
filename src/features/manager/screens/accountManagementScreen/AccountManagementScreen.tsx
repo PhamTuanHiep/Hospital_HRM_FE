@@ -16,17 +16,18 @@ import Highlighter from "react-highlight-words";
 import { AccountDetail } from "../../../../common/common.type";
 import { INIT_ACCOUNT } from "../../../../common/common.constant";
 import { getAccounts } from "../../../../api/apiServices";
-import { AccountsData } from "../../constants/manager.type";
 import UpdateAccountModal from "./updateAccountModel/UpdateAccountModal";
 import dayjs from "dayjs";
 import ViewAccountModal from "./viewAccountModel/ViewAccountModel";
 import DeleteAccountModal from "./deleteAccountModel/DeleteAccountModal";
 import { useAppSelector } from "../../../../app/hooks";
 import { useTranslation } from "react-i18next";
+import TableComponent from "../../../../components/tableComponent/TableComponent";
+import { AccountsData } from "../../constants/manager.type";
+import { filterAccountsByRole } from "../../../../common/common.helper";
 
 type DataIndex = keyof AccountsData;
 interface TableDataType extends AccountsData {}
-
 const AccountManagementScreen = () => {
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
@@ -45,6 +46,7 @@ const AccountManagementScreen = () => {
   const [reset, setReset] = useState(false);
 
   const [account, setAccount] = useState<AccountDetail>(INIT_ACCOUNT);
+  console.log("accounts:", accounts);
 
   useEffect(() => {
     fetchAccounts();
@@ -54,9 +56,8 @@ const AccountManagementScreen = () => {
     const res = await getAccounts();
     if (res) {
       const accountsApi = res.data.data as AccountDetail[];
-      const newAccountsApi = accountsApi.filter((accountApi): boolean => {
-        return accountApi.accountId !== currentAccount.accountId;
-      });
+
+      const newAccountsApi = filterAccountsByRole(accountsApi, currentAccount);
       setAccounts(newAccountsApi);
     }
   };
@@ -66,6 +67,9 @@ const AccountManagementScreen = () => {
     confirm: FilterDropdownProps["confirm"],
     dataIndex: DataIndex
   ) => {
+    console.log("s-dataIndex:", dataIndex);
+    console.log("s-typeof dataIndex:", typeof dataIndex);
+
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
@@ -84,70 +88,79 @@ const AccountManagementScreen = () => {
       confirm,
       clearFilters,
       close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
+    }) => {
+      return (
+        <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+          <Input
+            ref={searchInput}
+            placeholder={`Search ${dataIndex}`}
+            value={selectedKeys[0]}
+            onChange={(e) =>
+              setSelectedKeys(e.target.value ? [e.target.value] : [])
+            }
+            onPressEnter={() =>
               handleSearch(selectedKeys as string[], confirm, dataIndex)
             }
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
+            style={{ marginBottom: 8, display: "block" }}
+          />
+          <Space>
+            <Button
+              type="primary"
+              onClick={() =>
+                handleSearch(selectedKeys as string[], confirm, dataIndex)
+              }
+              icon={<SearchOutlined />}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Search
+            </Button>
+            <Button
+              onClick={() => clearFilters && handleReset(clearFilters)}
+              size="small"
+              style={{ width: 90 }}
+            >
+              Reset
+            </Button>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                confirm({ closeDropdown: false });
+                setSearchText((selectedKeys as string[])[0]);
+                setSearchedColumn(dataIndex);
+              }}
+            >
+              Filter
+            </Button>
+            <Button
+              type="link"
+              size="small"
+              onClick={() => {
+                close();
+              }}
+            >
+              close
+            </Button>
+          </Space>
+        </div>
+      );
+    },
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
     ),
-    onFilter: (value, record) =>
-      record[dataIndex]
+    onFilter: (value, record) => {
+      console.log("f-dataIndex:", dataIndex);
+      console.log("f-value:", value);
+      console.log("f-record:", record);
+
+      console.log("f-typeof dataIndex:", typeof dataIndex);
+
+      return record[dataIndex]
         .toString()
         .toLowerCase()
-        .includes((value as string).toLowerCase()),
+        .includes((value as string).toLowerCase());
+    },
     onFilterDropdownOpenChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -220,8 +233,12 @@ const AccountManagementScreen = () => {
           value: "User",
         },
       ],
-      onFilter: (value, record) =>
-        record.roleName.indexOf(value as string) === 0,
+      onFilter: (value, record) => {
+        console.log("value:", value);
+        console.log("record:", record);
+        console.log("---------------");
+        return record.roleName.indexOf(value as string) === 0;
+      },
     },
     {
       title: t("content.info.FullName"),
@@ -282,6 +299,69 @@ const AccountManagementScreen = () => {
     setAccount(accountDetail);
     setIsDeleteModalOpen(true);
   };
+  const otherColumn = [
+    {
+      title: t("content.info.Email"),
+      dataIndex: "email",
+      isSorter: true,
+    },
+    {
+      title: t("content.info.Password"),
+      dataIndex: "password",
+    },
+    {
+      title: t("content.info.Role"),
+      dataIndex: "roleName",
+      isSorter: true,
+      filterObject: [
+        {
+          text: "Manager",
+          value: "Manager",
+        },
+        {
+          text: "User",
+          value: "User",
+        },
+      ],
+    },
+    {
+      title: t("content.info.FullName"),
+      dataIndex: "userName",
+      isSearch: true,
+    },
+    {
+      title: t("content.common.CreatedAt"),
+      dataIndex: "createdAt",
+      isSorter: true,
+    },
+    {
+      title: t("content.common.UpdatedAt"),
+      dataIndex: "updatedAt",
+      isSorter: true,
+    },
+    {
+      title: "",
+      dataIndex: "actions",
+      className: "title_content-center",
+      render: (value: AccountDetail) => {
+        return (
+          <Flex justify="space-between" gap={8}>
+            <Button onClick={() => handleViewAccount(value)}>View</Button>
+            <Button onClick={() => handleUpdateAccount(value)} type="primary">
+              {t("content.common.Update")}
+            </Button>
+            <Button
+              onClick={() => handleDeleteAccount(value)}
+              type="primary"
+              danger
+            >
+              {t("content.common.Delete")}
+            </Button>
+          </Flex>
+        );
+      },
+    },
+  ];
 
   return (
     <div>
@@ -292,6 +372,7 @@ const AccountManagementScreen = () => {
         showSorterTooltip={{ target: "full-header" }}
         scroll={{ x: "max-content" }}
       />
+
       <UpdateAccountModal
         isModalOpen={isUpdateModalOpen}
         setIsModalOpen={setIsUpdateModalOpen}

@@ -228,7 +228,7 @@ const DepartmentManagementTable = () => {
     {
       title: t("content.department.FuncDescription"),
       dataIndex: "funcDescription",
-      width: 200,
+      width: 300,
     },
     {
       title: t("content.department.Users"),

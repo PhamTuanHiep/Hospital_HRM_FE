@@ -284,15 +284,53 @@ const ContractTable = () => {
 
   return (
     <div>
-      <Card title="HIHI">
-        <Table<TableDataType>
-          columns={CONTRACT_COLUMNS}
-          dataSource={contractData}
-          onChange={onChange}
-          showSorterTooltip={{ target: "full-header" }}
-          scroll={{ x: "max-content" }}
-        />
-      </Card>
+      <Flex vertical gap={12}>
+        <Card title="Hợp đồng làm việc xác định thời hạn (viên chức)">
+          <Table<TableDataType>
+            columns={CONTRACT_COLUMNS}
+            dataSource={contractData}
+            onChange={onChange}
+            showSorterTooltip={{ target: "full-header" }}
+            scroll={{ x: "max-content" }}
+          />
+        </Card>
+        <Card title="Hợp đồng làm việc không xác định thời hạn (viên chức)">
+          <Table<TableDataType>
+            columns={CONTRACT_COLUMNS}
+            dataSource={contractData}
+            onChange={onChange}
+            showSorterTooltip={{ target: "full-header" }}
+            scroll={{ x: "max-content" }}
+          />
+        </Card>
+        <Card title="Hợp đồng lao động xác định thời hạn ">
+          <Table<TableDataType>
+            columns={CONTRACT_COLUMNS}
+            dataSource={contractData}
+            onChange={onChange}
+            showSorterTooltip={{ target: "full-header" }}
+            scroll={{ x: "max-content" }}
+          />
+        </Card>
+        <Card title="Hợp đồng lao động không xác định thời hạn">
+          <Table<TableDataType>
+            columns={CONTRACT_COLUMNS}
+            dataSource={contractData}
+            onChange={onChange}
+            showSorterTooltip={{ target: "full-header" }}
+            scroll={{ x: "max-content" }}
+          />
+        </Card>
+        <Card title="Hợp đồng thời vụ">
+          <Table<TableDataType>
+            columns={CONTRACT_COLUMNS}
+            dataSource={contractData}
+            onChange={onChange}
+            showSorterTooltip={{ target: "full-header" }}
+            scroll={{ x: "max-content" }}
+          />
+        </Card>
+      </Flex>
 
       <DeleteContractModal
         isModalOpen={isDeleteModalOpen}

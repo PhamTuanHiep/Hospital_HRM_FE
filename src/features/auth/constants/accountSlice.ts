@@ -5,11 +5,11 @@ import { INIT_ACCOUNT } from "../../../common/common.constant";
 
 export interface AccountState {
   account: AccountDetail;
-  isAuthen: boolean;
+  isAuth: boolean;
 }
 const initialState: AccountState = {
   account: INIT_ACCOUNT,
-  isAuthen: false,
+  isAuth: false,
 };
 
 export const accountSlice = createSlice({
@@ -18,12 +18,12 @@ export const accountSlice = createSlice({
   reducers: {
     doLogin: (state, action: PayloadAction<AccountDetail>) => {
       state.account = action.payload;
-      state.isAuthen = true;
+      state.isAuth = true;
     },
     doLogout: (state, action: PayloadAction<AccountDetail>) => {
       console.log("action:", action);
       state.account = initialState.account;
-      state.isAuthen = false;
+      state.isAuth = false;
     },
   },
 });

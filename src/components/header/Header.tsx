@@ -21,7 +21,7 @@ import { recruitmentPaths } from "../../features/recruitment/constants/constant.
 
 const HeaderComponent = () => {
   // const navigate = useNavigate();
-  const { account: currentAccount, isAuthen } = useAppSelector(
+  const { account: currentAccount, isAuth } = useAppSelector(
     (state) => state.account_user
   );
 
@@ -203,7 +203,7 @@ const HeaderComponent = () => {
           <div className="right-header">
             <Language />
 
-            {!isAuthen ? (
+            {!isAuth ? (
               <Button type="primary">
                 <NavLink to="/login" className="nav-link">
                   Login

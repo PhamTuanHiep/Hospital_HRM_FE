@@ -1,4 +1,6 @@
-export const APIHHRM = "https://phamtuanhiep-hospital-hhrm.onrender.com";
+export const APIHHRM = "http://localhost:3000";
+// export const APIHHRM = "https://phamtuanhiep-hospital-hhrm.onrender.com";
+
 export const apiPaths = {
   ACCOUNTS: "/accounts",
   USERS: "/users",
