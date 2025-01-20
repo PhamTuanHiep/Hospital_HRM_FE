@@ -9,7 +9,7 @@ import {
   TableProps,
 } from "antd";
 import { FilterDropdownProps } from "antd/es/table/interface";
-import { memo, useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ContractColumnType } from "../../features/manager/constants/manager.type";
 import { SearchOutlined } from "@ant-design/icons";
@@ -19,7 +19,7 @@ interface FilterObject {
   value: string | number;
 }
 interface ColumnDataCustom {
-  title: string;
+  title?: string | React.ReactNode;
   dataIndex: string;
   isSorter?: boolean;
   isSearch?: boolean;

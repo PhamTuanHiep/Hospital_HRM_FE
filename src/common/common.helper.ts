@@ -239,6 +239,10 @@ export const getDayNameFromNumber = (days: number[]) => {
   return `Các thứ trong tuần: ${dayList}`;
 };
 
+export const formatDateToDDMMYYYY = (time: string | Date) => {
+  return dayjs(time).format("DD/MM/YYYY");
+};
+
 export const getDepartmentIdFromNumber = (num: number): string => {
   // Chuyển đổi số thành chuỗi và thêm số 0 vào trước nếu cần để đảm bảo đủ 3 chữ số
   const paddedNumber = num.toString().padStart(3, "0");

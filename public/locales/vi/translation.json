@@ -168,7 +168,7 @@
             "ByLevel": "Theo mức"
         },
         "salary": {
-            "UserId": "Mã nhân viên ",
+            "UserId": "Mã nhân viên",
             "EmployeeName": "Tên nhân viên",
             "DepartmentName": " Khoa/phòng",
             "PositionName": "Chức vụ ",
