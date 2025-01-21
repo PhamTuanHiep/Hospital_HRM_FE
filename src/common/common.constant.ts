@@ -266,6 +266,7 @@ export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
   startDay: "",
   endDay: "",
   note: "",
+  status: 0,
   user: null,
   contract: null,
   createdAt: DEFAULT_CREATED_AT,
@@ -460,4 +461,26 @@ export const notificationName = {
   [NotificationType.N004]: "Tin tức bệnh viện",
   [NotificationType.N005]: "Quy định",
   [NotificationType.N006]: "Tin tức nhà nước",
+};
+
+export enum ContractStatus {
+  ACTIVE = 1, //có hiệu lực.
+  RENEWAL_PENDING, //sắp hết hạn và đang chờ phê duyệt gia hạn
+  EXPIRED, //đã hết hạn
+  SUSPENDED, //tạm thời đình do sự cố
+  TERMINATED, //Chấm dứt-bị kết thúc trước thời hạn
+  CANCELLED, //bị hủy trước khi có hiệu lực
+  TRANSFERRED, //nhân viên nghỉ việc hoặc chuyển sang cơ sở khác
+  PROBATION, //thử việc
+}
+
+export const contractStatus = {
+  [ContractStatus.ACTIVE]: "Active",
+  [ContractStatus.RENEWAL_PENDING]: "Renewal-Pending",
+  [ContractStatus.EXPIRED]: "Expired",
+  [ContractStatus.SUSPENDED]: "Suspended",
+  [ContractStatus.TERMINATED]: "Terminated",
+  [ContractStatus.CANCELLED]: "Cancelled",
+  [ContractStatus.TRANSFERRED]: "Transferred",
+  [ContractStatus.PROBATION]: "Probation",
 };

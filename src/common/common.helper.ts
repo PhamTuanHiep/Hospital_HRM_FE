@@ -239,8 +239,8 @@ export const getDayNameFromNumber = (days: number[]) => {
   return `Các thứ trong tuần: ${dayList}`;
 };
 
-export const formatDateToDDMMYYYY = (time: string | Date) => {
-  return dayjs(time).format("DD/MM/YYYY");
+export const formatDateToDDMMYYYY = (time?: string | Date) => {
+  return time ? dayjs(time).format("DD/MM/YYYY") : "-";
 };
 
 export const getDepartmentIdFromNumber = (num: number): string => {

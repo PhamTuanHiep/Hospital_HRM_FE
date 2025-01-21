@@ -6,7 +6,21 @@
     }
     .ant-table-tbody {
       .ant-table-row {
-        background-color: #ffbc11;
+        &.Renewal-Pending {
+          background-color: #f8bc25;
+          .ant-table-cell-row-hover {
+            background-color: #bbc1be;
+          }
+        }
+        &.Probation {
+          background-color: #b7bcc1c2;
+          .ant-table-cell-row-hover {
+            background-color: #7c7e80c2;
+          }
+        }
+        // .ant-table-cell-row-hover {
+        //   background-color: #bbc1be;
+        // }
       }
     }
   }

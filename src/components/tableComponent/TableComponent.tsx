@@ -8,43 +8,43 @@ import {
   TableColumnsType,
   TableProps,
 } from "antd";
+import type { ColumnType } from "antd/es/table";
 import { FilterDropdownProps } from "antd/es/table/interface";
-import React, { memo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { ContractColumnType } from "../../features/manager/constants/manager.type";
+import { memo, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import { RowType } from "../../common/common.type";
+
 interface FilterObject {
   text: string;
   value: string | number;
 }
-interface ColumnDataCustom {
-  title?: string | React.ReactNode;
-  dataIndex: string;
+export interface ColumnDataCustom<T> extends ColumnType<T> {
   isSorter?: boolean;
   isSearch?: boolean;
-  filterObject?: FilterObject[];
+  filterObjects?: FilterObject[];
 }
-interface TableComponentProps<T> extends TableProps {
+
+interface TableComponentProps<T> extends TableProps<T> {
   isWarning?: boolean;
-  columnData: ColumnDataCustom[] & TableColumnsType<T>;
-  tableData: T[];
   isSummary?: boolean;
+  columnData: ColumnDataCustom<T>[];
+  tableData: T[];
 }
-const TableComponent = <T extends {}>({
+
+const TableComponent = <T extends RowType>({
   isWarning,
   isSummary,
   columnData,
   tableData,
   ...tableProps
 }: TableComponentProps<T>) => {
-  const newTableData = tableData.map((tableDatum, index) => ({
+  const newTableData = tableData.map((tableDatum) => ({
     ...tableDatum,
-    rowId: index,
+    // rowId: index,
   }));
 
-  interface TableDataType extends T {}
-  type DataIndex = keyof TableDataType;
+  type DataIndex = keyof T;
 
   const searchInput = useRef<InputRef>(null);
 
@@ -64,9 +64,7 @@ const TableComponent = <T extends {}>({
     setSearchText("");
   };
 
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): TableColumnType<TableDataType> => ({
+  const getColumnSearchProps = (dataIndex: DataIndex): TableColumnType<T> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -132,7 +130,7 @@ const TableComponent = <T extends {}>({
     filterIcon: (filtered: boolean) => (
       <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
     ),
-    onFilter: (value, record: TableDataType) =>
+    onFilter: (value, record: T) =>
       String(record[dataIndex])
         .toLowerCase()
         .includes((value as string).toLowerCase()),
@@ -153,53 +151,51 @@ const TableComponent = <T extends {}>({
         text
       ),
   });
-  const onChange: TableProps<TableDataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  // const onChange: TableProps<T>["onChange"] = (
+  //   pagination,
+  //   filters,
+  //   sorter,
+  //   extra
+  // ) => {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // };
   type Key = string | number | bigint;
-  const newColumns: TableColumnsType<TableDataType> = columnData.map(
-    (columnDatum) => {
-      if (columnDatum.isSearch) {
-        return {
-          ...columnDatum,
-          ...getColumnSearchProps(columnDatum.dataIndex as keyof TableDataType),
-        };
-      }
+  const newColumns: TableColumnsType<T> = columnData.map((columnDatum) => {
+    if (columnDatum.isSearch) {
       return {
         ...columnDatum,
-        sorter: columnDatum.isSorter && {
-          compare: (a: TableDataType, b: TableDataType) =>
-            String(
-              a[columnDatum.dataIndex as keyof TableDataType]
-            ).localeCompare(
-              String(b[columnDatum.dataIndex as keyof TableDataType])
-            ),
-        },
-        filters: columnDatum.filterObject,
-        onFilter: (
-          value: boolean | string | number | Key,
-          record: TableDataType
-        ): boolean => {
-          console.log("value:", value);
-          console.log("record:", record);
-          console.log("---------------");
-          return (
-            String(
-              record[columnDatum.dataIndex as keyof TableDataType]
-            ).indexOf(value as string) === 0
-          );
-        },
+        ...getColumnSearchProps(columnDatum.dataIndex as keyof T),
       };
     }
-  );
+    return {
+      ...columnDatum,
+      sorter: columnDatum.isSorter && {
+        compare: (a: T, b: T) =>
+          String(a[columnDatum.dataIndex as keyof T]).localeCompare(
+            String(b[columnDatum.dataIndex as keyof T])
+          ),
+      },
+      filters: columnDatum.filterObjects,
+      onFilter: (
+        value: boolean | string | number | Key,
+        record: T
+      ): boolean => {
+        console.log("value:", value);
+        console.log("record:", record);
+        console.log("---------------");
+        return (
+          String(record[columnDatum.dataIndex as keyof T]).indexOf(
+            value as string
+          ) === 0
+        );
+      },
+    };
+  });
   return (
     <Table
-      rowKey={(record): string => record.rowId.toString()}
+      rowKey={(record): string => {
+        return String(record.rowId);
+      }}
       columns={newColumns}
       dataSource={newTableData}
       // onChange={onChange}
@@ -210,4 +206,7 @@ const TableComponent = <T extends {}>({
   );
 };
 
-export default memo(TableComponent);
+// export default TableComponent;
+export default memo(TableComponent) as <T>(
+  props: TableComponentProps<T>
+) => JSX.Element;

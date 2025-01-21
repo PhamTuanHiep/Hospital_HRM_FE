@@ -532,6 +532,7 @@ export interface ContractHistoryDetail {
   startDay: string;
   endDay: string;
   note: string;
+  status: number;
   user: UserShortInfo | null;
   contract: ContractShortInfo | null;
   createdAt?: Date;
@@ -578,4 +579,8 @@ export interface AnnouncementPostDetail {
   createdAt: Date;
   updatedAt: Date;
   user: UserShortInfo | null;
+}
+
+export interface RowType {
+  rowId: string | number;
 }

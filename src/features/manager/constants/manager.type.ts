@@ -1,9 +1,11 @@
+import React from "react";
 import {
   AccountDetail,
   ContractDetail,
   ContractHistoryDetail,
   DepartmentDetail,
   PositionDetail,
+  RowType,
   SalaryHistoryShortInfo,
   UserDetail,
 } from "../../../common/common.type";
@@ -286,3 +288,15 @@ export interface AnnouncementPostUpdate {
 //   updatedAt: Date;
 //   user: UserShortInfo | null;
 // }
+
+export interface ContractTableData extends RowType {
+  userId?: number;
+  fullName?: string;
+  startDay: string;
+  endDay: string;
+  note: string;
+  contractStatus: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  actions: ContractHistoryDetail;
+}
