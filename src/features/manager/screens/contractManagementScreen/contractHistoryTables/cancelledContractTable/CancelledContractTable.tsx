@@ -1,61 +1,60 @@
-import { Button, Card, Flex } from "antd";
-import { useEffect, useMemo, useState } from "react";
-import {
-  getContractHistories,
-  getContracts,
-} from "../../../../../api/apiServices";
-import {
-  ContractDetail,
-  ContractHistoryDetail,
-  RowType,
-} from "../../../../../common/common.type";
+import { useTranslation } from "react-i18next";
 import {
   ContractStatus,
   contractStatus,
-  INIT_CONTRACT,
   INIT_CONTRACT_HISTORY,
-} from "../../../../../common/common.constant";
-
-import { useTranslation } from "react-i18next";
-import "./ContractHistoryTables.scss";
-import { formatDateToDDMMYYYY } from "../../../../../common/common.helper";
-import { ContractTableData } from "../../../constants/manager.type";
+  INIT_PAGE_RESPONSE,
+  QueryParamsWithListPosts,
+} from "../../../../../../common/common.constant";
+import {
+  CommonQueryParams,
+  ContractHistoryDetail,
+  PageResponse,
+} from "../../../../../../common/common.type";
+import { useEffect, useMemo, useState } from "react";
+import { getContractHistories } from "../../../../../../api/apiServices";
 import TableComponent, {
   ColumnDataCustom,
-} from "../../../../../components/tableComponent/TableComponent";
+} from "../../../../../../components/tableComponent/TableComponent";
+import { ContractTableData } from "../../../../constants/manager.type";
+import { formatDateToDDMMYYYY } from "../../../../../../common/common.helper";
+import { Button, Card, Flex } from "antd";
 
-const ContractHistoryTables = () => {
+interface SignedContractTableProps {
+  contractTypeText: string;
+  contractTypeTitle: string;
+}
+const SignedContractTable = ({
+  contractTypeText,
+  contractTypeTitle,
+}: SignedContractTableProps) => {
   const { t } = useTranslation();
-  const [contracts, setContracts] = useState<ContractDetail[]>([INIT_CONTRACT]);
   const [contractHistories, setContractHistories] = useState<
     ContractHistoryDetail[]
   >([INIT_CONTRACT_HISTORY]);
 
-  const fetchContracts = async () => {
-    const res = await getContracts();
-    if (res) {
-      const contractsApi = res.data.data;
-      setContracts(contractsApi);
-      // console.log("contractsApi:", contractsApi);
-    }
-  };
+  const [queryParams, setQueryParams] = useState<CommonQueryParams>({
+    page: QueryParamsWithListPosts.DEFAULT_CURRENT_PAGE,
+    items_per_page: QueryParamsWithListPosts.PER_PAGE,
+    search: "",
+  });
+  const [customPageParam, setCustomPageParam] =
+    useState<PageResponse>(INIT_PAGE_RESPONSE);
+
   const fetchContractHistories = async () => {
-    const res = await getContractHistories();
+    const res = await getContractHistories(queryParams);
+    console.log("res:", res);
+
     if (res) {
-      const contractHistoriesApi = res.data.data;
+      const { data: contractHistoriesApi, ...pageResponse } = res.data;
+      setCustomPageParam(pageResponse);
       setContractHistories(contractHistoriesApi);
-      // console.log("contractHistoriesApi:", contractHistoriesApi);
     }
   };
 
   useEffect(() => {
-    fetchContracts();
     fetchContractHistories();
-  }, []);
-
-  const contractTypes = useMemo(() => {
-    return contracts;
-  }, [contracts]);
+  }, [queryParams]);
 
   const contractTableColumn: ColumnDataCustom<ContractTableData>[] = [
     {
@@ -64,9 +63,6 @@ const ContractHistoryTables = () => {
       width: 150,
       isSorter: true,
       render: (value: string, record: ContractTableData) => {
-        // console.log("value:", value);
-        // console.log("record:", record);
-
         return (
           <div
             className={contractStatus[record.contractStatus as ContractStatus]}
@@ -153,28 +149,37 @@ const ContractHistoryTables = () => {
       dataIndex: "actions",
       className: "title_content-center",
       render: (value: ContractHistoryDetail) => {
-        // console.log("value:", value);
         return (
           <Flex justify="space-between" gap={8} className="actions">
             <Button
               onClick={() => handleUpdateContractHistory(value)}
               type="primary"
             >
-              Gia hạn
+              Xóa
               {/* {t("content.common.Update")} */}
-            </Button>
-            <Button
-              onClick={() => handleDeleteContractHistory(value)}
-              type="primary"
-              danger
-            >
-              {t("content.common.Delete")}
             </Button>
           </Flex>
         );
       },
     },
   ];
+
+  const contractTableData = useMemo(() => {
+    return contractHistories.map(
+      (contractHistory): ContractTableData => ({
+        rowId: contractHistory.contractHistoryId,
+        userId: contractHistory.user?.userId,
+        fullName: contractHistory.user?.fullName,
+        startDay: contractHistory.startDay,
+        endDay: contractHistory.endDay,
+        contractStatus: contractHistory.status,
+        note: contractHistory.note,
+        createdAt: contractHistory.createdAt,
+        updatedAt: contractHistory.updatedAt,
+        actions: contractHistory,
+      })
+    );
+  }, [contractHistories]);
 
   const handleUpdateContractHistory = (contract: ContractHistoryDetail) => {
     alert("up");
@@ -184,41 +189,19 @@ const ContractHistoryTables = () => {
   };
 
   return (
-    <Flex id="table-card-list" vertical gap={12}>
-      {contractTypes.map((contractType, index) => {
-        const contractHistoryClassification = contractHistories.filter(
-          (contractHistory) =>
-            contractHistory.contract?.contractId === contractType.contractId
-        );
-        const contractTableData = contractHistoryClassification.map(
-          (contractHistory): ContractTableData => ({
-            rowId: contractHistory.contractHistoryId,
-            userId: contractHistory.user?.userId,
-            fullName: contractHistory.user?.fullName,
-            startDay: contractHistory.startDay,
-            endDay: contractHistory.endDay,
-            contractStatus: contractHistory.status,
-            note: contractHistory.note,
-            createdAt: contractHistory.createdAt,
-            updatedAt: contractHistory.updatedAt,
-            actions: contractHistory,
-          })
-        );
-
-        return (
-          <Card title={contractType.contractNameVI} key={index}>
-            <TableComponent<ContractTableData>
-              tableData={contractTableData}
-              columnData={contractTableColumn}
-              rowClassName={(record) => {
-                return contractStatus[record.contractStatus as ContractStatus];
-              }}
-            />
-          </Card>
-        );
-      })}
-    </Flex>
+    <Card title={contractTypeTitle}>
+      <TableComponent<ContractTableData>
+        tableData={contractTableData}
+        columnData={contractTableColumn}
+        rowClassName={(record) => {
+          return contractStatus[record.contractStatus as ContractStatus];
+        }}
+        itemTotal={customPageParam.total}
+        paginationQueryParams={queryParams}
+        setPaginationQueryParams={setQueryParams}
+      />
+    </Card>
   );
 };
 
-export default ContractHistoryTables;
+export default SignedContractTable;

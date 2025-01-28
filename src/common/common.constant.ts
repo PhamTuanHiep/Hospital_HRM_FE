@@ -31,7 +31,7 @@ const DEFAULT_UPDATED_AT = dayjs("2000-01-01").toDate();
 
 export const INIT_QUERY_PARAMS: CommonQueryParams = {
   page: 1,
-  items_per_page: 4,
+  items_per_page: 5,
 };
 
 export const INIT_PAGINATION: Pagination = {
@@ -46,7 +46,7 @@ export const INIT_PAGE_RESPONSE: PageResponse = {
   nextPage: null,
   perPage: null,
   prevPage: null,
-  total: null,
+  total: 1,
 };
 export enum QueryParamsWithListPosts {
   DEFAULT_CURRENT_PAGE = 1,
@@ -471,7 +471,6 @@ export enum ContractStatus {
   TERMINATED, //Chấm dứt-bị kết thúc trước thời hạn
   CANCELLED, //bị hủy trước khi có hiệu lực
   TRANSFERRED, //nhân viên nghỉ việc hoặc chuyển sang cơ sở khác
-  PROBATION, //thử việc
 }
 
 export const contractStatus = {
@@ -482,5 +481,4 @@ export const contractStatus = {
   [ContractStatus.TERMINATED]: "Terminated",
   [ContractStatus.CANCELLED]: "Cancelled",
   [ContractStatus.TRANSFERRED]: "Transferred",
-  [ContractStatus.PROBATION]: "Probation",
 };

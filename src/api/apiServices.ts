@@ -2,6 +2,7 @@ import {
   AccountForm,
   CommonQueryParams,
   UserPost,
+  UsersQueryParams,
 } from "../common/common.type";
 import {
   AnnouncementPostCreate,
@@ -54,9 +55,15 @@ export const deleteAccount = async (accountId: number) => {
 
 //USER
 
-export const getUsers = async () => {
+export const getUsers = async (queryParams?: UsersQueryParams) => {
   try {
-    return await instance.get(`${apiPaths.USERS}`);
+    if (queryParams) {
+      return await instance.get(`${apiPaths.USERS}`, {
+        params: queryParams,
+      });
+    } else {
+      return await instance.get(`${apiPaths.USERS}`);
+    }
   } catch (error) {
     console.log("Error calling API getUsers :", error);
   }
@@ -427,9 +434,11 @@ export const deleteContract = async (contractId: string) => {
 
 //CONTRACT-HISTORIES
 
-export const getContractHistories = async () => {
+export const getContractHistories = async (query?: CommonQueryParams) => {
   try {
-    return await instance.get(`${apiPaths.CONTRACT_HISTORIES}`);
+    return await instance.get(`${apiPaths.CONTRACT_HISTORIES}`, {
+      params: query ?? {},
+    });
   } catch (error) {
     console.log("Error calling API getOvertimeHistories :", error);
   }

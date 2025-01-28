@@ -53,10 +53,16 @@ const AnnouncementManagementScreen = () => {
 
     if (res) {
       const { data: announcementPostsApi, ...pageResponse } = res.data;
+      console.log("announcementPostsApi:", announcementPostsApi);
+      console.log("pageResponse:", pageResponse);
+
       setAnnouncementPosts(announcementPostsApi);
       setCustomPageParam(pageResponse);
     }
   };
+  console.log("-------------");
+  console.log("customPageParam:", customPageParam);
+  console.log("queryParams:", queryParams);
 
   useEffect(() => {
     fetchAnnouncementPosts();
@@ -135,9 +141,7 @@ const AnnouncementManagementScreen = () => {
           </Flex>
           {customPageParam.total ? (
             <PaginationAntd
-              defaultCurrent={queryParams.page}
               total={customPageParam.total}
-              pageSize={queryParams.items_per_page}
               queryParams={queryParams}
               setQueryParams={setQueryParams}
             />

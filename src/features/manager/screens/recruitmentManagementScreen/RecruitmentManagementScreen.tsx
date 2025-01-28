@@ -128,9 +128,7 @@ const RecruitmentManagementScreen = () => {
           </Flex>
           {customPageParam.total ? (
             <PaginationAntd
-              defaultCurrent={queryParams.page}
               total={customPageParam.total}
-              pageSize={queryParams.items_per_page}
               queryParams={queryParams}
               setQueryParams={setQueryParams}
             />

@@ -300,3 +300,14 @@ export interface ContractTableData extends RowType {
   updatedAt?: Date;
   actions: ContractHistoryDetail;
 }
+
+export interface NonContractedEmployee extends RowType {
+  userId?: number;
+  fullName?: string;
+  gender: number;
+  departmentName: string;
+  positionName: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  actions: UserDetail;
+}

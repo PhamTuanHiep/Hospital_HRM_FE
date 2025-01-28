@@ -4,13 +4,27 @@ export interface CommonQueryParams {
   search?: string;
 }
 
+export interface ContractHistoriesQueryParams {
+  page?: number;
+  items_per_page?: number;
+  search?: string;
+  contractStatus?: string;
+}
+
+export interface UsersQueryParams {
+  page?: number;
+  items_per_page?: number;
+  search?: string;
+  roleId?: string;
+}
+
 export interface PageResponse {
   currentPage: number | null;
   lastPage: number | null;
   nextPage: number | null;
   perPage: number | null;
   prevPage: number | null;
-  total: number | null;
+  total: number;
 }
 
 export interface Pagination {

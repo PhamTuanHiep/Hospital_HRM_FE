@@ -1,0 +1,21 @@
+.ant-breadcrumb {
+  ol {
+    li {
+      .ant-breadcrumb-link {
+        a,
+        span {
+          color: rgb(12 112 201);
+        }
+        a {
+          display: flex;
+          gap: 8px;
+        }
+      }
+      .ant-dropdown-trigger {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 4px;
+      }
+    }
+  }
+}

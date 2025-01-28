@@ -24,6 +24,7 @@ import ViewUserProfileModel from "./viewUserProfileModel/ViewUserProfileModel";
 import DeleteUserProfileModal from "./deleteUserProfileModal/DeleteUserProfileModal";
 import { useAppSelector } from "../../../../../app/hooks";
 import { useTranslation } from "react-i18next";
+import CustomBreadcrumb from "../../../../../components/customBreadcrumb/CustomBreadcrumb";
 
 type DataIndex = keyof UsersData;
 interface TableDataType extends UsersData {}
@@ -310,13 +311,26 @@ const UserProfilesTable = () => {
 
   return (
     <div>
-      <Button
-        type="primary"
-        className="btn-add-object"
-        onClick={() => handleAddUser()}
-      >
-        {t("content.common.AddUserInfo")}
-      </Button>
+      <CustomBreadcrumb
+        breadcrumbItems={[
+          {
+            title: (
+              <div>
+                <a href="/manager/profile-management">Profile Management</a>
+              </div>
+            ),
+          },
+        ]}
+        buttonGroup={
+          <Button
+            type="primary"
+            className="btn-add-object"
+            onClick={() => handleAddUser()}
+          >
+            {t("content.common.AddUserInfo")}
+          </Button>
+        }
+      />
       <Table<UsersData>
         columns={accountColumns}
         dataSource={usersData}

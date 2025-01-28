@@ -13,7 +13,7 @@ import { FilterDropdownProps } from "antd/es/table/interface";
 import { memo, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
-import { RowType } from "../../common/common.type";
+import { CommonQueryParams, RowType } from "../../common/common.type";
 
 interface FilterObject {
   text: string;
@@ -30,6 +30,9 @@ interface TableComponentProps<T> extends TableProps<T> {
   isSummary?: boolean;
   columnData: ColumnDataCustom<T>[];
   tableData: T[];
+  itemTotal: number;
+  paginationQueryParams: CommonQueryParams;
+  setPaginationQueryParams: Function;
 }
 
 const TableComponent = <T extends RowType>({
@@ -37,6 +40,9 @@ const TableComponent = <T extends RowType>({
   isSummary,
   columnData,
   tableData,
+  itemTotal,
+  paginationQueryParams,
+  setPaginationQueryParams,
   ...tableProps
 }: TableComponentProps<T>) => {
   const newTableData = tableData.map((tableDatum) => ({
@@ -180,9 +186,9 @@ const TableComponent = <T extends RowType>({
         value: boolean | string | number | Key,
         record: T
       ): boolean => {
-        console.log("value:", value);
-        console.log("record:", record);
-        console.log("---------------");
+        // console.log("value:", value);
+        // console.log("record:", record);
+        // console.log("---------------");
         return (
           String(record[columnDatum.dataIndex as keyof T]).indexOf(
             value as string
@@ -191,18 +197,36 @@ const TableComponent = <T extends RowType>({
       },
     };
   });
+
+  const handleChangePageSize = (current: number, pageSize: number) => {
+    console.log("current:", current);
+    console.log("pageSize:", pageSize);
+    setPaginationQueryParams({
+      ...paginationQueryParams,
+      page: current,
+      items_per_page: pageSize,
+    });
+  };
   return (
-    <Table
-      rowKey={(record): string => {
-        return String(record.rowId);
-      }}
-      columns={newColumns}
-      dataSource={newTableData}
-      // onChange={onChange}
-      showSorterTooltip={{ target: "full-header" }}
-      scroll={{ x: "max-content" }}
-      {...tableProps}
-    />
+    <div>
+      <Table
+        rowKey={(record): string => {
+          return String(record.rowId);
+        }}
+        columns={newColumns}
+        dataSource={newTableData}
+        // onChange={onChange}
+        showSorterTooltip={{ target: "full-header" }}
+        scroll={{ x: "max-content" }}
+        pagination={{
+          defaultCurrent: paginationQueryParams.page,
+          total: itemTotal,
+          pageSize: paginationQueryParams.items_per_page,
+          onChange: handleChangePageSize,
+        }}
+        {...tableProps}
+      />
+    </div>
   );
 };
 

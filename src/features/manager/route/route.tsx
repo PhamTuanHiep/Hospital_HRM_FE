@@ -20,6 +20,8 @@ import SalaryManagementScreen from "../screens/salaryManagementScreen/SalaryMana
 import SalaryManagement from "../screens/salaryManagementScreen/salaryManagement/SalaryManagement";
 import BenefitsManagementScreen from "../screens/salaryManagementScreen/benefitsManagementScreen/BenefitsManagementScreen";
 import AnnouncementManagementScreen from "../screens/announcementManagementScreen/AnnouncementManagementScreen";
+import ContractHistoryTables from "../screens/contractManagementScreen/contractHistoryTables/ContractHistoryTables";
+import AddContractTable from "../screens/contractManagementScreen/contractHistoryTables/addContractTable/AddContractTable";
 
 const ACCOUNT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -50,6 +52,20 @@ const PROFILE_MANAGEMENT_ROUTE: RouteObject = {
 const CONTRACT_MANAGEMENT_ROUTE: RouteObject = {
   path: managerPaths.CONTRACT_MANAGEMENT,
   element: <ContractManagementScreen />,
+  children: [
+    {
+      index: true,
+      element: <ContractHistoryTables />,
+    },
+    {
+      path: managerChildPaths.CANCELLED_CONTRACT,
+      element: <ContractHistoryTables isCancelledContractList={true} />,
+    },
+    {
+      path: managerChildPaths.ADD_CONTRACT,
+      element: <AddContractTable />,
+    },
+  ],
 };
 
 const DEPARTMENT_MANAGEMENT_ROUTE: RouteObject = {

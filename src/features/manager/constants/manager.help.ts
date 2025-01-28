@@ -2,12 +2,14 @@ import { SelectProps } from "antd";
 
 import { ColumnFilterItem } from "antd/es/table/interface";
 import {
+  ContractStatus,
   dayOfWeekVN,
   departmentName,
   notificationName,
   positionName,
 } from "../../../common/common.constant";
 import {
+  ContractHistoryDetail,
   EvaluateShortInfo,
   LeaveHistoryDetail,
   UserDetail,
@@ -191,4 +193,53 @@ export const getNumberOfDaysOffTypes = (
     unpaidLeave,
     numOfDaysOff,
   };
+};
+// tạo text với số tháng được thêm
+export const generateSuspensionText = (x: number): string => {
+  return `Tạm đình chỉ ${x} tháng`;
+};
+
+// lấy ra số tháng được thêm
+export const extractSuspensionMonths = (text: string): number => {
+  const match = text.match(/Tạm đình chỉ (\d+) tháng/);
+  return match ? parseInt(match[1], 10) : 0;
+};
+
+//hàm lấy ra thời hạn còn lại của hđ
+export const getRemainingTermOfContract = (
+  contractHistory: ContractHistoryDetail,
+  addMonths?: number
+): number => {
+  const startTime = dayjs(contractHistory.startDay); // Thời gian bắt đầu
+  const x = extractSuspensionMonths(contractHistory.note); //thòi gian được thêm do đình chỉ hđ
+  console.log("x:", x);
+  console.log("note:", contractHistory.note);
+
+  const endTime = addMonths
+    ? dayjs(contractHistory.endDay).add(x, "month")
+    : dayjs(contractHistory.endDay); //thời gian kết thúc đã qua điều chỉnh
+  const diffDays = endTime.diff(startTime, "days");
+  return diffDays || 999;
+};
+
+const contractExclusion = [
+  ContractStatus.EXPIRED,
+  ContractStatus.CANCELLED,
+  ContractStatus.TRANSFERRED,
+];
+
+//tạo ra trạng thái mới cho các hđ
+export const getNewStatusContractHistory = (
+  contractHistory: ContractHistoryDetail
+) => {
+  const diffDays = getRemainingTermOfContract(contractHistory);
+  if (contractExclusion.includes(contractHistory.status)) {
+    return contractHistory.status;
+  } else {
+    if (diffDays < 0) {
+      return ContractStatus.EXPIRED;
+    } else if (diffDays < 60) {
+      return ContractStatus.RENEWAL_PENDING;
+    }
+  }
 };

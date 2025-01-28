@@ -16,4 +16,6 @@ export const managerChildPaths = {
   ADD_DEPARTMENT: "add-department",
   ADD_POSITION: "add-position",
   BENEFITS_MANAGEMENT: "benefits-management",
+  CANCELLED_CONTRACT: "cancelled-contract",
+  ADD_CONTRACT: "add-contract",
 };

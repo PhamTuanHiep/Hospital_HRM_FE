@@ -1,10 +1,10 @@
 import { Flex } from "antd";
-import ContractHistoryTables from "./ContractHistoryTables/ContractHistoryTables";
+import { Outlet } from "react-router-dom";
 
 const ContractManagementScreen = () => {
   return (
     <Flex vertical>
-      <ContractHistoryTables />
+      <Outlet />
     </Flex>
   );
 };
