@@ -1,6 +1,9 @@
 import { Button, Flex } from "antd";
 import { useEffect, useState } from "react";
-import { getContracts } from "../../../../../api/apiServices";
+import {
+  getContracts,
+  putContractHistory,
+} from "../../../../../api/apiServices";
 import { ContractDetail } from "../../../../../common/common.type";
 import { INIT_CONTRACT } from "../../../../../common/common.constant";
 
@@ -14,6 +17,7 @@ import {
   managerChildPaths,
   managerPaths,
 } from "../../../constants/constant.path";
+import { useNavigate } from "react-router-dom";
 
 interface ContractHistoryTablesProps {
   isCancelledContractList?: boolean;
@@ -31,7 +35,14 @@ const ContractHistoryTables = ({
       setContracts(contractsApi);
     }
   };
-
+  // const updateStatusContractHistories = async () => {
+  //   const res = await putContractHistory();
+  //   if (res) {
+  //     const contractsApi = res.data.data;
+  //     setContracts(contractsApi);
+  //   }
+  // };
+  // const navigate = useNavigate();
   useEffect(() => {
     fetchContracts();
   }, []);
@@ -101,15 +112,26 @@ const ContractHistoryTables = ({
           },
         ]}
         buttonGroup={
-          <Button
-            type="primary"
-            className="btn-add-object"
-            onClick={() => {
-              // navigate(-1);
-            }}
-          >
-            Lập hợp đồng
-          </Button>
+          <Flex>
+            <Button
+              type="primary"
+              className="btn-add-object"
+              onClick={() => {}}
+            >
+              Cập nhật trạng thái hợp đồng
+            </Button>
+            <Button
+              type="primary"
+              className="btn-add-object"
+              onClick={() => {
+                navigate(
+                  `${managerPaths.CONTRACT_MANAGEMENT}/${managerChildPaths.ADD_CONTRACT}`
+                );
+              }}
+            >
+              Lập hợp đồng
+            </Button>
+          </Flex>
         }
       />
       {contracts.length !== 0 && contracts[0].contractId != "" ? (

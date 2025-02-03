@@ -470,7 +470,7 @@ export enum ContractStatus {
   SUSPENDED, //tạm thời đình do sự cố
   TERMINATED, //Chấm dứt-bị kết thúc trước thời hạn
   CANCELLED, //bị hủy trước khi có hiệu lực
-  TRANSFERRED, //nhân viên nghỉ việc hoặc chuyển sang cơ sở khác
+  TRANSFERRED, //nhân viên chuyển sang cơ sở khác
 }
 
 export const contractStatus = {
