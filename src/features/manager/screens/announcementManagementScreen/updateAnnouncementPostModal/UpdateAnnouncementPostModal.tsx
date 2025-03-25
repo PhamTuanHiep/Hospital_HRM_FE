@@ -145,8 +145,12 @@ const UpdateAnnouncementPostModal = ({
           name="notificationType"
           key="notificationType"
           rules={[
-            { required: true, message: "Please input notification name!" },
+            { required: true, message: "Please input notification name!" ,
+              
+            }
           ]}
+        
+          
         >
           <Select
             className="input-profile-item"

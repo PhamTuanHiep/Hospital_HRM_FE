@@ -1,7 +1,7 @@
 const NotificationScreen = () => {
   return (
-    <div>
-      <h1>NotificationScreen</h1>
+    <div style={{ height: "300px" }}>
+      <h1>chưa có thông báo nào</h1>
     </div>
   );
 };

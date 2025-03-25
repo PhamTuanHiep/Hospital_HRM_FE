@@ -12,16 +12,30 @@
     .ant-table-tbody {
       .ant-table-row {
         &.Renewal-Pending {
-          background-color: #f8bc25;
+          // background-color: #f8bc25;
+          background-color: #ffd872;
           .ant-table-cell-row-hover {
             background-color: #bbc1be;
           }
         }
         &.Probation {
-          background-color: #b7bcc1c2;
+          // background-color: #b7bcc1c2;
+          background-color: #ffde4d;
+
           .ant-table-cell-row-hover {
             background-color: #7c7e80c2;
           }
+        }
+        &.Expired {
+          // background-color: #ab3819c2;
+          background-color: #c0564a;
+
+          .ant-table-cell-row-hover {
+            background-color: #7c7e80c2;
+          }
+        }
+        .ant-table-cell-row-hover {
+          background-color: #7c7e80c2;
         }
       }
     }

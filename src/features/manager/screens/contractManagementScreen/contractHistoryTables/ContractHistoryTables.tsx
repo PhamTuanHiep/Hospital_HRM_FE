@@ -1,11 +1,18 @@
 import { Button, Flex } from "antd";
 import { useEffect, useState } from "react";
 import {
+  getContractHistories,
   getContracts,
-  putContractHistory,
+  putContractHistories,
 } from "../../../../../api/apiServices";
-import { ContractDetail } from "../../../../../common/common.type";
-import { INIT_CONTRACT } from "../../../../../common/common.constant";
+import {
+  ContractDetail,
+  ContractHistoryDetail,
+} from "../../../../../common/common.type";
+import {
+  INIT_CONTRACT,
+  INIT_CONTRACT_HISTORY,
+} from "../../../../../common/common.constant";
 
 import { useTranslation } from "react-i18next";
 import "./ContractHistoryTables.scss";
@@ -18,6 +25,7 @@ import {
   managerPaths,
 } from "../../../constants/constant.path";
 import { useNavigate } from "react-router-dom";
+import { updateStatusInContractHistories } from "../../../constants/manager.help";
 
 interface ContractHistoryTablesProps {
   isCancelledContractList?: boolean;
@@ -26,7 +34,13 @@ const ContractHistoryTables = ({
   isCancelledContractList = false,
 }: ContractHistoryTablesProps) => {
   const { t } = useTranslation();
+
   const [contracts, setContracts] = useState<ContractDetail[]>([INIT_CONTRACT]);
+  const [contractHistories, setContractHistories] = useState<
+    ContractHistoryDetail[]
+  >([INIT_CONTRACT_HISTORY]);
+
+  const [resetApi, setResetApi] = useState<boolean>(false);
 
   const fetchContracts = async () => {
     const res = await getContracts();
@@ -35,19 +49,33 @@ const ContractHistoryTables = ({
       setContracts(contractsApi);
     }
   };
-  // const updateStatusContractHistories = async () => {
-  //   const res = await putContractHistory();
-  //   if (res) {
-  //     const contractsApi = res.data.data;
-  //     setContracts(contractsApi);
-  //   }
-  // };
-  // const navigate = useNavigate();
+
+  const fetchContractHistories = async () => {
+    const res = await getContractHistories();
+
+    if (res) {
+      const contractHistoriesApi = res.data.data;
+      setContractHistories(contractHistoriesApi);
+    }
+  };
+  const updateStatusContractHistories = async () => {
+    const updatedContractHistories =
+      updateStatusInContractHistories(contractHistories);
+    const res = await putContractHistories(updatedContractHistories);
+    console.log("res:", res);
+    if (res) {
+      setResetApi(true);
+      const contractsApi = res.data.data;
+      setContracts(contractsApi);
+    }
+  };
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchContracts();
-  }, []);
+    fetchContractHistories();
+  }, [resetApi]);
 
-  console.log("contracts:", contracts);
   return (
     <div>
       <CustomBreadcrumb
@@ -56,7 +84,7 @@ const ContractHistoryTables = ({
             title: (
               <div>
                 <a href={managerPaths.CONTRACT_MANAGEMENT}>
-                  Contract Management
+                  {t("content.contract.ContractManagement")}
                 </a>
               </div>
             ),
@@ -65,8 +93,8 @@ const ContractHistoryTables = ({
             title: (
               <span>
                 {isCancelledContractList
-                  ? "Cancelled Contract"
-                  : "Signed Contract"}
+                  ? t("content.contract.CancelledContract")
+                  : t("content.contract.SignedContract")}
               </span>
             ),
             menu: {
@@ -79,7 +107,7 @@ const ContractHistoryTables = ({
                       // rel="noopener noreferrer"
                       href={`${managerPaths.CONTRACT_MANAGEMENT}`}
                     >
-                      Signed Contract
+                      {t("content.contract.SignedContract")}
                     </a>
                   ),
                 },
@@ -91,7 +119,7 @@ const ContractHistoryTables = ({
                       // rel="noopener noreferrer"
                       href={`${managerPaths.CONTRACT_MANAGEMENT}/${managerChildPaths.ADD_CONTRACT}`}
                     >
-                      Add User
+                      {t("content.contract.AddContractHistory")}
                     </a>
                   ),
                 },
@@ -103,7 +131,7 @@ const ContractHistoryTables = ({
                       // rel="noopener noreferrer"
                       href={`${managerPaths.CONTRACT_MANAGEMENT}/${managerChildPaths.CANCELLED_CONTRACT}`}
                     >
-                      Cancelled Contract
+                      {t("content.contract.CancelledContract")}
                     </a>
                   ),
                 },
@@ -116,9 +144,9 @@ const ContractHistoryTables = ({
             <Button
               type="primary"
               className="btn-add-object"
-              onClick={() => {}}
+              onClick={() => updateStatusContractHistories()}
             >
-              Cập nhật trạng thái hợp đồng
+              {t("content.contract.UpdateStatusOfContracts")}
             </Button>
             <Button
               type="primary"
@@ -129,36 +157,41 @@ const ContractHistoryTables = ({
                 );
               }}
             >
-              Lập hợp đồng
+              {t("content.contract.AddContractHistory")}
             </Button>
           </Flex>
         }
       />
-      {contracts.length !== 0 && contracts[0].contractId != "" ? (
+      {contracts && contracts.length !== 0 && contracts[0].contractId != "" ? (
         <Flex id="table-card-list" vertical gap={12}>
           <SignedContractTable
-            contractTypeText={ContractType.FIXED_TERM_EMPLOYMENT_CONTRACT}
+            contractType={ContractType.FIXED_TERM_EMPLOYMENT_CONTRACT}
             contractTypeTitle={contracts[0].contractNameVI}
             isCancelledContractList={isCancelledContractList}
           />
           <SignedContractTable
-            contractTypeText={ContractType.INDEFINITE_TERM_EMPLOYMENT_CONTRACT}
+            contractType={ContractType.INDEFINITE_TERM_EMPLOYMENT_CONTRACT}
             contractTypeTitle={contracts[1].contractNameVI}
             isCancelledContractList={isCancelledContractList}
           />
           <SignedContractTable
-            contractTypeText={ContractType.FIXED_TERM_LABOR_CONTRACT}
+            contractType={ContractType.FIXED_TERM_LABOR_CONTRACT}
             contractTypeTitle={contracts[2].contractNameVI}
             isCancelledContractList={isCancelledContractList}
           />
           <SignedContractTable
-            contractTypeText={ContractType.INDEFINITE_TERM_LABOR_CONTRACT}
+            contractType={ContractType.INDEFINITE_TERM_LABOR_CONTRACT}
             contractTypeTitle={contracts[3].contractNameVI}
             isCancelledContractList={isCancelledContractList}
           />
           <SignedContractTable
-            contractTypeText={ContractType.COLLABORATION_CONTRACT}
+            contractType={ContractType.COLLABORATION_CONTRACT}
             contractTypeTitle={contracts[4].contractNameVI}
+            isCancelledContractList={isCancelledContractList}
+          />
+          <SignedContractTable
+            contractType={ContractType.PROBATIONARY_CONTRACT}
+            contractTypeTitle={contracts[5].contractNameVI}
             isCancelledContractList={isCancelledContractList}
           />
         </Flex>

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import "./CustomBreadcrumb.scss";
 import { ReactNode } from "react";
 import { BreadcrumbItemType } from "antd/es/breadcrumb/Breadcrumb";
+import { useTranslation } from "react-i18next";
 
 interface CustomBreadcrumbProps {
   breadcrumbItems?: BreadcrumbItemType[];
@@ -13,6 +14,8 @@ const CustomBreadcrumb = ({
   breadcrumbItems,
   buttonGroup,
 }: CustomBreadcrumbProps) => {
+  const { t } = useTranslation();
+
   const location = useLocation();
   const urlSegments = location.pathname.split("/");
   const isManagementScreen = urlSegments[1] === "manager" ? true : false;
@@ -23,7 +26,7 @@ const CustomBreadcrumb = ({
         <div>
           <a href="/">
             <HomeOutlined />
-            <span>Homepage</span>
+            <span>{t("homepage.Homepage")}</span>
           </a>
         </div>
       ),

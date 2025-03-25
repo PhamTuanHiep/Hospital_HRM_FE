@@ -15,7 +15,6 @@ import {
   OvertimeDetail,
   OvertimeHistoryDetail,
   Pagination,
-  PositionAllowanceDetail,
   PositionDetail,
   CommonQueryParams,
   RecruitmentPostDetail,
@@ -24,10 +23,33 @@ import {
   UserDetail,
   UserInsuranceDetail,
   PageResponse,
+  UserShortInfo,
+  DepartmentShortInfo,
+  PositionShortInfo,
+  ContractShortInfo,
+  DepartmentUserShortInfo,
+  UserInfo,
 } from "./common.type";
+import { SelectProps } from "antd";
+import { DefaultOptionType } from "antd/es/select";
+export const EMAIL_PATTERN =
+  /^(([^<>()\[\]\\.,;:\s@"]{2,}(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+export const PASSWORD_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/g;
 const DEFAULT_CREATED_AT = dayjs("2000-01-01").toDate();
 const DEFAULT_UPDATED_AT = dayjs("2000-01-01").toDate();
+export const TIME_FORMATS = [
+  "YYYY-MM-DD HH:mm:ss",
+  "YYYY-MM-DD HH:mm:ss.SSSSS",
+  "DD/MM/YYYY",
+  "YYYY-MM-DD",
+  "YYYY-M-DD",
+  "YYYY-MM-D",
+  "YYYY-M-D",
+
+  "DD-MM-YYYY",
+];
+export const DEFAULT_DATE_FORMAT = "DD/MM/YYYY";
 
 export const INIT_QUERY_PARAMS: CommonQueryParams = {
   page: 1,
@@ -62,6 +84,49 @@ export const INIT_ACCOUNT: AccountDetail = {
   user: null,
   createdAt: DEFAULT_CREATED_AT,
   updatedAt: DEFAULT_UPDATED_AT,
+};
+
+export const INIT_DEPARTMENT_USER_SHORT_INFO: DepartmentUserShortInfo = {
+  address: "",
+  fullName: "",
+  gender: 1,
+  userId: 0,
+  note: [],
+};
+
+export const INIT_DEPARTMENT_SHORT_INFO: DepartmentShortInfo = {
+  departmentId: "",
+  departmentName: "",
+  location: "",
+  funcDescription: "",
+  users: [],
+  allowanceRelationship: null,
+  overtimeHistories: [],
+};
+
+export const INIT_POSITION_SHORT_INFO: PositionShortInfo = {
+  positionId: "",
+  positionName: "",
+  users: [],
+  allowanceRelationship: null,
+};
+
+export const INIT_USER_SHORT_INFO: UserShortInfo = {
+  userId: 0,
+  fullName: "",
+};
+
+export const INIT_USER_INFO: UserInfo = {
+  userId: 0,
+  fullName: "",
+  department: INIT_DEPARTMENT_SHORT_INFO,
+  position: INIT_POSITION_SHORT_INFO,
+};
+
+export const INIT_CONTRACT_SHORT_INFO: ContractShortInfo = {
+  contractId: "",
+  contractNameVI: "",
+  contractNameEN: "",
 };
 
 export const INIT_USER: UserDetail = {
@@ -105,19 +170,22 @@ export const INIT_ROLE: RoleDetail = {
   updatedAt: DEFAULT_UPDATED_AT,
 };
 
-export const INIT_POSITION_ALLOWANCE_DETAIL: PositionAllowanceDetail = {
-  id: 0,
-  position: null,
-  allowance: null,
+export const INIT_ALLOWANCE_DETAIL: AllowanceDetail = {
+  allowanceId: "",
+  allowanceType: "",
+  allowanceNameVI: "",
+  allowanceNameEN: "",
+  allowanceRate: 0,
+  allowanceFee: 0,
+  note: "",
   createdAt: DEFAULT_CREATED_AT,
   updatedAt: DEFAULT_UPDATED_AT,
 };
-
 export const INIT_POSITION: PositionDetail = {
   positionId: "",
   positionName: "",
   users: [],
-  positionAllowances: [],
+  allowanceRelationship: null,
   createdAt: DEFAULT_CREATED_AT,
   updatedAt: DEFAULT_UPDATED_AT,
 };
@@ -185,6 +253,7 @@ export const INIT_DEPARTMENT: DepartmentDetail = {
   funcDescription: "",
   users: [],
   overtimeHistories: [],
+  allowanceRelationship: null,
   createdAt: DEFAULT_CREATED_AT,
   updatedAt: DEFAULT_UPDATED_AT,
 };
@@ -211,10 +280,10 @@ export const INIT_OVERTIME_HISTORY: OvertimeHistoryDetail = {
 };
 
 export const INIT_ALLOWANCE: AllowanceDetail = {
-  allowanceId: 0,
-  allowanceAcronym: "-",
-  allowanceName: "-",
+  allowanceId: "",
   allowanceType: "-",
+  allowanceNameVI: "-",
+  allowanceNameEN: "-",
   allowanceRate: 0,
   allowanceFee: 0,
   note: "-",
@@ -266,9 +335,10 @@ export const INIT_CONTRACT_HISTORY: ContractHistoryDetail = {
   startDay: "",
   endDay: "",
   note: "",
+  suspensionTime: 0,
   status: 0,
-  user: null,
-  contract: null,
+  user: INIT_USER_INFO,
+  contract: INIT_CONTRACT_SHORT_INFO,
   createdAt: DEFAULT_CREATED_AT,
   updatedAt: DEFAULT_UPDATED_AT,
 };
@@ -284,6 +354,7 @@ export const INIT_SALARY_HISTORY: SalaryHistoryDetail = {
   numOfDaysOff: 0,
   standardWorkDays: 0,
   bonus: 0,
+  overtimeCost: 0,
   allowance: 0,
   salary: 0,
 };
@@ -327,6 +398,12 @@ export const enum RoleId {
   USER = "user",
 }
 
+export const roleName = {
+  [RoleId.ADMIN]: "Admin",
+  [RoleId.MANAGER]: "Manager",
+  [RoleId.USER]: "User",
+};
+
 export const enum GenderId {
   FEMALE = 0,
   MALE = 1,
@@ -336,6 +413,11 @@ export const enum GenderName {
   FEMALE = "Female",
   MALE = "Male",
 }
+
+export const genderName = {
+  [GenderId.FEMALE]: "Female",
+  [GenderId.MALE]: "Male",
+};
 
 export enum DayOfWeek {
   MONDAY = 2,
@@ -430,19 +512,133 @@ export enum PositionId {
   P008 = "P008",
   P009 = "P009",
   P010 = "P010",
+  P011 = "P011",
+  P012 = "P012",
+  P013 = "P013",
+  P014 = "P014",
+  P015 = "P015",
+  P016 = "P016",
+  P017 = "P017",
+  P018 = "P018",
+  P019 = "P019",
+  P020 = "P020",
+  P021 = "P021",
+  P022 = "P022",
+  P023 = "P023",
+  P024 = "P024",
+  P025 = "P025",
+  P026 = "P026",
+  P027 = "P027",
+  P028 = "P028",
+  P029 = "P029",
+  P030 = "P030",
+  P031 = "P031",
+  P032 = "P032",
+  P033 = "P033",
+  P034 = "P034",
+  P035 = "P035",
+  P036 = "P036",
+  P037 = "P037",
+  P038 = "P038",
+  P039 = "P039",
+  P040 = "P040",
+  P041 = "P041",
+  P042 = "P042",
+  P043 = "P043",
+  P044 = "P044",
+  P045 = "P045",
+  P046 = "P046",
+  P047 = "P047",
+  P048 = "P048",
+  P049 = "P049",
+  P050 = "P050",
+  P051 = "P051",
+  P052 = "P052",
+  P053 = "P053",
+  P054 = "P054",
+  P055 = "P055",
+  P056 = "P056",
+  P057 = "P057",
+  P058 = "P058",
+  P059 = "P059",
+  P060 = "P060",
+  P061 = "P061",
+  P062 = "P062",
+  P063 = "P063",
+  P064 = "P064",
+  P065 = "P065",
+  P066 = "P066",
+  P067 = "P067",
 }
 
 export const positionName = {
-  [PositionId.P001]: "Bác sĩ cao cấp",
-  [PositionId.P002]: "Bác sĩ chính",
-  [PositionId.P003]: "Bác sĩ",
-  [PositionId.P004]: "Bác sĩ y học dự phòng cao cấp",
-  [PositionId.P005]: "Bác sĩ y học dự phòng chính",
-  [PositionId.P006]: "Bác sĩ y học dự phòng",
-  [PositionId.P007]: "Y sĩ",
-  [PositionId.P008]: "Y tá cao cấp",
-  [PositionId.P009]: "Y tá chính",
-  [PositionId.P010]: "Y tá",
+  [PositionId.P001]: "Giám đốc bệnh viện",
+  [PositionId.P002]: "Phó giám đốc",
+  [PositionId.P003]: "Trưởng khoa khám bệnh",
+  [PositionId.P004]: "Trưởng khoa nội tổng hợp",
+  [PositionId.P005]: "Trưởng khoa hồi sức chống độc",
+  [PositionId.P006]: "Trưởng khoa lão khoa",
+  [PositionId.P007]: "Trưởng khoa nhi",
+  [PositionId.P008]: "Trưởng khoa châm cứu",
+  [PositionId.P009]: "Trưởng khoa phục hồi chấn thương",
+  [PositionId.P010]: "Trưởng khoa ngũ quan",
+  [PositionId.P011]: "Trưởng khoa ngoại",
+  [PositionId.P012]: "Trưởng khoa sản",
+  [PositionId.P013]: "Trưởng khoa phòng mổ",
+  [PositionId.P014]: "Trưởng khoa xét nghiệm",
+  [PositionId.P015]: "Trưởng khoa chẩn đoán hình ảnh",
+  [PositionId.P016]: "Trưởng khoa dược",
+  [PositionId.P017]: "Trưởng khoa dinh dưỡng",
+  [PositionId.P018]: "Trưởng khoa kiểm soát nhiễm khuẩn",
+  [PositionId.P019]: "Phó trưởng khoa khám bệnh",
+  [PositionId.P020]: "Phó trưởng khoa nội tổng hợp",
+  [PositionId.P021]: "Phó trưởng khoa hồi sức chống độc",
+  [PositionId.P022]: "Phó trưởng khoa lão khoa",
+  [PositionId.P023]: "Phó trưởng khoa nhi",
+  [PositionId.P024]: "Phó trưởng khoa châm cứu",
+  [PositionId.P025]: "Phó trưởng khoa phục hồi chấn thương",
+  [PositionId.P026]: "Phó trưởng khoa ngũ quan",
+  [PositionId.P027]: "Phó trưởng khoa ngoại",
+  [PositionId.P028]: "Phó trưởng khoa sản",
+  [PositionId.P029]: "Phó trưởng khoa phòng mổ",
+  [PositionId.P030]: "Phó trưởng khoa xét nghiệm",
+  [PositionId.P031]: "Phó trưởng khoa chẩn đoán hình ảnh",
+  [PositionId.P032]: "Phó trưởng khoa dược",
+  [PositionId.P033]: "Phó trưởng khoa dinh dưỡng",
+  [PositionId.P034]: "Phó trưởng khoa kiểm soát nhiễm khuẩn",
+  [PositionId.P035]: "Trưởng phòng tổ chức hành chính",
+  [PositionId.P036]: "Trưởng phòng kế hoạch tổng hợp",
+  [PositionId.P037]: "Trưởng phòng tài chính kế toán",
+  [PositionId.P038]: "Trưởng phòng đào tạo",
+  [PositionId.P039]: "Trưởng phòng điều dưỡng",
+  [PositionId.P040]: "Phó trưởng phòng tổ chức hành chính",
+  [PositionId.P041]: "Phó trưởng phòng kế hoạch tổng hợp",
+  [PositionId.P042]: "Phó trưởng phòng tài chính kế toán",
+  [PositionId.P043]: "Phó trưởng phòng đào tạo",
+  [PositionId.P044]: "Phó trưởng phòng điều dưỡng",
+  [PositionId.P045]: "Bác sĩ đa khoa hạng I",
+  [PositionId.P046]: "Bác sĩ đa khoa hạng II",
+  [PositionId.P047]: "Bác sĩ đa khoa hạng III",
+  [PositionId.P048]: "Bác sĩ chuyên khoa hạng I",
+  [PositionId.P049]: "Bác sĩ chuyên khoa hạng II",
+  [PositionId.P050]: "Bác sĩ chuyên khoa hạng III",
+  [PositionId.P051]: "Bác sĩ nội trú hạng I",
+  [PositionId.P052]: "Bác sĩ nội trú hạng II",
+  [PositionId.P053]: "Bác sĩ nội trú hạng III",
+  [PositionId.P054]: "Bác sĩ phẫu thuật hạng I",
+  [PositionId.P055]: "Bác sĩ phẫu thuật hạng II",
+  [PositionId.P056]: "Bác sĩ phẫu thuật hạng III",
+  [PositionId.P057]: "Bác sĩ dinh dưỡng",
+  [PositionId.P058]: "Điều dưỡng viên hạng II",
+  [PositionId.P059]: "Điều dưỡng viên hạng III",
+  [PositionId.P060]: "Kỹ thuật viên",
+  [PositionId.P061]: "Dược sĩ lâm sàng",
+  [PositionId.P062]: "Dược sĩ kiểm soát thuốc",
+  [PositionId.P063]: "Chuyên viên dinh dưỡng",
+  [PositionId.P064]: "Nhân viên hành chính nhân sự",
+  [PositionId.P065]: "Nhân viên thống kê y tế",
+  [PositionId.P066]: "Nhân viên kế toán",
+  [PositionId.P067]: "Nhân viên phụ trách đào tạo",
 };
 
 export enum NotificationType {
@@ -482,3 +678,24 @@ export const contractStatus = {
   [ContractStatus.CANCELLED]: "Cancelled",
   [ContractStatus.TRANSFERRED]: "Transferred",
 };
+
+export enum UserStatus {
+  WORKING = "1",
+  RETIRED = "2",
+  CURRENTLY_IN_TRAINING = "3",
+}
+
+export const userStatus = {
+  [UserStatus.WORKING]: "Đang làm",
+  [UserStatus.RETIRED]: "Đã nghỉ",
+  [UserStatus.CURRENTLY_IN_TRAINING]: "Đang tham gia đào tạo",
+};
+
+export const optionUserStatus: SelectProps["options"] = Object.entries(
+  userStatus
+).map(([key, value]): DefaultOptionType => {
+  return {
+    label: value,
+    value: key,
+  };
+});

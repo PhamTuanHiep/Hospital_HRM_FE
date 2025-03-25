@@ -6,7 +6,7 @@ export const apiPaths = {
   USERS: "/users",
   ROLES: "/roles",
   POSITIONS: "/positions",
-  POSITION_ALLOWANCE: "/position_allowance",
+  ALLOWANCE_RELATIONSHIPS: "/allowance_relationships",
   LEAVE_HISTORIES: "/leave-histories",
   LEAVES: "/leaves",
   INSURANCES: "/insurances",

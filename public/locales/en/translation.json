@@ -30,12 +30,13 @@
       "SalaryManagement": "Salary Management",
       "RecruitmentManagement": "Recruitment Management",
       "AnnouncementManagement": "Announcement Management",
+      "ScheduleManagement": "Schedule Management",
       "PersonalProfile": "Personal Profile",
       "RecordManagement": "Record Management",
       "Contract": "Contract",
       "DepartmentManagement": "DepartmentManagement",
       "WorkSchedule": "Work Schedule",
-      "WorkManagement": "Work Management",
+      "PositionManagement": "Position Management",
       "WorkPerformance": "Work Performance",
       "BenefitsManagement": "Benefits Management",
       "Benefits": "Benefits",
@@ -94,15 +95,29 @@
       "JobDescription": "Job Description",
       "OtherDescription": "Other Description",
       "Status": "Status",
-      "AverageScore": "Average Score"
+      "AverageScore": "Average Score",
+      "CreateUserProfile": "Create User Profile"
     },
-    "employee": {
-      "Hello": "Hello",
+    "account": {
+      "CreateAccount": "Create Account",
+      "FullName": "Full Name",
+      "Email": "Email",
+      "Password": "Password",
+      "ConfirmPassword": "Confirm Password",
+      "Avatar": "Avatar",
+      "Role": "Role",
+      "UserName": "UserName",
+      "Gender": "Gender",
+      "DepartmentName": "Department Name",
+      "PositionName": "Position Name",
       "NoticeNowLevel": "Your current system level is ",
       "NoticeRoleManagement": "You can manage employees with ",
       "DownLevel": "level or below",
-      "NoticeOfBenefits": "You can change employees' job information and conduct annual reviews with them",
-      "AskAboutEvaluate": "Would you like to take the assessment now",
+      "NoticeOfBenefits": "You can change their account information",
+      "AskAboutEvaluate": "Do you want to make changes now"
+    },
+    "employee": {
+      "Hello": "Hello",
       "ManageEmployeesTitle": "Employee management",
       "UpdateEmployeeTitle": "Update employee information",
       "UpdateEvaluateTitle": "Update employee performance evaluation",
@@ -111,7 +126,8 @@
       "PositionName": "PositionName",
       "DepartmentWorking": "Work in department",
       "AskAboutUpdateEvaluation": "This employee has had an annual performance review. Would you like to update the evaluation?",
-      "NoticeEvaluation": "You are conducting an annual performance review for this employee"
+      "NoticeEvaluation": "You are conducting an annual performance review for this employee",
+      "Update": "Update"
     },
     "department": {
       "DepartmentId": "DepartmentId",
@@ -128,6 +144,7 @@
       "CreateDepartment": "Create new department"
     },
     "position": {
+      "PositionManagement": "Position Management",
       "PositionId": "PositionId",
       "PositionName": "PositionName",
       "Users": "Employees",
@@ -137,21 +154,39 @@
       "AskAboutDeletePosition": "Do you want to delete this position",
       "HinderDeletePositionTitle": "Your actions are not enforceable",
       "HinderDeletePositionContent": "You cannot delete this currently applied position",
-      "CreatePosition": "Create new position"
+      "CreatePosition": "Create new position",
+      "Update": "Điều chỉnh",
+      "Delete": "Loại bỏ"
     },
     "contract": {
+      "ContractManagement": "Contract Management",
+      "AddContractHistory": "AddContract History",
+      "CancelledContract": "Cancelled Contract",
+      "SignedContract": "Signed Contract",
+      "UpdateStatusOfContracts": "Update Contracts's Status",
+      "CancelContractHistory": "Cancel Contract History",
+      "AdjustStatus": "AdjustStatus",
+      "Extend": "Extend",
+      "Delete": "Delete",
       "FullName": "Employee",
       "PositionName": "PositionName",
+      "DepartmentName": "DepartmentName",
       "StartDay": "Start Day",
       "EndDay": "End Day",
       "UpdateContractHistoryTitle": "Update Contract History",
       "DeleteContractHistoryTile": "Delete Contract History",
       "AskAboutDeleteContractHistory": "Do you want to delete this contract history",
+      "AskAboutExtendContractHistory": "Do you want to renew this contract?",
+      "AskAboutTerminateContractHistory": "Do you want to terminate this contract?",
+      "AskAboutCancelContractHistory": "Do you want to cancel this contract?",
       "ContractId": "Contract Id",
       "ContractName": "Contract Name",
       "ContractNameVI": "Contract Name (Viet Nam)",
       "ContractNameEN": "Contract Name (English)",
-      "ContractStatus": "Contract Status"
+      "ContractStatus": "Contract Status",
+      "UserName": "UserName",
+      "ContractType": "ContractType",
+      "Note": "Note"
     },
     "allowance": {
       "TypesOfInsurance": "Types of Insurance",
@@ -168,6 +203,14 @@
       "ByRate": "By Rate",
       "ByLevel": "By Level"
     },
+    "schedule": {
+      "UserId": "UserId",
+      "EmployeeName": "Employee Name",
+      "Gender": "Gender",
+      "Address": "Address",
+      "ShiftAdjustment": "Shift Adjustment",
+      "ScheduleManagement": "Schedule Management"
+    },
     "salary": {
       "UserId": "User ID",
       "EmployeeName": "Employee Name",
@@ -180,7 +223,11 @@
       "StandardWorkDays": "Standard Work Days",
       "Bonus": "Bonus",
       "Allowance": "Allowance",
-      "Salary": "Salary"
+      "OvertimeCost": "Overtime Cost",
+      "Salary": "Salary",
+      "MonthlyPayroll": "Monthly Payroll",
+      "MonthlyClosedPayroll": "Monthly Closed Payroll",
+      "StaffTableForUnclosedMonthlyPayroll": "Staff Table For Unclosed Monthly Payroll"
     },
     "recruitmentPost": {
       "Title": "Title",
@@ -195,8 +242,25 @@
       "AddPost": "Add Post",
       "Create_RecruitmentPostTitle": "Create Recruitment Post",
       "UpdateRecruitmentTitle": "Update Recruitment Post",
+      "Delete": "Delete",
       "DeleteRecruitment": "Delete Recruitment Post",
-      "AskAboutDeleteRecruitmentPost": "Do you want to delete this recruitment posting"
+      "AskAboutDeleteRecruitmentPost": "Do you want to delete this recruitment posting",
+      "RecruitmentManagement": "Recruitment and Training management",
+      "TrainingManagement": "Training Management",
+      "JoinTraining": "JoinTraining",
+      "FinishTraining": "Finish Training",
+      "EvaluateTheResults": "Evaluate The Results",
+      "UnderstandingOfMedicalTheory": "UnderstandingOfMedicalTheory",
+      "KnowledgeOfTreatmentProtocols": "Knowledge Of TreatmentProtocols ",
+      "AbilityToLearnNewKnowledge": "Ability To Learn New Knowledge",
+      "DiagnosticSkills": "Diagnostic Skills",
+      "TreatmentSkills": "Treatment Skills",
+      "DecisionMakingSkills": "Decision Making Skills ",
+      "CommunicationSkillsWithPatientsAndTheirFamilies": "Communication Skills WithPatientsAndTheirFamilies ",
+      "CommunicationSkillsWithColleagues": "Communication Skills With Colleagues ",
+      "PatientMonitoringAndCare": "Patient Monitoring AndCare ",
+      "ParticipationInMedicalResearch": "Participation InMedicalResearch ",
+      "AverageScore": "AverageScore"
     },
     "announcementPost": {
       "Title": "Title",
@@ -212,6 +276,23 @@
       "UpdateAnnouncementTitle": "Update Announcement Post",
       "DeleteAnnouncement": "Delete Announcement Post",
       "AskAboutDeleteAnnouncementPost": "Do you want to delete this announcement posting"
+    },
+    "user": {
+      "NumericalOrder": "Numerical Order",
+      "FullName": "Full Name",
+      "PositionName": "Position Name",
+      "Content": "Content",
+      "AssignmentTableAccordingToRegulations": "AssignmentTableAccordingToRegulations",
+      "DepartmentName": "Department Name",
+      "Monday": "Monday",
+      "Tuesday": "Tuesday",
+      "Wednesday": "Wednesday",
+      "Thursday": "Thursday",
+      "Friday": "Friday",
+      "Saturday": "Saturday",
+      "Sunday": "Sunday",
+      "NextWeekSchedule": "Nex tWeekS chedule",
+      "CurrentWeekSchedule": "Current Week Schedule"
     },
     "other": {
       "Male": "Male",

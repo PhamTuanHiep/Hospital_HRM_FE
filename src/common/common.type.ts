@@ -1,3 +1,5 @@
+import { RcFile } from "antd/es/upload";
+
 export interface CommonQueryParams {
   page?: number;
   items_per_page?: number;
@@ -9,6 +11,7 @@ export interface ContractHistoriesQueryParams {
   items_per_page?: number;
   search?: string;
   contractStatus?: string;
+  excludesStatus?: string;
 }
 
 export interface UsersQueryParams {
@@ -16,8 +19,22 @@ export interface UsersQueryParams {
   items_per_page?: number;
   search?: string;
   roleId?: string;
+  userStatus?: string;
 }
 
+export interface AccountsQueryParams {
+  page?: number;
+  items_per_page?: number;
+  search?: string;
+  roleId?: string;
+}
+
+export interface DepartmentsQueryParams {
+  page?: number;
+  items_per_page?: number;
+  search?: string;
+  departmentId?: string;
+}
 export interface PageResponse {
   currentPage: number | null;
   lastPage: number | null;
@@ -34,7 +51,7 @@ export interface Pagination {
 }
 
 interface AccountShortInfo {
-  accountId: string;
+  accountId: number;
   email: string;
   avatar: string;
 }
@@ -42,6 +59,13 @@ interface AccountShortInfo {
 export interface UserShortInfo {
   userId: number;
   fullName: string;
+}
+
+export interface UserInfo {
+  userId: number;
+  fullName: string;
+  department: DepartmentShortInfo;
+  position: PositionShortInfo;
 }
 
 interface RoleShortInfo {
@@ -57,7 +81,7 @@ interface LeaveHistoryShortInfo {
   numOfDaysOff: number;
   dayOffList: number[];
 }
-export interface OvertimeHistoryUserShortInfo {
+export interface OvertimeHistoryShortInfo {
   overtimeHistoryId: number;
   overtimeId: string;
   startDay: string;
@@ -68,16 +92,16 @@ interface UserInsuranceShortInfo {
   insuranceId: string;
 }
 
-interface PositionShortInfo {
+export interface PositionShortInfo {
   positionId: string;
   positionName: string;
 }
 
 interface AllowanceShortInfo {
-  allowanceId: number;
-  allowanceAcronym: string;
+  allowanceId: string;
   allowanceType: string;
-  allowanceName: string;
+  allowanceNameVI: string;
+  allowanceNameEN: string;
   allowanceRate: number;
   allowanceFee: number;
   note: string;
@@ -106,9 +130,28 @@ interface UserInsuranceShortInfo {
   userId: number;
 }
 
-interface DepartmentShortInfo {
+export interface DepartmentShortInfo {
   departmentId: string;
   departmentName: string;
+  location: string;
+  funcDescription: string;
+  users: UserShortInfo[] | [];
+  allowanceRelationship: AllowanceRelationshipShortInfo | null;
+  overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | [];
+}
+
+export interface PositionShortInfo {
+  positionId: string;
+  positionName: string;
+  users: UserShortInfo[] | [];
+  allowanceRelationship: AllowanceRelationshipShortInfo | null;
+}
+
+export interface AllowanceRelationshipShortInfo {
+  id: number;
+  position: PositionAllowanceShortInfo | null;
+  department: DepartmentShortInfo | null;
+  allowance: AllowanceShortInfo;
 }
 
 interface OvertimeShortInfo {
@@ -117,12 +160,20 @@ interface OvertimeShortInfo {
   overtimePay: number;
 }
 
+export interface DepartmentUserShortInfo {
+  userId: number;
+  fullName: string;
+  gender: number;
+  address: string;
+  note: string[];
+}
 export interface OvertimeHistoryDepartmentShortInfo {
   overtimeHistoryId: number;
-  userId: number;
-  overtimeId: string;
+  user: DepartmentUserShortInfo;
+  overtime: OvertimeShortInfo;
   startDay: string;
   endDay: string;
+  note: string[];
 }
 
 interface RoleShortInfo {
@@ -148,27 +199,56 @@ export interface AccountForm {
   updatedAt?: Date;
 }
 
+// export interface AccountCreateForm {
+//   fullName: string;
+//   gender: number;
+//   positionName: string;
+//   email: string;
+//   password?: string;
+//   avatar?: string;
+//   roleId: string;
+//   userId?: number;
+//   createdAt?: Date;
+//   updatedAt?: Date;
+// }
+
+// export interface AccountCreate {
+//   email: string;
+//   password?: string;
+//   avatar?: string;
+//   roleId: string;
+//   userId?: number;
+// }
+
+export interface AccountCreate {
+  email: string;
+  password: string;
+  avatar: RcFile;
+  roleId: string;
+  userId: number;
+}
+
 export interface UserPost {
   email?: string;
-  fullName: string;
-  gender: number;
-  address: string;
-  phoneNumber: string;
-  nation: string;
-  nationality: string;
-  hometown: string;
-  positionId: string;
-  departmentId: string;
-  salaryCoefficient: number;
-  birthday: string;
-  fatherFullName: string;
-  fatherBirthday: string;
-  motherFullName: string;
-  motherBirthday: string;
-  weeklySchedule: number[];
-  jobDescription: string[];
-  otherDescription: string;
-  status: string;
+  fullName?: string;
+  gender?: number;
+  address?: string;
+  phoneNumber?: string;
+  nation?: string;
+  nationality?: string;
+  hometown?: string;
+  positionId?: string;
+  departmentId?: string;
+  salaryCoefficient?: number;
+  birthday?: string;
+  fatherFullName?: string;
+  fatherBirthday?: string;
+  motherFullName?: string;
+  motherBirthday?: string;
+  weeklySchedule?: number[];
+  jobDescription?: string[];
+  otherDescription?: string;
+  status?: string;
 }
 
 export interface UserForm {
@@ -204,12 +284,10 @@ export interface Role {
   updatedAt?: Date;
 }
 
-export interface PositionAllowance {
-  id: number;
+export interface PositionShortInfo {
   positionId: string;
-  allowanceId: number;
-  createdAt?: Date;
-  updatedAt?: Date;
+  positionName: string;
+  allowanceRelationship: AllowanceRelationshipShortInfo;
 }
 
 export interface Position {
@@ -283,6 +361,7 @@ export interface SalaryHistoryShortInfo {
   numOfDaysOff: number;
   standardWorkDays: number;
   bonus: number;
+  overtimeCost: number;
   allowance: number;
   salary: number;
 }
@@ -297,10 +376,10 @@ export interface Department {
 }
 
 export interface Allowance {
-  allowanceId: number;
-  allowanceAcronym: string;
+  allowanceId: string;
   allowanceType: string;
-  allowanceName: string;
+  allowanceNameVI: string;
+  allowanceNameEN: string;
   allowanceRate: number;
   allowanceFee: number;
   note: string;
@@ -379,7 +458,7 @@ export interface AccountDetail {
   password: string;
   avatar: string;
   role: RoleShortInfo | null;
-  user: UserShortInfo | null;
+  user: UserInfo | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -405,7 +484,7 @@ export interface UserDetail {
   department: DepartmentShortInfo | null;
   salaryCoefficient: number;
   leaveHistories: LeaveHistoryShortInfo[] | [];
-  overtimeHistories: OvertimeHistoryUserShortInfo[] | [];
+  overtimeHistories: OvertimeHistoryShortInfo[] | [];
   userInsurances: UserInsuranceShortInfo[] | [];
   position: PositionShortInfo | null;
   evaluateHistories: EvaluateShortInfo[];
@@ -420,19 +499,11 @@ export interface UserDetail {
 
 export interface RoleDetail extends Role {}
 
-export interface PositionAllowanceDetail {
-  id: number;
-  position: PositionShortInfo | null;
-  allowance: AllowanceShortInfo | null;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 export interface PositionDetail {
   positionId: string;
   positionName: string;
   users: UserShortInfo[] | [];
-  positionAllowances: PositionAllowanceShortInfo[] | [];
+  allowanceRelationship: AllowanceRelationshipShortInfo | null;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -486,9 +557,16 @@ export interface EvaluateDetail {
   updatedAt?: Date;
 }
 
-export interface DepartmentDetail extends Department {
-  users: UserShortInfo[] | [];
+export interface DepartmentDetail {
+  departmentId: string;
+  departmentName: string;
+  location: string;
+  funcDescription: string;
+  users: DepartmentUserShortInfo[] | [];
+  allowanceRelationship: AllowanceRelationshipShortInfo | null;
   overtimeHistories: OvertimeHistoryDepartmentShortInfo[] | [];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface OvertimeDetail extends Overtime {}
@@ -546,9 +624,10 @@ export interface ContractHistoryDetail {
   startDay: string;
   endDay: string;
   note: string;
+  suspensionTime: number;
   status: number;
-  user: UserShortInfo | null;
-  contract: ContractShortInfo | null;
+  user: UserInfo;
+  contract: ContractShortInfo;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -564,6 +643,7 @@ export interface SalaryHistoryDetail {
   numOfDaysOff: number;
   standardWorkDays: number;
   bonus: number;
+  overtimeCost: number;
   allowance: number;
   salary: number;
 }
@@ -593,6 +673,15 @@ export interface AnnouncementPostDetail {
   createdAt: Date;
   updatedAt: Date;
   user: UserShortInfo | null;
+}
+
+export interface AllowanceRelationshipDetail {
+  id: number;
+  position: PositionAllowanceShortInfo;
+  department: DepartmentShortInfo;
+  allowance: AllowanceShortInfo;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface RowType {

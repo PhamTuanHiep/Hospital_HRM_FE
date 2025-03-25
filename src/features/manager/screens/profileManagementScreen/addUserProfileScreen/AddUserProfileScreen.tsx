@@ -17,6 +17,7 @@ import {
 } from "../../../../../common/common.type";
 import { useEffect, useMemo, useState } from "react";
 import {
+  DEFAULT_DATE_FORMAT,
   GenderId,
   GenderName,
   INIT_DEPARTMENT,
@@ -76,25 +77,25 @@ const AddUserProfileScreen = () => {
 
   const defaultValues = useMemo(() => {
     return {
-      fullName: "Nguyễn Văn A",
+      fullName: "",
       gender: 1,
-      address: "số 20 Hoàng Cầu, Đống Đa, Hà Nội",
-      phoneNumber: "0123456789",
-      nation: "Việt Nam",
-      nationality: "Kinh",
-      hometown: "số 20 Hoàng Cầu, Đống Đa, Hà Nội",
-      birthday: dayjs("10/10/2001"),
-      fatherFullName: "Nguyễn Văn C",
-      fatherBirthday: dayjs("10/10/2001"),
-      motherFullName: "Nguyễn Văn B",
-      motherBirthday: dayjs("10/10/2001"),
+      address: "",
+      phoneNumber: "",
+      nation: "",
+      nationality: "",
+      hometown: "",
+      // birthday: dayjs("10/10/2001"),
+      fatherFullName: "",
+      // fatherBirthday: dayjs("10/10/2001"),
+      motherFullName: "",
+      // motherBirthday: dayjs("10/10/2001"),
       weeklySchedule: [2, 3, 4, 5, 6],
-      positionId: "P010",
-      departmentId: "D003",
+      positionId: "",
+      departmentId: "",
       salaryCoefficient: 0,
       jobDescription: ["Làm việc các ngày trong tuần"],
-      otherDescription: "Sẽ có tăng ca hàng tháng",
-      status: "Đang làm",
+      otherDescription: "",
+      status: "",
     };
   }, []);
 
@@ -108,12 +109,16 @@ const AddUserProfileScreen = () => {
   }, []);
 
   const onFinish: FormProps<UserPost>["onFinish"] = async (values) => {
-    values.birthday = dayjs(values.birthday).format("DD/MM/YYYY");
-    values.fatherBirthday = dayjs(values.fatherBirthday).format("DD/MM/YYYY");
-    values.motherBirthday = dayjs(values.motherBirthday).format("DD/MM/YYYY");
+    values.birthday = dayjs(values.birthday).format(DEFAULT_DATE_FORMAT);
+    values.fatherBirthday = dayjs(values.fatherBirthday).format(
+      DEFAULT_DATE_FORMAT
+    );
+    values.motherBirthday = dayjs(values.motherBirthday).format(
+      DEFAULT_DATE_FORMAT
+    );
     const res = await postUser(values);
     if (res) {
-      navigate(managerPaths.EMPLOYEE_MANAGEMENT);
+      navigate(managerPaths.PROFILE_MANAGEMENT);
     }
   };
 
@@ -125,8 +130,6 @@ const AddUserProfileScreen = () => {
     console.log(`selected ${value}`);
   };
 
-  const dateFormatList = ["DD/MM/YYYY"];
-
   return (
     <Flex vertical gap={8}>
       <CustomBreadcrumb
@@ -134,14 +137,18 @@ const AddUserProfileScreen = () => {
           {
             title: (
               <div>
-                <a href="/manager/profile-management">Profile Management</a>
+                <a href="/manager/profile-management">
+                  {t("content.feature.ProfileManagement")}
+                </a>
               </div>
             ),
           },
           {
             title: (
               <div>
-                <a href="/manager/profile-management/add-user">Add User</a>
+                <a href="/manager/profile-management/add-user">
+                  {t("content.info.CreateUserProfile")}
+                </a>
               </div>
             ),
           },
@@ -159,7 +166,9 @@ const AddUserProfileScreen = () => {
         }
       />
       <Card>
-        <Typography.Title>Create new User Profile</Typography.Title>
+        <Typography.Title>
+          {t("content.info.CreateUserProfile")}
+        </Typography.Title>
         <Form
           form={form}
           id="add_user_form"
@@ -230,7 +239,7 @@ const AddUserProfileScreen = () => {
           >
             <DatePicker
               className="input-profile-item"
-              format={dateFormatList}
+              format={DEFAULT_DATE_FORMAT}
             />
           </Form.Item>
           <Form.Item<UserPost>
@@ -245,7 +254,7 @@ const AddUserProfileScreen = () => {
           >
             <DatePicker
               className="input-profile-item"
-              format={dateFormatList}
+              format={DEFAULT_DATE_FORMAT}
             />
           </Form.Item>
           <Form.Item<UserPost>
@@ -260,7 +269,7 @@ const AddUserProfileScreen = () => {
           >
             <DatePicker
               className="input-profile-item"
-              format={dateFormatList}
+              format={DEFAULT_DATE_FORMAT}
             />
           </Form.Item>
           <Form.Item<UserPost>

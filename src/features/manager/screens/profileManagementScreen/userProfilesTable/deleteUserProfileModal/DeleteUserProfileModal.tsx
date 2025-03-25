@@ -20,7 +20,7 @@ const DeleteUserProfileModal = ({
   const { t } = useTranslation();
 
   const handleOk = async () => {
-    const res = await deleteUser(user.userId);
+    const res = await deleteUser(user);
     if (res?.data.affected != 0) {
       setIsModalOpen(false);
       setReset(true);

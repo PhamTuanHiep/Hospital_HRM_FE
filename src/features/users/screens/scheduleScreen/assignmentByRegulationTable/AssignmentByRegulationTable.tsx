@@ -1,18 +1,14 @@
 import { Card, Table } from "antd";
-import { ASSIGNMENT_BY_REGULATION_COLUMNS } from "../../../constants/user.constant";
 import { useEffect, useMemo, useState } from "react";
 import { UserDetail } from "../../../../../common/common.type";
 import { INIT_USER } from "../../../../../common/common.constant";
 import { getUsers } from "../../../../../api/apiServices";
 import "./AssignmentByRegulationTable.scss";
+import { useTranslation } from "react-i18next";
 
 const AssignmentByRegulationTable = () => {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<UserDetail[]>([INIT_USER]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
   const fetchUsers = async () => {
     const res = await getUsers();
     if (res) {
@@ -20,6 +16,36 @@ const AssignmentByRegulationTable = () => {
       setUsers(usersData);
     }
   };
+  const assignmentByRegulationIndex = {
+    order: "order",
+    fullName: "fullName",
+    positionName: "positionName",
+    jobDescription: "jobDescription",
+  };
+
+  const ASSIGNMENT_BY_REGULATION_COLUMNS = [
+    {
+      title: t("content.user.NumericalOrder"),
+      dataIndex: assignmentByRegulationIndex.order,
+      key: assignmentByRegulationIndex.order,
+      className: "title_content-center",
+    },
+    {
+      title: t("content.user.FullName"),
+      dataIndex: assignmentByRegulationIndex.fullName,
+      key: assignmentByRegulationIndex.fullName,
+    },
+    {
+      title: t("content.user.PositionName"),
+      dataIndex: assignmentByRegulationIndex.positionName,
+      key: assignmentByRegulationIndex.positionName,
+    },
+    {
+      title: t("content.user.Content"),
+      dataIndex: assignmentByRegulationIndex.jobDescription,
+      key: assignmentByRegulationIndex.jobDescription,
+    },
+  ];
 
   const assignmentByRegulation = useMemo(() => {
     return users.map((userData, index) => {
@@ -32,9 +58,13 @@ const AssignmentByRegulationTable = () => {
     });
   }, [users]);
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <Card
-      title="Bảng phân công theo quy định"
+      title={t("content.user.AssignmentTableAccordingToRegulations")}
       bordered={false}
       id="assignment-by-regulation-card"
     >

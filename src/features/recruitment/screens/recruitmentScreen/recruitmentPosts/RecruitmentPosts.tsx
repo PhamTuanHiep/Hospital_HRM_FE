@@ -12,7 +12,7 @@ import {
   INIT_RECRUITMENT_POST_DETAIL,
   QueryParamsWithListPosts,
 } from "../../../../../common/common.constant";
-import RecruitmentPoster from "../../../../manager/screens/recruitmentManagementScreen/recruitmentPoster/RecruitmentPoster";
+import RecruitmentPoster from "../../../../manager/screens/recruitmentAndTrainingScreen/recruitmentManagementScreen/recruitmentPoster/RecruitmentPoster";
 import PaginationAntd from "../../../../../components/paginationAntd/PaginationAntd";
 
 const RecruitmentPosts = () => {

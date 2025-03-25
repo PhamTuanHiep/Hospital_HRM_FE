@@ -18,29 +18,34 @@ const FileUpload = ({ apiUrl, fileList, setFileList }: FileUploadProps) => {
   const beforeUpload = (file: RcFile) => {
     console.log("file-beforeUpload:", file);
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isLt5M = file.size / 1024 / 1024 < 5;
+
     if (!isJpgOrPng) {
       setIsValid(false);
       message.error("Bạn chỉ có thể tải lên file JPG/PNG!");
       console.log("isJpgOrPng:", isJpgOrPng);
 
       return false;
-    }
-    const isLt2M = file.size / 1024 / 1024 < 5;
-    if (!isLt2M) {
+    } else if (!isLt5M) {
       setIsValid(false);
-      message.error("File phải nhỏ hơn 2MB!");
-      console.log("isLt2M:", isLt2M);
-
+      message.error("File phải nhỏ hơn 5MB!");
+      console.log("isLt5M:", isLt5M);
+      return false;
+    } else {
+      setIsValid(true);
       return false;
     }
-
-    return false;
   };
 
   // Xử lý thay đổi khi người dùng chọn file
   const handleChange = (info: UploadChangeParam<UploadFile>) => {
     console.log("info-handleChange:", info);
-    isValid ? setFileList(info.fileList) : setFileList([]);
+    if (isValid) {
+      setFileList(info.fileList);
+    } else {
+      setFileList([]);
+    }
+
     // formInstance.setFieldValue("image", info.fileList[0].originFileObj);
   };
 

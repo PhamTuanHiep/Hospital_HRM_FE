@@ -106,71 +106,71 @@ const HeaderComponent = () => {
     {
       key: "3",
       label: (
-        <NavLink to="#" className="nav-link">
+        <NavLink to={NewsAndEventsPaths.NEWS} className="nav-link">
           {t("homepage.NewsAndEvents")}
         </NavLink>
       ),
 
-      children: [
-        {
-          key: "3-sub-1",
-          label: (
-            <NavLink to={NewsAndEventsPaths.NEWS} className="nav-link">
-              {t("homepage.News")}
-            </NavLink>
-          ),
-        },
-        {
-          key: "3-sub-2",
-          label: (
-            <NavLink to={NewsAndEventsPaths.RESEARCH} className="nav-link">
-              {t("homepage.Research")}
-            </NavLink>
-          ),
-        },
-        {
-          key: "3-sub-3",
-          label: (
-            <NavLink to={NewsAndEventsPaths.NUTRITION} className="nav-link">
-              {t("homepage.Nutrition")}
-            </NavLink>
-          ),
-        },
-      ],
+      // children: [
+      //   {
+      //     key: "3-sub-1",
+      //     label: (
+      //       <NavLink to={NewsAndEventsPaths.NEWS} className="nav-link">
+      //         {t("homepage.News")}
+      //       </NavLink>
+      //     ),
+      //   },
+      // {
+      //   key: "3-sub-2",
+      //   label: (
+      //     <NavLink to={NewsAndEventsPaths.RESEARCH} className="nav-link">
+      //       {t("homepage.Research")}
+      //     </NavLink>
+      //   ),
+      // },
+      // {
+      //   key: "3-sub-3",
+      //   label: (
+      //     <NavLink to={NewsAndEventsPaths.NUTRITION} className="nav-link">
+      //       {t("homepage.Nutrition")}
+      //     </NavLink>
+      //   ),
+      // },
+      // ],
     },
-    {
-      key: "4",
-      label: (
-        <NavLink to={ContactPaths.CONTACT} className="nav-link">
-          {t("homepage.Contact")}
-        </NavLink>
-      ),
-    },
+    // {
+    //   key: "4",
+    //   label: (
+    //     <NavLink to={ContactPaths.CONTACT} className="nav-link">
+    //       {t("homepage.Contact")}
+    //     </NavLink>
+    //   ),
+    // },
     {
       key: "5",
       label: (
-        <NavLink to={"#"} className="nav-link">
+        <NavLink to={recruitmentPaths.RECRUITMENT} className="nav-link">
           {t("homepage.Recruitment")}
         </NavLink>
       ),
-      children: [
-        {
-          key: "5-sub-1",
-          label: (
-            <NavLink to={recruitmentPaths.RECRUITMENT} className="nav-link">
-              {t("homepage.Recruitment")}
-            </NavLink>
-          ),
-        },
-        {
-          key: "5-sub-2",
-          label: (
-            <NavLink to={recruitmentPaths.TRAIN} className="nav-link">
-              {t("homepage.Train")}
-            </NavLink>
-          ),
-        },
-      ],
+      // children: [
+      //   {
+      //     key: "5-sub-1",
+      //     label: (
+      //       <NavLink to={recruitmentPaths.RECRUITMENT} className="nav-link">
+      //         {t("homepage.Recruitment")}
+      //       </NavLink>
+      //     ),
+      //   },
+      // {
+      //   key: "5-sub-2",
+      //   label: (
+      //     <NavLink to={recruitmentPaths.TRAIN} className="nav-link">
+      //       {t("homepage.Train")}
+      //     </NavLink>
+      //   ),
+      // },
+      // ],
     },
   ];
 

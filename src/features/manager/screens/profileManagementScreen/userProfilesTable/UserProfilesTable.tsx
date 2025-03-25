@@ -1,43 +1,46 @@
-import { SearchOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Flex,
-  Input,
-  InputRef,
-  Space,
-  Table,
-  TableColumnType,
-  TableColumnsType,
-  TableProps,
-} from "antd";
-import { FilterDropdownProps } from "antd/es/table/interface";
-import { useEffect, useMemo, useRef, useState } from "react";
-import Highlighter from "react-highlight-words";
+import { Button, Flex } from "antd";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+
 import dayjs from "dayjs";
 
 import { useNavigate } from "react-router-dom";
 import { UsersData } from "../../../constants/manager.type";
-import { UserDetail } from "../../../../../common/common.type";
+import {
+  PageResponse,
+  UserDetail,
+  UsersQueryParams,
+} from "../../../../../common/common.type";
 import { getUsers } from "../../../../../api/apiServices";
-import { INIT_USER } from "../../../../../common/common.constant";
+import {
+  GenderId,
+  GenderName,
+  INIT_PAGE_RESPONSE,
+  INIT_USER,
+  QueryParamsWithListPosts,
+} from "../../../../../common/common.constant";
 import ViewUserProfileModel from "./viewUserProfileModel/ViewUserProfileModel";
 import DeleteUserProfileModal from "./deleteUserProfileModal/DeleteUserProfileModal";
 import { useAppSelector } from "../../../../../app/hooks";
 import { useTranslation } from "react-i18next";
 import CustomBreadcrumb from "../../../../../components/customBreadcrumb/CustomBreadcrumb";
-
-type DataIndex = keyof UsersData;
-interface TableDataType extends UsersData {}
+import TableComponent, {
+  ColumnDataCustom,
+} from "../../../../../components/tableComponent/TableComponent";
 
 const UserProfilesTable = () => {
   const { account: currentAccount } = useAppSelector(
     (state) => state.account_user
   );
   const { t } = useTranslation();
-  const searchInput = useRef<InputRef>(null);
+  const [customPageParam, setCustomPageParam] =
+    useState<PageResponse>(INIT_PAGE_RESPONSE);
 
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
+  const [queryParams, setQueryParams] = useState<UsersQueryParams>({
+    page: QueryParamsWithListPosts.DEFAULT_CURRENT_PAGE,
+    items_per_page: QueryParamsWithListPosts.PER_PAGE,
+  });
+
   const [users, setUsers] = useState<UserDetail[]>([INIT_USER]);
   const [user, setUser] = useState<UserDetail>(INIT_USER);
 
@@ -46,139 +49,26 @@ const UserProfilesTable = () => {
   const [reset, setReset] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchAccounts();
-  }, [reset]);
-
-  const fetchAccounts = async () => {
-    const res = await getUsers();
+  const fetchUsers = useCallback(async () => {
+    const res = await getUsers(queryParams);
     if (res) {
-      const usersApi = res.data.data as UserDetail[];
-      const newUsersApi = usersApi.filter((userApi): boolean => {
+      // const usersApi = res.data.data as UserDetail[];
+      const { data: usersApi, ...pageResponse } = res.data;
+
+      const newUsersApi = usersApi.filter((userApi: UserDetail): boolean => {
         return userApi.userId !== currentAccount.user?.userId;
       });
+      setCustomPageParam(pageResponse);
+
       setUsers(newUsersApi);
+      setReset(false);
     }
-  };
+  }, [queryParams, currentAccount.user?.userId]);
 
-  const handleSearch = (
-    selectedKeys: string[],
-    confirm: FilterDropdownProps["confirm"],
-    dataIndex: DataIndex
-  ) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): TableColumnType<TableDataType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
-            }
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  const onChange: TableProps<TableDataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
-
-  const usersData = useMemo(() => {
+  const usersData: UsersData[] = useMemo(() => {
     return users.map((user) => {
       return {
-        key: user.userId,
+        rowId: user.userId,
         fullName: user.fullName,
         email: user.account?.email || "",
         gender: user.gender,
@@ -197,29 +87,28 @@ const UserProfilesTable = () => {
     });
   }, [users]);
 
-  const accountColumns: TableColumnsType<TableDataType> = [
+  const accountColumns: ColumnDataCustom<UsersData>[] = [
     {
       title: t("content.info.FullName"),
       dataIndex: "fullName",
       width: 150,
-      sorter: {
-        compare: (a, b) => a.fullName.localeCompare(b.fullName),
-        multiple: 4,
-      },
+      prioritySort: 4,
     },
     {
       title: t("content.info.Email"),
       dataIndex: "email",
       width: 150,
 
-      sorter: {
-        compare: (a, b) => a.email.localeCompare(b.email),
-        multiple: 4,
-      },
+      prioritySort: 3,
     },
     {
       title: t("content.info.Gender"),
       dataIndex: "gender",
+      render: (value) => {
+        return value === GenderId.MALE
+          ? t(`content.common.${GenderName.MALE}`)
+          : t(`content.common.${GenderName.FEMALE}`);
+      },
     },
     {
       title: t("content.info.Address"),
@@ -240,7 +129,7 @@ const UserProfilesTable = () => {
     {
       title: t("content.info.DepartmentName"),
       dataIndex: "departmentName",
-      ...getColumnSearchProps("departmentName"),
+      isSearch: true,
     },
     {
       title: t("content.info.SalaryCoefficient"),
@@ -249,24 +138,18 @@ const UserProfilesTable = () => {
     {
       title: t("content.info.PositionName"),
       dataIndex: "positionName",
-      ...getColumnSearchProps("positionName"),
+      isSearch: true,
     },
 
     {
       title: t("content.common.CreatedAt"),
       dataIndex: "createdAt",
-      sorter: {
-        compare: (a, b) => a.createdAt.localeCompare(b.createdAt),
-        multiple: 2,
-      },
+      prioritySort: 2,
     },
     {
       title: t("content.common.UpdatedAt"),
       dataIndex: "updatedAt",
-      sorter: {
-        compare: (a, b) => a.updatedAt.localeCompare(b.updatedAt),
-        multiple: 1,
-      },
+      prioritySort: 1,
     },
     {
       title: t("content.common.Status"),
@@ -309,6 +192,9 @@ const UserProfilesTable = () => {
     // setReset(false);
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, [reset, queryParams, fetchUsers]);
   return (
     <div>
       <CustomBreadcrumb
@@ -316,7 +202,9 @@ const UserProfilesTable = () => {
           {
             title: (
               <div>
-                <a href="/manager/profile-management">Profile Management</a>
+                <a href="/manager/profile-management">
+                  {t("content.feature.ProfileManagement")}
+                </a>
               </div>
             ),
           },
@@ -331,12 +219,14 @@ const UserProfilesTable = () => {
           </Button>
         }
       />
-      <Table<UsersData>
-        columns={accountColumns}
-        dataSource={usersData}
-        onChange={onChange}
-        showSorterTooltip={{ target: "full-header" }}
-        scroll={{ x: "max-content" }}
+      <TableComponent<UsersData>
+        columnData={accountColumns}
+        tableData={usersData}
+        // onChange={onChange}
+
+        itemTotal={customPageParam.total}
+        paginationQueryParams={queryParams}
+        setPaginationQueryParams={setQueryParams}
       />
       <ViewUserProfileModel
         isModalOpen={isViewModalOpen}

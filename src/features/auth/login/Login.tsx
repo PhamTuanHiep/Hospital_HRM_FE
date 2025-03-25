@@ -8,7 +8,11 @@ import {
   errMessageSubmit,
   validateMessages,
 } from "../constants/login.constant";
-import { INIT_ACCOUNT } from "../../../common/common.constant";
+import {
+  EMAIL_PATTERN,
+  INIT_ACCOUNT,
+  PASSWORD_PATTERN,
+} from "../../../common/common.constant";
 import { getAccounts } from "../../../api/apiServices";
 import { useAppDispatch } from "../../../app/hooks";
 import { LoginSubmit } from "../constants/login.type";
@@ -84,8 +88,7 @@ const Login = () => {
               {
                 required: true,
                 message: "Email is valid",
-                pattern:
-                  /^(([^<>()\[\]\\.,;:\s@"]{2,}(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                pattern: EMAIL_PATTERN,
               },
             ]}
           >
@@ -105,7 +108,7 @@ const Login = () => {
                 required: true,
                 message:
                   "The password must have 8-32 characters, at least 1 capital and 1 normal word !",
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,32}$/g,
+                pattern: PASSWORD_PATTERN,
               },
             ]}
           >

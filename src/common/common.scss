@@ -82,6 +82,15 @@
   }
 }
 
+.btn-wide {
+  min-width: 80px;
+  max-width: 130px;
+  min-height: 46px;
+  white-space: normal;
+}
+.btn {
+  min-width: 100px;
+}
 .btn-edit {
   background-color: #f08300;
   color: white;
@@ -91,6 +100,15 @@
   color: white;
 }
 .btn-create {
+  background-color: #1677ff;
+  color: white;
+}
+
+.btn-update {
+  background-color: #1677ff;
+  color: white;
+}
+.btn-view {
   background-color: #1677ff;
   color: white;
 }

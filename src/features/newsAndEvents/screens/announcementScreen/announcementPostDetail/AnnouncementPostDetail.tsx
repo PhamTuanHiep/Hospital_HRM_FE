@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Card, Flex, Image, Typography } from "antd";
 import "./AnnouncementPostDetail.scss";
 import TextComponent from "../../../../../components/textComponent/TextComponent";
-import { getDDMMYYYYfromISO8601DateString } from "../../../../../common/common.helper";
+import { formatDateToDDMMYYYY } from "../../../../../common/common.helper";
 import { useTranslation } from "react-i18next";
 import { AnnouncementPostDetail as AnnouncementPostDetailType } from "../../../../../common/common.type";
 import { INIT_ANNOUNCEMENT_POST_DETAIL } from "../../../../../common/common.constant";
@@ -42,9 +42,7 @@ const AnnouncementPostDetail = () => {
               <Title level={2}> {announcementPost.title}</Title>
               <Flex justify="space-between">
                 <Text>
-                  {`${t(
-                    "content.common.CreatedAt"
-                  )}: ${getDDMMYYYYfromISO8601DateString(
+                  {`${t("content.common.CreatedAt")}: ${formatDateToDDMMYYYY(
                     announcementPost.createdAt
                   )}`}
                 </Text>

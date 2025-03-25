@@ -8,8 +8,20 @@ import dayjs, { Dayjs } from "dayjs";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import isBetween from "dayjs/plugin/isBetween"; // Import plugin từ dayjs
 import isoWeek from "dayjs/plugin/isoWeek"; // Import plugin isoWeek
-import { DayOfWeek, RoleId, RoleName, dayOfWeek } from "./common.constant";
+import {
+  DayOfWeek,
+  RoleId,
+  RoleName,
+  dayOfWeek,
+  DEFAULT_DATE_FORMAT,
+  TIME_FORMATS,
+} from "./common.constant";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
+dayjs.extend(customParseFormat);
 dayjs.extend(isBetween);
 dayjs.extend(isoWeek);
 
@@ -35,9 +47,36 @@ export const addSuffix = (value: number | string, suffix: string) => {
   return value.toString() + " " + suffix;
 };
 
-export const getDDMMYYYYfromISO8601DateString = (date: Date | undefined) => {
-  let newDate = date ? date : "";
-  return dayjs(newDate).format("DD/MM/YYYY");
+export const formatDateToDDMMYYYY = (input?: string | Date): string => {
+  const customRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+  if (input) {
+    if (input instanceof Date) {
+      return dayjs(input).format(DEFAULT_DATE_FORMAT);
+    } else if (customRegex.test(input)) {
+      return input;
+    }
+    // Kiểm tra nếu input là dạng ISO (YYYY-MM-DDTHH:mm:ss.sssZ)
+    // const isoRegex = /^\d{4}-\d{2}-\d{2}T/;
+    // if (isoRegex.test(input)) {
+    //   return dayjs(input).format(DEFAULT_DATE_FORMAT);
+    // }
+    else {
+      return dayjs(input).format(DEFAULT_DATE_FORMAT);
+    }
+  } else {
+    return "-";
+  }
+};
+
+export const parseDate = (input?: string | Date): Dayjs | null => {
+  if (input) {
+    if (typeof input === "string") {
+      return dayjs(input, TIME_FORMATS);
+    }
+    return dayjs(input);
+  } else {
+    return null;
+  }
 };
 
 export const getDayToDaysOfOvertime = (days: string) => {
@@ -166,8 +205,7 @@ export const checkWeek = (
   dateString: string | Date,
   next?: boolean
 ): boolean => {
-  const date = dayjs(dateString);
-
+  const date = dayjs(dateString, TIME_FORMATS);
   // Lấy ra tuần hiện tại
   const startOfThisWeek = dayjs().startOf("isoWeek").format("YYYY-MM-DD");
   const endOfThisWeek = dayjs().endOf("isoWeek").format("YYYY-MM-DD");
@@ -181,7 +219,6 @@ export const checkWeek = (
     .add(1, "week")
     .endOf("isoWeek")
     .format("YYYY-MM-DD");
-
   //default next =false -> check this week
   if (next) {
     // Parameter 4 is a string with two characters; '[' means inclusive, '(' exclusive
@@ -190,6 +227,7 @@ export const checkWeek = (
     // '[)' includes the start date but excludes the stop
     // Granuality offers the precision on start and end inclusive checks.
     // For example including the start date on day precision you should use 'day' as 3r
+
     return date.isBetween(startOfNextWeek, endOfNextWeek, "day", "[]")
       ? true
       : false;
@@ -206,13 +244,25 @@ export const checkDayOfWeek = (
   day: number,
   next?: boolean
 ): boolean => {
+  // console.log("dateString:", dateString);
+  // console.log("checkWeek(dateString, next):", checkWeek(dateString, next));
+  // console.log("checkWeek(dateString):", checkWeek(dateString));
+
+  // console.log("--------------");
+
   if (next) {
     if (checkWeek(dateString, next)) {
-      return dayjs(dateString).format("dddd") === dayOfWeek[day as DayOfWeek];
+      return (
+        dayjs(dateString, TIME_FORMATS).format("dddd") ===
+        dayOfWeek[day as DayOfWeek]
+      );
     }
   } else {
     if (checkWeek(dateString)) {
-      return dayjs(dateString).format("dddd") === dayOfWeek[day as DayOfWeek];
+      return (
+        dayjs(dateString, TIME_FORMATS).format("dddd") ===
+        dayOfWeek[day as DayOfWeek]
+      );
     }
   }
   return false;
@@ -225,11 +275,14 @@ export const timeStartToEndOfAWeek = (next?: boolean) => {
     startOfWeek = dayjs()
       .add(1, "week")
       .startOf("isoWeek")
-      .format("DD/MM/YYYY");
-    endOfWeek = dayjs().add(1, "week").endOf("isoWeek").format("DD/MM/YYYY");
+      .format(DEFAULT_DATE_FORMAT);
+    endOfWeek = dayjs()
+      .add(1, "week")
+      .endOf("isoWeek")
+      .format(DEFAULT_DATE_FORMAT);
   } else {
-    startOfWeek = dayjs().startOf("isoWeek").format("DD/MM/YYYY");
-    endOfWeek = dayjs().endOf("isoWeek").format("DD/MM/YYYY");
+    startOfWeek = dayjs().startOf("isoWeek").format(DEFAULT_DATE_FORMAT);
+    endOfWeek = dayjs().endOf("isoWeek").format(DEFAULT_DATE_FORMAT);
   }
   return `(${startOfWeek}-${endOfWeek})`;
 };
@@ -237,10 +290,6 @@ export const timeStartToEndOfAWeek = (next?: boolean) => {
 export const getDayNameFromNumber = (days: number[]) => {
   const dayList = days.join(",");
   return `Các thứ trong tuần: ${dayList}`;
-};
-
-export const formatDateToDDMMYYYY = (time?: string | Date) => {
-  return time ? dayjs(time).format("DD/MM/YYYY") : "-";
 };
 
 export const getDepartmentIdFromNumber = (num: number): string => {
@@ -282,6 +331,7 @@ export const findMissingElementInId = (arr: string[], char: string): string => {
   // Nếu không có phần tử bị thiếu, trả về phần tử tiếp theo
   return `${char}${expectedNumber.toString().padStart(3, "0")}`;
 };
+
 export const getLowerRole = (role?: string): string => {
   return role === RoleName.ADMIN ? RoleName.MANAGER : RoleName.USER;
 };

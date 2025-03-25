@@ -1,41 +1,35 @@
-import { SearchOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Flex,
-  Input,
-  InputRef,
-  Space,
-  Table,
-  TableColumnType,
-  TableColumnsType,
-  TableProps,
-} from "antd";
-import { FilterDropdownProps } from "antd/es/table/interface";
-import { useEffect, useMemo, useRef, useState } from "react";
-import Highlighter from "react-highlight-words";
+import { Button, Flex } from "antd";
+
+import { useEffect, useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import {
+  AllowanceDetail,
+  CommonQueryParams,
   LeaveHistoryDetail,
-  PositionAllowanceDetail,
+  OvertimeDetail,
   UserDetail,
 } from "../../../../../../common/common.type";
 import {
   AttendanceData,
+  OvertimeIdsObject,
   SalaryHistoryColumnData,
-  SalaryHistoryColumnType,
   SalaryHistoryPost,
 } from "../../../../constants/manager.type";
 import {
+  INIT_ALLOWANCE_DETAIL,
   INIT_LEAVE_HISTORY_DETAIL,
-  INIT_POSITION_ALLOWANCE_DETAIL,
+  INIT_OVERTIME,
+  INIT_QUERY_PARAMS,
   INIT_USER,
 } from "../../../../../../common/common.constant";
 import {
+  calculateOvertimeCost,
   getNowMonth,
   getNowYear,
   getNumberOfDaysOffTypes,
+  isDateInRange,
 } from "../../../../constants/manager.help";
 import { SALARY_BASE } from "../../../../constants/manager.constant";
 import {
@@ -43,42 +37,54 @@ import {
   getFormatNumberToString,
 } from "../../../../../../common/common.helper";
 import {
+  getAllowances,
   getLeaveHistories,
-  getPositionAllowances,
+  getOvertimes,
   postSalaryHistory,
 } from "../../../../../../api/apiServices";
-
-type DataIndex = keyof SalaryHistoryColumnType;
-interface TableDataType extends SalaryHistoryColumnData {}
+import TableComponent, {
+  ColumnDataCustom,
+} from "../../../../../../components/tableComponent/TableComponent";
 interface EnteredPayrollTableProps {
   setReset: Function;
   reset: Boolean;
   users: UserDetail[];
   attendanceData: AttendanceData[];
+  month: number;
+  year: number;
 }
 const EnteredPayrollTable = ({
   setReset,
   reset,
   users,
   attendanceData,
+  month,
+  year,
 }: EnteredPayrollTableProps) => {
-  const searchInput = useRef<InputRef>(null);
-
   const { t } = useTranslation();
 
-  const [searchText, setSearchText] = useState<string>("");
-  const [searchedColumn, setSearchedColumn] = useState<string>("");
+  const [mockUserQueryParams, setMockUserQueryParams] =
+    useState<CommonQueryParams>(INIT_QUERY_PARAMS);
+
   const [leaveHistories, setLeaveHistories] = useState<LeaveHistoryDetail[]>([
     INIT_LEAVE_HISTORY_DETAIL,
   ]);
-  const [positionAllowances, setPositionAllowances] = useState<
-    PositionAllowanceDetail[]
-  >([INIT_POSITION_ALLOWANCE_DETAIL]);
+  const [allowances, setAllowances] = useState<AllowanceDetail[]>([
+    INIT_ALLOWANCE_DETAIL,
+  ]);
+  const [overtimes, setOvertimes] = useState<OvertimeDetail[]>([INIT_OVERTIME]);
 
-  const fetchPositionAllowances = async () => {
-    const res = await getPositionAllowances();
+  const fetchAllowances = async () => {
+    const res = await getAllowances();
     if (res) {
-      setPositionAllowances(res.data.data);
+      setAllowances(res.data.data);
+    }
+  };
+
+  const fetchOvertimes = async () => {
+    const res = await getOvertimes();
+    if (res) {
+      setOvertimes(res.data.data);
     }
   };
 
@@ -90,126 +96,19 @@ const EnteredPayrollTable = ({
   };
 
   useEffect(() => {
-    fetchPositionAllowances();
+    fetchAllowances();
+    fetchOvertimes();
     fetchLeaveHistories();
   }, []);
 
-  const handleSearch = (
-    selectedKeys: string[],
-    confirm: FilterDropdownProps["confirm"],
-    dataIndex: DataIndex
-  ) => {
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
-  const handleReset = (clearFilters: () => void) => {
-    clearFilters();
-    setSearchText("");
-  };
-
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): TableColumnType<TableDataType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: "block" }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
-            }
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? "#1677ff" : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  const onChange: TableProps<TableDataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
-
-  const salaryHistoryTableData = useMemo(() => {
-    return attendanceData.map((attendanceDatum, index) => {
+  const {
+    salaryHistoryTableData,
+    numberSalaryHistoryTableData,
+  }: {
+    salaryHistoryTableData: SalaryHistoryColumnData[];
+    numberSalaryHistoryTableData: number;
+  } = useMemo(() => {
+    const salaryHistoryData = attendanceData.map((attendanceDatum, index) => {
       const user =
         users.find((user) => user.userId === attendanceDatum.employeeId) ||
         INIT_USER;
@@ -219,35 +118,57 @@ const EnteredPayrollTable = ({
         attendanceDatum.annualLeave
       );
 
-      const employeePositionAllowances = positionAllowances.filter(
-        (positionAllowance) =>
-          positionAllowance.position?.positionId === user.position?.positionId
-      ) as PositionAllowanceDetail[];
-
-      //employee's allowance  according to employee's position
-      const employeeAllowances = employeePositionAllowances.map(
-        (employeePositionAllowance) => {
+      //overtime
+      const filterOvertimeHistories = user.overtimeHistories.filter(
+        (overtimeHistory) =>
+          isDateInRange(overtimeHistory.startDay, month, year)
+      );
+      const overtimeIds: OvertimeIdsObject[] = filterOvertimeHistories.map(
+        (overtimeHistory) => {
           return {
-            allowanceName: employeePositionAllowance.allowance?.allowanceName,
-            allowanceType: employeePositionAllowance.allowance?.allowanceType,
-            allowanceRate: employeePositionAllowance.allowance?.allowanceRate,
-            allowanceFee: employeePositionAllowance.allowance?.allowanceFee,
+            overtimeId: overtimeHistory.overtimeId,
           };
         }
       );
+      const totalOvertimeCost = calculateOvertimeCost(overtimeIds, overtimes);
 
-      //total allowance for this employee
-      const totalEmployeeAllowance = employeeAllowances.reduce(
-        (total, currentAllowance) => {
-          return (
-            total +
-            (currentAllowance.allowanceFee || 0) +
-            (currentAllowance.allowanceRate || 0) * SALARY_BASE
-          );
-        },
-        0
+      //calculate allowance
+      const CURRENT_SALARY = SALARY_BASE * (user.salaryCoefficient || 0);
+      //common allowance
+      const commonAllowance = allowances.find(
+        (allowance) => allowance.allowanceId === "A004"
       );
+      const totalCommonAllowance =
+        SALARY_BASE * (commonAllowance?.allowanceRate || 0);
 
+      let totalEmployeeAllowance = 0 + totalCommonAllowance;
+
+      // allowance by position
+      const positionAllowanceId =
+        user.department?.allowanceRelationship?.allowance.allowanceId;
+      const departmentAllowanceId =
+        user.position?.allowanceRelationship?.allowance.allowanceId;
+      if (positionAllowanceId) {
+        const positionAllowance = allowances.find(
+          (allowance) => allowance.allowanceId === positionAllowanceId
+        );
+        const totalPositionAllowance =
+          CURRENT_SALARY * (positionAllowance?.allowanceRate || 0) +
+          (positionAllowance?.allowanceFee || 0);
+        totalEmployeeAllowance =
+          totalEmployeeAllowance + totalPositionAllowance;
+      }
+      // allowance by department
+      if (departmentAllowanceId) {
+        const departmentAllowance = allowances.find(
+          (allowance) => allowance.allowanceId === departmentAllowanceId
+        );
+        const totalDepartmentAllowance =
+          SALARY_BASE * (departmentAllowance?.allowanceRate || 0) +
+          (departmentAllowance?.allowanceFee || 0);
+        totalEmployeeAllowance =
+          totalEmployeeAllowance + totalDepartmentAllowance;
+      }
       //sum paid leave
       const totalPaidLeave =
         paidLeave +
@@ -262,7 +183,8 @@ const EnteredPayrollTable = ({
           (totalPaidLeave + attendanceDatum.attendance) +
           totalEmployeeAllowance) /
           attendanceDatum.standardWorkDays +
-        attendanceDatum.bonus;
+        attendanceDatum.bonus +
+        totalOvertimeCost;
 
       const salaryHistoryPost = {
         userId: attendanceDatum.employeeId,
@@ -274,74 +196,71 @@ const EnteredPayrollTable = ({
         numOfDaysOff: numOfDaysOff,
         standardWorkDays: attendanceDatum.standardWorkDays,
         bonus: attendanceDatum.bonus,
+        overtimeCost: totalOvertimeCost,
         allowance: totalEmployeeAllowance,
         salary: employeeSalary,
       };
       const nowSalaryData = {
-        key: index,
+        rowId: index,
         userId: attendanceDatum.employeeId,
         employeeName: user.fullName,
         departmentName: user.department?.departmentName || "",
         positionName: user.position?.positionName || "",
-        time: `${getNowMonth()}/${getNowYear()}`,
+        time: `${month}/${year}`,
         paidLeave: totalPaidLeave,
         unpaidLeave: unpaidLeave + attendanceDatum.unpaidLeave,
         attendance: attendanceDatum.attendance,
         standardWorkDays: attendanceDatum.standardWorkDays,
         bonus: attendanceDatum.bonus,
+        overtimeCost: totalOvertimeCost,
         allowance: totalEmployeeAllowance,
         salary: employeeSalary,
         actions: salaryHistoryPost,
       };
-
       return nowSalaryData;
     });
-  }, [users, attendanceData, reset, positionAllowances]);
+    const itemPerPage = mockUserQueryParams.items_per_page || 1;
+    const currentPage = mockUserQueryParams.page || 1;
+    setMockUserQueryParams({
+      ...mockUserQueryParams,
+      page: currentPage,
+      items_per_page: itemPerPage,
+    });
+    return {
+      salaryHistoryTableData: salaryHistoryData,
+      numberSalaryHistoryTableData: salaryHistoryData.length,
+    };
+  }, [users, attendanceData, reset, leaveHistories, allowances]);
 
-  const SALARY_HISTORY_COLUMNS: TableColumnsType<TableDataType> = [
+  const SALARY_HISTORY_COLUMNS: ColumnDataCustom<SalaryHistoryColumnData>[] = [
     {
       title: t("content.salary.UserId"),
       dataIndex: "userId",
       key: "userId",
-      width: 80,
-      sorter: {
-        compare: (a, b) => a.userId - b.userId,
-        multiple: 4,
-      },
+      width: 150,
+      prioritySort: 5,
     },
     {
       title: t("content.salary.EmployeeName"),
       dataIndex: "employeeName",
       key: "employeeName",
-      width: 150,
-      sorter: {
-        compare: (a, b) => a.employeeName.localeCompare(b.employeeName),
-        multiple: 4,
-      },
-      ...getColumnSearchProps("employeeName"),
+      prioritySort: 4,
+      isSearch: true,
     },
     {
       title: t("content.salary.DepartmentName"),
       dataIndex: "departmentName",
       key: "departmentName",
       width: 150,
-
-      sorter: {
-        compare: (a, b) => a.departmentName.localeCompare(b.departmentName),
-        multiple: 4,
-      },
+      prioritySort: 6,
     },
     {
       title: t("content.salary.PositionName"),
       dataIndex: "positionName",
       key: "positionName",
       width: 130,
-
-      sorter: {
-        compare: (a, b) => a.positionName.localeCompare(b.positionName),
-        multiple: 3,
-      },
-      ...getColumnSearchProps("positionName"),
+      prioritySort: 3,
+      isSearch: true,
     },
     {
       title: t("content.salary.MonthlySalary"),
@@ -365,18 +284,26 @@ const EnteredPayrollTable = ({
       title: t("content.salary.Attendance"),
       dataIndex: "attendance",
       key: "attendance",
-      width: 100,
+      width: 150,
     },
     {
       title: t("content.salary.StandardWorkDays"),
       dataIndex: "standardWorkDays",
       key: "standardWorkDays",
-      width: 100,
+      width: 150,
     },
     {
       title: t("content.salary.Bonus"),
       dataIndex: "bonus",
       key: "bonus",
+      width: 140,
+      render: (value) =>
+        addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
+    },
+    {
+      title: t("content.salary.OvertimeCost"),
+      dataIndex: "overtimeCost",
+      key: "overtimeCost",
       width: 140,
       render: (value) =>
         addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
@@ -389,6 +316,7 @@ const EnteredPayrollTable = ({
       render: (value) =>
         addSuffix(getFormatNumberToString(Math.round(value), ","), "VND"),
     },
+
     {
       title: t("content.salary.Salary"),
       dataIndex: "salary",
@@ -415,7 +343,22 @@ const EnteredPayrollTable = ({
     },
   ];
 
+  const { customNonContractedEmployeeData } = useMemo(() => {
+    const itemPerPage = mockUserQueryParams.items_per_page || 1;
+    const currentPage = mockUserQueryParams.page || 1;
+    const startIndex = itemPerPage * (currentPage - 1);
+    const endIndex = itemPerPage * currentPage - 1;
+
+    return {
+      customNonContractedEmployeeData: salaryHistoryTableData.slice(
+        startIndex,
+        endIndex + 1
+      ),
+    };
+  }, [salaryHistoryTableData, mockUserQueryParams]);
+
   const handleSubmitSalaryHistory = async (value: SalaryHistoryPost) => {
+    console.log("value:", value);
     const res = await postSalaryHistory(value);
     if (res) {
       setReset(true);
@@ -424,12 +367,13 @@ const EnteredPayrollTable = ({
 
   return (
     <div id="department-management">
-      <Table<TableDataType>
-        columns={SALARY_HISTORY_COLUMNS}
-        dataSource={salaryHistoryTableData}
-        onChange={onChange}
-        showSorterTooltip={{ target: "full-header" }}
-        scroll={{ x: "max-content", y: 400 }}
+      <TableComponent<SalaryHistoryColumnData>
+        tableData={salaryHistoryTableData}
+        columnData={SALARY_HISTORY_COLUMNS}
+        itemTotal={numberSalaryHistoryTableData}
+        paginationQueryParams={mockUserQueryParams}
+        setPaginationQueryParams={setMockUserQueryParams}
+        loading={!customNonContractedEmployeeData}
       />
     </div>
   );

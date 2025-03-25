@@ -4,7 +4,7 @@ import "./ManagementDrawerScreen.scss";
 import {
   AccountBookOutlined,
   ApartmentOutlined,
-  BellOutlined,
+  // BellOutlined,
   FileDoneOutlined,
   FileOutlined,
   FileSearchOutlined,
@@ -50,6 +50,14 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
 
   const adminFeature: FeatureName[] = [
     {
+      icon: <FileOutlined />,
+      text: t("content.feature.ProfileManagement"),
+      path: managerPaths.PROFILE_MANAGEMENT,
+      fn: () => {
+        setOpen(false);
+      },
+    },
+    {
       icon: <AccountBookOutlined />,
       text: t("content.feature.AccountManagement"),
       path: managerPaths.ACCOUNT_MANAGEMENT,
@@ -60,15 +68,16 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <UsergroupAddOutlined />,
       text: t("content.feature.EmployeeManagement"),
-      path: managerPaths.EMPLOYEE_MANAGEMENT,
+      path: managerPaths.EMPLOYEE_WORK_MANAGEMENT,
       fn: () => {
         setOpen(false);
       },
     },
+
     {
-      icon: <FileOutlined />,
-      text: t("content.feature.ProfileManagement"),
-      path: managerPaths.PROFILE_MANAGEMENT,
+      icon: <FileTextOutlined />,
+      text: t("content.feature.ScheduleManagement"),
+      path: managerPaths.SCHEDULE_MANAGEMENT,
       fn: () => {
         setOpen(false);
       },
@@ -91,8 +100,8 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     },
     {
       icon: <InsertRowAboveOutlined />,
-      text: t("content.feature.WorkManagement"),
-      path: managerPaths.JOB_MANAGEMENT,
+      text: t("content.feature.PositionManagement"),
+      path: managerPaths.POSITION_MANAGEMENT,
       fn: () => {
         setOpen(false);
       },
@@ -108,7 +117,7 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
     {
       icon: <FileSearchOutlined />,
       text: t("content.feature.RecruitmentManagement"),
-      path: managerPaths.RECRUITMENT_MANAGEMENT,
+      path: managerPaths.RECRUITMENT_AND_TRAINING_MANAGEMENT,
       fn: () => {
         setOpen(false);
       },
@@ -157,14 +166,14 @@ const ManagementDrawerScreen = ({ open, setOpen }: ManagementDrawerProps) => {
         setOpen(false);
       },
     },
-    {
-      icon: <BellOutlined />,
-      path: UserPaths.NOTIFICATION,
-      text: t("content.feature.Notification"),
-      fn: () => {
-        setOpen(false);
-      },
-    },
+    // {
+    //   icon: <BellOutlined />,
+    //   path: UserPaths.NOTIFICATION,
+    //   text: t("content.feature.Notification"),
+    //   fn: () => {
+    //     setOpen(false);
+    //   },
+    // },
     {
       icon: <FileDoneOutlined />,
       path: UserPaths.TRAINING_RESULTS,

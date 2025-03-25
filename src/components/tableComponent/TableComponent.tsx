@@ -16,11 +16,11 @@ import Highlighter from "react-highlight-words";
 import { CommonQueryParams, RowType } from "../../common/common.type";
 
 interface FilterObject {
-  text: string;
-  value: string | number;
+  text: string | React.ReactNode;
+  value: React.Key | boolean;
 }
 export interface ColumnDataCustom<T> extends ColumnType<T> {
-  isSorter?: boolean;
+  prioritySort?: number;
   isSearch?: boolean;
   filterObjects?: FilterObject[];
 }
@@ -39,7 +39,7 @@ const TableComponent = <T extends RowType>({
   isWarning,
   isSummary,
   columnData,
-  tableData,
+  tableData = [],
   itemTotal,
   paginationQueryParams,
   setPaginationQueryParams,
@@ -47,7 +47,6 @@ const TableComponent = <T extends RowType>({
 }: TableComponentProps<T>) => {
   const newTableData = tableData.map((tableDatum) => ({
     ...tableDatum,
-    // rowId: index,
   }));
 
   type DataIndex = keyof T;
@@ -175,11 +174,12 @@ const TableComponent = <T extends RowType>({
     }
     return {
       ...columnDatum,
-      sorter: columnDatum.isSorter && {
+      sorter: !!columnDatum.prioritySort && {
         compare: (a: T, b: T) =>
           String(a[columnDatum.dataIndex as keyof T]).localeCompare(
             String(b[columnDatum.dataIndex as keyof T])
           ),
+        multiple: columnDatum.prioritySort,
       },
       filters: columnDatum.filterObjects,
       onFilter: (

@@ -6,7 +6,7 @@ import { getRecruitmentPost } from "../../../../../api/apiServices";
 import { Card, Flex, Image, Typography } from "antd";
 import "./RecruitmentPostDetail.scss";
 import TextComponent from "../../../../../components/textComponent/TextComponent";
-import { getDDMMYYYYfromISO8601DateString } from "../../../../../common/common.helper";
+import { formatDateToDDMMYYYY } from "../../../../../common/common.helper";
 import { useTranslation } from "react-i18next";
 
 const { Text, Title } = Typography;
@@ -45,9 +45,7 @@ const RecruitmentPostDetail = () => {
               <Title level={5}> {recruitmentPost.subtitle}</Title>
               <Flex justify="space-between">
                 <Text>
-                  {`${t(
-                    "content.common.CreatedAt"
-                  )}: ${getDDMMYYYYfromISO8601DateString(
+                  {`${t("content.common.CreatedAt")}: ${formatDateToDDMMYYYY(
                     recruitmentPost.createdAt
                   )}`}
                 </Text>

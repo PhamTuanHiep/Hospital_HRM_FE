@@ -54,7 +54,7 @@ const CreateAnnouncementPostModal = ({
 
   useEffect(() => {
     form.setFieldValue("image", fileList);
-  }, [fileList]);
+  }, [fileList, form]);
 
   const onFinish: FormProps<AnnouncementPostCreate>["onFinish"] = async (
     values

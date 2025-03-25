@@ -23,6 +23,8 @@ import UpdateAnnouncementPostModal from "./updateAnnouncementPostModal/UpdateAnn
 import DeleteAnnouncementPostModal from "./deleteAnnouncementPostModal/DeleteRecruitmentPostModal";
 import { NewsAndEventsPaths } from "../../../newsAndEvents/constants/constant.path";
 import PaginationAntd from "../../../../components/paginationAntd/PaginationAntd";
+import CustomBreadcrumb from "../../../../components/customBreadcrumb/CustomBreadcrumb";
+import { managerPaths } from "../../constants/constant.path";
 
 const AnnouncementManagementScreen = () => {
   const { t } = useTranslation();
@@ -104,14 +106,28 @@ const AnnouncementManagementScreen = () => {
 
   return (
     <div>
-      <Card
-        id="announcement-posts"
-        title={t("content.announcementPost.AnnouncementManagementTitle")}
-        extra={
+      <CustomBreadcrumb
+        breadcrumbItems={[
+          {
+            title: (
+              <div>
+                <a href={`${managerPaths.ANNOUNCEMENT_MANAGEMENT}`}>
+                  {t("content.feature.AnnouncementManagement")}
+                </a>
+              </div>
+            ),
+          },
+        ]}
+        buttonGroup={
           <Button className="btn-create" onClick={handleCreateRecruitmentPost}>
             {t("content.announcementPost.AddPost")}
           </Button>
         }
+      />
+
+      <Card
+        id="announcement-posts"
+        title={t("content.announcementPost.AnnouncementManagementTitle")}
       >
         <Flex vertical gap={12}>
           <Flex vertical gap={8}>

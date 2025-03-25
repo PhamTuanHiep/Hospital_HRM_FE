@@ -42,7 +42,11 @@ const ExcelComponent = ({ setExcelData }: ExcelComponentProps) => {
   return (
     <div>
       {/* Chọn file để tải lên */}
-      <input type="file" onChange={handleFileUpload} accept=".xlsx, .xls" />
+      <input
+        type="file"
+        onChange={handleFileUpload}
+        accept=".xlsx, .xls, .csv"
+      />
 
       {/* <button onClick={exportToExcel}>Export to Excel</button> */}
 

@@ -1,4 +1,4 @@
-import { Flex, Form, Input, Modal } from "antd";
+import { Button, Flex, Form, Input, Modal } from "antd";
 
 import { useEffect, useMemo } from "react";
 import { UserDetail, UserForm } from "../../../../../../common/common.type";
@@ -81,13 +81,13 @@ const ViewUserProfileModel = ({
         <Flex vertical={false} justify="space-between" wrap>
           {Object.entries(defaultValues).map(([key, value]) => {
             const keyName = key as string;
-            console.log("value:", value);
 
             return (
               <div className="container-form-item">
                 <Form.Item<UserForm>
                   label={t(`content.info.${transformCamelToPascal(keyName)}`)}
                   name={keyName as UserKeys}
+                  key={keyName + value}
                 >
                   <Input disabled />
                 </Form.Item>

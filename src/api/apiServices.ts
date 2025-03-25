@@ -1,6 +1,11 @@
 import {
+  AccountCreate,
   AccountForm,
+  AccountsQueryParams,
   CommonQueryParams,
+  MedicalTrainingResults,
+  MedicalTrainingResultsDetail,
+  UserDetail,
   UserPost,
   UsersQueryParams,
 } from "../common/common.type";
@@ -8,22 +13,28 @@ import {
   AnnouncementPostCreate,
   AnnouncementPostUpdate,
   ContractHistoryPost,
+  ContractHistoryPut,
   ContractPost,
+  CreateMedicalTrainingResult,
+  CreateOvertimeHistory,
   DepartmentForm,
   EvaluatePost,
   PositionForm,
   RecruitmentPostCreate,
   RecruitmentPostUpdate,
   SalaryHistoryPost,
+  UpdateMedicalTrainingResult,
 } from "../features/manager/constants/manager.type";
 import instance from "./api";
 import { apiPaths } from "./api.constant";
 
 //account
 
-export const getAccounts = async () => {
+export const getAccounts = async (queryParams?: AccountsQueryParams) => {
   try {
-    return await instance.get(`${apiPaths.ACCOUNTS}`, {});
+    return await instance.get(`${apiPaths.ACCOUNTS}`, {
+      params: queryParams,
+    });
   } catch (error) {
     console.log("Error calling API getAccounts :", error);
   }
@@ -32,6 +43,25 @@ export const getAccounts = async () => {
 export const getAccount = async (accountId: number) => {
   try {
     return await instance.get(`${apiPaths.ACCOUNTS}/${accountId}`, {});
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postAccount = async (account: AccountCreate) => {
+  try {
+    const formData = new FormData();
+
+    formData.append("email", account.email);
+    formData.append("password", account.password);
+
+    formData.append("roleId", account.roleId);
+
+    formData.append("userId", account.userId.toString());
+
+    formData.append("avatar", account.avatar as Blob);
+
+    return await instance.post(`${apiPaths.ACCOUNTS}/`, formData);
   } catch (error) {
     console.log("Error calling API:", error);
   }
@@ -93,9 +123,57 @@ export const putUser = async (userId: number, user: UserPost) => {
   }
 };
 
-export const deleteUser = async (userId: number) => {
+export const deleteUser = async (user: UserDetail) => {
   try {
-    return await instance.delete(`${apiPaths.USERS}/${userId}`);
+    const accountId = user.account?.accountId;
+    const contractHistoryObjectIds = user.contractHistories.map(
+      (contractHistory) => {
+        return {
+          contractHistoryId: contractHistory.contractHistoryId,
+        };
+      }
+    );
+
+    //have all
+    if (
+      accountId &&
+      contractHistoryObjectIds &&
+      contractHistoryObjectIds.length > 0
+    ) {
+      const resDeleteAccount = await deleteAccount(accountId);
+      if (!resDeleteAccount) console.log("Delete account Fail !");
+
+      contractHistoryObjectIds.map(async (contractHistoryObjectId) => {
+        const resDeleteAccount = await deleteContractHistory(
+          contractHistoryObjectId.contractHistoryId
+        );
+        if (!resDeleteAccount) console.log("Delete contractHistory Fail !");
+        else return resDeleteAccount;
+      });
+      return await instance.delete(`${apiPaths.USERS}/${user.userId}`);
+    }
+    //have 2
+    else if (contractHistoryObjectIds && contractHistoryObjectIds.length > 0) {
+      contractHistoryObjectIds.map(async (contractHistoryObjectId) => {
+        const resDeleteAccount = await deleteContractHistory(
+          contractHistoryObjectId.contractHistoryId
+        );
+        if (!resDeleteAccount) console.log("Delete contractHistory Fail !");
+        else return resDeleteAccount;
+      });
+      return await instance.delete(`${apiPaths.USERS}/${user.userId}`);
+    }
+    //have 1
+    else if (accountId) {
+      const resDeleteAccount = await deleteAccount(accountId);
+      if (!resDeleteAccount) console.log("Delete account Fail !");
+
+      return await instance.delete(`${apiPaths.USERS}/${user.userId}`);
+    }
+    //no have
+    else {
+      return await instance.delete(`${apiPaths.USERS}/${user.userId}`);
+    }
   } catch (error) {
     console.log("Error calling API putAccount:", error);
   }
@@ -119,23 +197,23 @@ export const getRole = async (roleId: string) => {
   }
 };
 
-//POSITION-ALLOWANCE
+// //POSITION-ALLOWANCE
 
-export const getPositionAllowances = async () => {
-  try {
-    return await instance.get(`${apiPaths.POSITION_ALLOWANCE}`);
-  } catch (error) {
-    console.log("Error calling API getPositionAllowances :", error);
-  }
-};
+// export const getAllowanceRelation = async () => {
+//   try {
+//     return await instance.get(`${apiPaths.ALLOWANCE_RELATIONSHIPS}`);
+//   } catch (error) {
+//     console.log("Error calling API getPositionAllowances :", error);
+//   }
+// };
 
-export const getPositionAllowance = async (id: number) => {
-  try {
-    return await instance.get(`${apiPaths.POSITION_ALLOWANCE}/${id}`);
-  } catch (error) {
-    console.log("Error calling API:", error);
-  }
-};
+// export const getPositionAllowance = async (id: number) => {
+//   try {
+//     return await instance.get(`${apiPaths.ALLOWANCE_RELATIONSHIPS}/${id}`);
+//   } catch (error) {
+//     console.log("Error calling API:", error);
+//   }
+// };
 
 //POSITION
 
@@ -395,6 +473,29 @@ export const getOvertimeHistory = async (overtimeHistoryId: number) => {
   }
 };
 
+export const postOvertimeHistory = async (
+  overtimeHistory: CreateOvertimeHistory
+) => {
+  try {
+    return await instance.post(
+      `${apiPaths.OVERTIME_HISTORIES}`,
+      overtimeHistory
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const deleteOvertimeHistory = async (overtimeHistoryId: number) => {
+  try {
+    return await instance.delete(
+      `${apiPaths.OVERTIME_HISTORIES}/${overtimeHistoryId}`
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
 //CONTRACT
 
 export const getContracts = async () => {
@@ -456,11 +557,37 @@ export const getContractHistory = async (contractHistoryId: number) => {
 
 export const putContractHistory = async (
   contractHistoryId: number,
-  contractHistory: ContractHistoryPost
+  contractHistory: ContractHistoryPut
 ) => {
   try {
     return await instance.put(
       `${apiPaths.CONTRACT_HISTORIES}/${contractHistoryId}`,
+      contractHistory
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const putContractHistories = async (
+  contractHistories: ContractHistoryPut[]
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.CONTRACT_HISTORIES}`,
+      contractHistories
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postContractHistory = async (
+  contractHistory: ContractHistoryPost
+) => {
+  try {
+    return await instance.post(
+      `${apiPaths.CONTRACT_HISTORIES}`,
       contractHistory
     );
   } catch (error) {
@@ -498,6 +625,32 @@ export const getMedicalTrainingResult = async (trainingResultsId: number) => {
   }
 };
 
+export const putMedicalTrainingResult = async (
+  medicalTrainingResultId: number,
+  medicalTrainingResult: UpdateMedicalTrainingResult
+) => {
+  try {
+    return await instance.put(
+      `${apiPaths.MEDICAL_TRAINING_RESULTS}/${medicalTrainingResultId}`,
+      medicalTrainingResult
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
+
+export const postMedicalTrainingResult = async (
+  createMedicalTraining: CreateMedicalTrainingResult
+) => {
+  try {
+    return await instance.post(
+      `${apiPaths.CONTRACT_HISTORIES}`,
+      createMedicalTraining
+    );
+  } catch (error) {
+    console.log("Error calling API:", error);
+  }
+};
 //NursingTrainingResults
 
 export const getNursingTrainingResults = async () => {

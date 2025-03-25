@@ -19,53 +19,77 @@ import TableComponent, {
 import { ContractTableData } from "../../../../constants/manager.type";
 import { formatDateToDDMMYYYY } from "../../../../../../common/common.helper";
 import { Button, Card, Flex } from "antd";
+import {
+  ContractModalType,
+  ContractType,
+} from "../../../../constants/manager.constant";
+import UpdateContractHistoryModal from "../contractHistoriesModels/updateContractHistoryModal/UpdateContractHistoryModal";
 
 interface SignedContractTableProps {
-  contractTypeText: string;
+  contractType: string;
   contractTypeTitle: string;
   isCancelledContractList?: boolean;
 }
 const SignedContractTable = ({
-  contractTypeText,
+  contractType,
   contractTypeTitle,
   isCancelledContractList = false,
 }: SignedContractTableProps) => {
+  const subParams = isCancelledContractList
+    ? {
+        contractStatus: String(ContractStatus.CANCELLED),
+      }
+    : {
+        excludesStatus: `${ContractStatus.CANCELLED}, ${ContractStatus.TERMINATED}`,
+      };
+
   const { t } = useTranslation();
   const [contractHistories, setContractHistories] = useState<
     ContractHistoryDetail[]
   >([INIT_CONTRACT_HISTORY]);
 
+  const [contractHistory, setContractHistory] = useState<ContractHistoryDetail>(
+    INIT_CONTRACT_HISTORY
+  );
+
   const [queryParams, setQueryParams] = useState<ContractHistoriesQueryParams>({
     page: QueryParamsWithListPosts.DEFAULT_CURRENT_PAGE,
     items_per_page: QueryParamsWithListPosts.PER_PAGE,
-    search: contractTypeText,
-    contractStatus: isCancelledContractList
-      ? String(ContractStatus.CANCELLED)
-      : "",
+    search: contractType,
+    ...subParams,
   });
   const [customPageParam, setCustomPageParam] =
     useState<PageResponse>(INIT_PAGE_RESPONSE);
 
+  const [reset, setReset] = useState<boolean>(false);
+
+  const [isExtendModalOpen, setIsExtendModalOpen] = useState(false);
+  const [isTerminateModalOpen, setIsTerminateModalOpen] = useState(false);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
   const fetchContractHistories = async () => {
     const res = await getContractHistories(queryParams);
-    console.log("res:", res);
+    // console.log("res:", res);
 
     if (res) {
       const { data: contractHistoriesApi, ...pageResponse } = res.data;
       setCustomPageParam(pageResponse);
       setContractHistories(contractHistoriesApi);
+      setReset(false);
     }
   };
 
   useEffect(() => {
     fetchContractHistories();
-  }, [queryParams]);
+  }, [reset, queryParams]);
+
   const contractTableColumn: ColumnDataCustom<ContractTableData>[] = [
     {
       title: t("content.salary.UserId"),
       dataIndex: "userId",
       width: 150,
-      isSorter: true,
+      prioritySort: 2,
       render: (value: string, record: ContractTableData) => {
         return (
           <div
@@ -80,18 +104,28 @@ const SignedContractTable = ({
       title: t("content.info.FullName"),
       dataIndex: "fullName",
       width: 200,
-      isSorter: true,
+      prioritySort: 1,
     },
     {
       title: t("content.contract.StartDay"),
       dataIndex: "startDay",
       width: 150,
+      hidden: !(
+        contractType !== ContractType.INDEFINITE_TERM_EMPLOYMENT_CONTRACT &&
+        contractType !== ContractType.INDEFINITE_TERM_LABOR_CONTRACT &&
+        contractType !== ContractType.PROBATIONARY_CONTRACT
+      ),
       render: (value: string) => <div>{formatDateToDDMMYYYY(value)}</div>,
     },
     {
       title: t("content.contract.EndDay"),
       dataIndex: "endDay",
       width: 150,
+      hidden: !(
+        contractType !== ContractType.INDEFINITE_TERM_EMPLOYMENT_CONTRACT &&
+        contractType !== ContractType.INDEFINITE_TERM_LABOR_CONTRACT &&
+        contractType !== ContractType.PROBATIONARY_CONTRACT
+      ),
       render: (value: string) => <div>{formatDateToDDMMYYYY(value)}</div>,
     },
     {
@@ -161,31 +195,36 @@ const SignedContractTable = ({
                 type="primary"
                 danger
               >
-                Xóa
-                {/* {t("content.common.Update")} */}
+                {t("content.contract.Delete")}
               </Button>
             ) : (
               <Flex justify="space-between" gap={8} className="actions">
+                {contractType !==
+                  ContractType.INDEFINITE_TERM_EMPLOYMENT_CONTRACT &&
+                contractType !== ContractType.INDEFINITE_TERM_LABOR_CONTRACT &&
+                contractType !== ContractType.PROBATIONARY_CONTRACT ? (
+                  <Button
+                    onClick={() => handleExtendContractHistory(value)}
+                    type="primary"
+                  >
+                    {t("content.contract.Extend")}
+                  </Button>
+                ) : (
+                  <div></div>
+                )}
+
                 <Button
-                  onClick={() => handleUpdateContractHistory(value)}
+                  onClick={() => handleTerminateContractHistory(value)}
                   type="primary"
                 >
-                  Gia hạn
-                  {/* {t("content.common.Update")} */}
+                  {t("content.contract.AdjustStatus")}
                 </Button>
                 <Button
-                  onClick={() => handleUpdateContractHistory(value)}
-                  type="primary"
-                >
-                  Chấm dứt
-                  {/* {t("content.common.Update")} */}
-                </Button>
-                <Button
-                  onClick={() => handleDeleteContractHistory(value)}
+                  onClick={() => handleCancelContractHistory(value)}
                   type="primary"
                   danger
                 >
-                  Hủy
+                  {t("content.contract.CancelContractHistory")}
                 </Button>
               </Flex>
             )}
@@ -195,7 +234,7 @@ const SignedContractTable = ({
     },
   ];
 
-  const contractTableData = useMemo(() => {
+  const contractTableData: ContractTableData[] = useMemo(() => {
     return contractHistories.map(
       (contractHistory): ContractTableData => ({
         rowId: contractHistory.contractHistoryId,
@@ -212,43 +251,100 @@ const SignedContractTable = ({
     );
   }, [contractHistories]);
 
-  const handleUpdateContractHistory = (contract: ContractHistoryDetail) => {
-    alert("up");
-  };
-  const handleDeleteContractHistory = (contract: ContractHistoryDetail) => {
-    alert("up");
+  const handleExtendContractHistory = (
+    contractHistory: ContractHistoryDetail
+  ) => {
+    setContractHistory(contractHistory);
+    setIsExtendModalOpen(true);
   };
 
+  const handleTerminateContractHistory = (
+    contractHistory: ContractHistoryDetail
+  ) => {
+    setContractHistory(contractHistory);
+    setIsTerminateModalOpen(true);
+  };
+
+  const handleCancelContractHistory = (
+    contractHistory: ContractHistoryDetail
+  ) => {
+    setContractHistory(contractHistory);
+    setIsCancelModalOpen(true);
+  };
+  const handleDeleteContractHistory = (
+    contractHistory: ContractHistoryDetail
+  ) => {
+    setContractHistory(contractHistory);
+    setIsDeleteModalOpen(true);
+  };
+  console.log("reset:", reset);
   return (
-    <Card
-      title={contractTypeTitle}
-      className={isCancelledContractList ? "Cancelled" : ""}
-    >
-      <TableComponent<ContractTableData>
-        tableData={contractTableData}
-        columnData={contractTableColumn}
-        onHeaderRow={(columns, index) => {
-          console.log("columns:", columns);
-          console.log("index:", index);
-          return isCancelledContractList
-            ? {
-                onClick: () => {
-                  console.log("Header row clicked");
-                },
-                className: "Cancelled",
-              }
-            : {
-                className: "hihi",
-              };
-        }}
-        rowClassName={(record) => {
-          return contractStatus[record.contractStatus as ContractStatus];
-        }}
-        itemTotal={customPageParam.total}
-        paginationQueryParams={queryParams}
-        setPaginationQueryParams={setQueryParams}
+    <div key={contractType}>
+      <Card
+        title={contractTypeTitle}
+        className={isCancelledContractList ? "Cancelled" : ""}
+      >
+        <TableComponent<ContractTableData>
+          tableData={contractTableData}
+          columnData={contractTableColumn}
+          onHeaderRow={(columns, index) => {
+            // console.log("columns:", columns);
+            // console.log("index:", index);
+            return isCancelledContractList
+              ? {
+                  onClick: () => {
+                    // console.log("Header row clicked");
+                  },
+                  className: "Cancelled",
+                }
+              : {
+                  className: "hihi",
+                };
+          }}
+          rowClassName={(record) => {
+            return contractStatus[record.contractStatus as ContractStatus];
+          }}
+          itemTotal={customPageParam.total}
+          paginationQueryParams={queryParams}
+          setPaginationQueryParams={setQueryParams}
+        />
+      </Card>
+      <UpdateContractHistoryModal
+        contractModalType={ContractModalType.EXTEND}
+        modalKey={contractHistory.contractHistoryId}
+        isModalOpen={isExtendModalOpen}
+        setIsModalOpen={setIsExtendModalOpen}
+        setReset={setReset}
+        contractHistory={contractHistory}
+        confirmLoading={!contractHistory}
       />
-    </Card>
+      <UpdateContractHistoryModal
+        modalKey={contractHistory.contractHistoryId}
+        isModalOpen={isTerminateModalOpen}
+        setIsModalOpen={setIsTerminateModalOpen}
+        setReset={setReset}
+        contractHistory={contractHistory}
+        confirmLoading={!contractHistory}
+      />
+      <UpdateContractHistoryModal
+        contractModalType={ContractModalType.CANCEL}
+        modalKey={contractHistory.contractHistoryId}
+        isModalOpen={isCancelModalOpen}
+        setIsModalOpen={setIsCancelModalOpen}
+        setReset={setReset}
+        contractHistory={contractHistory}
+        confirmLoading={!contractHistory}
+      />
+      <UpdateContractHistoryModal
+        contractModalType={ContractModalType.DELETE}
+        modalKey={contractHistory.contractHistoryId}
+        isModalOpen={isDeleteModalOpen}
+        setIsModalOpen={setIsDeleteModalOpen}
+        setReset={setReset}
+        contractHistory={contractHistory}
+        confirmLoading={!contractHistory}
+      />
+    </div>
   );
 };
 

@@ -61,7 +61,7 @@ const SignedContractTable = ({
       title: t("content.salary.UserId"),
       dataIndex: "userId",
       width: 150,
-      isSorter: true,
+      prioritySort: 1,
       render: (value: string, record: ContractTableData) => {
         return (
           <div
@@ -76,7 +76,7 @@ const SignedContractTable = ({
       title: t("content.info.FullName"),
       dataIndex: "fullName",
       width: 200,
-      isSorter: true,
+      prioritySort: 2,
     },
     {
       title: t("content.contract.StartDay"),

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { UserInfo } from "./type";
 import { UserDetail } from "../../../../common/common.type";
 import { useTranslation } from "react-i18next";
-import { getDDMMYYYYfromISO8601DateString } from "../../../../common/common.helper";
+import { formatDateToDDMMYYYY } from "../../../../common/common.helper";
 import { getUser } from "../../../../api/apiServices";
 import { GenderId, INIT_USER } from "../../../../common/common.constant";
 import { USER_INFO_COLUMNS } from "../../constants/user.constant";
@@ -107,7 +107,7 @@ const RecordScreen = () => {
         </Space>
         <span>
           {t("content.info.DateOfJoining")}:{" "}
-          {getDDMMYYYYfromISO8601DateString(currentAccount.createdAt)}
+          {formatDateToDDMMYYYY(currentAccount.createdAt)}
         </span>
         <div className="account-descriptions">
           {/* <h3 className="title-info">Recor d Info</h3> */}

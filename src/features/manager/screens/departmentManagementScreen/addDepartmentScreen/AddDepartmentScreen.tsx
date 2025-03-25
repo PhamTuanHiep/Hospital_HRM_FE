@@ -5,8 +5,12 @@ import { DepartmentForm } from "../../../constants/manager.type";
 import { DepartmentDetail } from "../../../../../common/common.type";
 import { getDepartments, postDepartment } from "../../../../../api/apiServices";
 import { findMissingElementInId } from "../../../../../common/common.helper";
-import { managerPaths } from "../../../constants/constant.path";
+import {
+  managerChildPaths,
+  managerPaths,
+} from "../../../constants/constant.path";
 import { useTranslation } from "react-i18next";
+import CustomBreadcrumb from "../../../../../components/customBreadcrumb/CustomBreadcrumb";
 
 const AddDepartmentScreen = () => {
   const [form] = Form.useForm();
@@ -17,7 +21,7 @@ const AddDepartmentScreen = () => {
 
   const fetchDepartments = async () => {
     const res = await getDepartments();
-    let departmentIds: string[] = [];
+    const departmentIds: string[] = [];
 
     if (res) {
       const departmentsApi = res.data.data as DepartmentDetail[];
@@ -56,17 +60,46 @@ const AddDepartmentScreen = () => {
     console.log("Failed:", errorInfo);
   };
 
+  const handleBackDepartmentManagementScreen = () => {
+    navigate(managerPaths.DEPARTMENT_MANAGEMENT);
+  };
+
   return (
     <div>
-      <Button
-        type="primary"
-        className="btn-add-object"
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        {t("content.common.Back")}
-      </Button>
+      <CustomBreadcrumb
+        breadcrumbItems={[
+          {
+            title: (
+              <div>
+                <a href={`${managerPaths.DEPARTMENT_MANAGEMENT}`}>
+                  {t("content.feature.DepartmentManagement")}
+                </a>
+              </div>
+            ),
+          },
+          {
+            title: (
+              <div>
+                <a
+                  href={`${managerPaths.DEPARTMENT_MANAGEMENT}/${managerChildPaths.ADD_DEPARTMENT}`}
+                >
+                  {t("content.department.CreateDepartment")}
+                </a>
+              </div>
+            ),
+          },
+        ]}
+        buttonGroup={
+          <Button
+            type="primary"
+            className="btn-add-object"
+            onClick={handleBackDepartmentManagementScreen}
+          >
+            {t("content.common.Back")}
+          </Button>
+        }
+      />
+
       <Typography.Title>
         {t("content.department.CreateDepartment")}
       </Typography.Title>

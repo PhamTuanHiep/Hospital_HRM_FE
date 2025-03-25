@@ -4,15 +4,17 @@ import {
   ContractDetail,
   ContractHistoryDetail,
   DepartmentDetail,
+  DepartmentUserShortInfo,
   PositionDetail,
   RowType,
   SalaryHistoryShortInfo,
   UserDetail,
+  UserShortInfo,
 } from "../../../common/common.type";
 import { RcFile } from "antd/es/upload";
+import { Dayjs } from "dayjs";
 
-export interface AccountsData {
-  // key: React.Key;
+export interface AccountsData extends RowType {
   email: string;
   password: string;
   roleName: string;
@@ -22,8 +24,30 @@ export interface AccountsData {
   actions: AccountDetail;
 }
 
-export interface UsersData {
-  key: React.Key;
+export interface EmployeeNotHaveAccountColumns extends RowType {
+  userId?: number;
+  fullName?: string;
+  gender: number;
+  departmentName: string;
+  positionName: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  actions: UserDetail;
+}
+
+export interface CreateAccountFormType {
+  fullName: string;
+  gender: string;
+  departmentName?: string;
+  positionName?: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  avatar: string;
+  roleId: string;
+}
+
+export interface UsersData extends RowType {
   fullName: string;
   email: string;
   gender: number;
@@ -40,8 +64,7 @@ export interface UsersData {
   actions: UserDetail;
 }
 
-export interface EmployeeColumnType {
-  key: React.Key;
+export interface EmployeeWorkColumnType extends RowType {
   email: string;
   fullName: string;
   gender: number;
@@ -55,8 +78,18 @@ export interface EmployeeColumnType {
   actions: UserDetail;
 }
 
-export interface DepartmentColumnType {
-  key: React.Key;
+export interface EmployeeTrainingColumnType extends RowType {
+  email: string;
+  fullName: string;
+  gender: number;
+  departmentName: string;
+  positionName: string;
+  createdAt: string;
+  updatedAt: string;
+  actions: UserDetail;
+}
+
+export interface DepartmentColumnType extends RowType {
   departmentId: string;
   departmentName: string;
   location: string;
@@ -74,12 +107,11 @@ export interface DepartmentForm {
   funcDescription: string;
 }
 
-export interface PositionColumnType {
-  key: React.Key;
+export interface PositionColumnType extends RowType {
   positionId: string;
   positionName: string;
-  // users: UserShortInfo[] | null;
-  // positionAllowances: PositionAllowanceShortInfo[] | null;
+  users: React.ReactNode;
+  allowanceRelationship: React.ReactNode;
   createdAt: string;
   updatedAt: string;
   actions: PositionDetail;
@@ -102,6 +134,46 @@ export interface EvaluateForm {
   workInitiatives: number;
 }
 
+export interface MedicalForm {
+  understandingOfMedicalTheory: number;
+  knowledgeOfTreatmentProtocols: number;
+  abilityToLearnNewKnowledge: number;
+  diagnosticSkills: number;
+  treatmentSkills: number;
+  decisionMakingSkills: number;
+  communicationSkillsWithPatientsAndTheirFamilies: number;
+  communicationSkillsWithColleagues: number;
+  patientMonitoringAndCare: number;
+  participationInMedicalResearch: number;
+}
+
+export interface UpdateMedicalTrainingResult {
+  understandingOfMedicalTheory?: number;
+  knowledgeOfTreatmentProtocols?: number;
+  abilityToLearnNewKnowledge?: number;
+  diagnosticSkills?: number;
+  treatmentSkills?: number;
+  decisionMakingSkills?: number;
+  communicationSkillsWithPatientsAndTheirFamilies?: number;
+  communicationSkillsWithColleagues?: number;
+  patientMonitoringAndCare?: number;
+  participationInMedicalResearch?: number;
+}
+
+export interface CreateMedicalTrainingResult {
+  userId: number;
+  understandingOfMedicalTheory: number;
+  knowledgeOfTreatmentProtocols: number;
+  abilityToLearnNewKnowledge: number;
+  diagnosticSkills: number;
+  treatmentSkills: number;
+  decisionMakingSkills: number;
+  communicationSkillsWithPatientsAndTheirFamilies: number;
+  communicationSkillsWithColleagues: number;
+  patientMonitoringAndCare: number;
+  participationInMedicalResearch: number;
+}
+
 export interface EvaluatePost extends EvaluateForm {
   userId: number;
 }
@@ -117,13 +189,23 @@ export interface ContractHistoryColumnType {
 }
 
 export interface ContractHistoryPost {
-  userId?: number;
+  userId: number;
   contractId: string;
   startDay: string;
   endDay: string;
   note: string;
+  status: number;
 }
-
+export interface ContractHistoryPut {
+  contractHistoryId?: number;
+  userId?: number;
+  contractId?: string;
+  startDay?: string;
+  endDay?: string;
+  note?: string;
+  suspensionTime?: number;
+  status?: number;
+}
 export interface ContractHistoryForm {
   contractId: string;
   startDay: string;
@@ -163,10 +245,10 @@ export interface AttendanceData {
   attendance: number;
   standardWorkDays: number;
   bonus: number;
+  month: number;
 }
 
-export interface SalaryHistoryColumnData {
-  key: React.Key;
+export interface SalaryHistoryColumnData extends RowType {
   userId: number;
   employeeName: string;
   departmentName: string;
@@ -176,10 +258,10 @@ export interface SalaryHistoryColumnData {
   unpaidLeave: number;
   attendance: number;
   bonus: number;
+  overtimeCost: number;
   allowance: number;
   salary: number;
   actions: SalaryHistoryPost;
-  // actions: SalaryHistoryDetail;
 }
 export interface SalaryHistoryColumnType {
   employeeName: string;
@@ -190,6 +272,7 @@ export interface SalaryHistoryColumnType {
   unpaidLeave: number;
   attendance: number;
   bonus: number;
+  overtimeCost: number;
   allowance: number;
   salary: number;
   actions: SalaryHistoryPost;
@@ -209,8 +292,7 @@ export interface SalaryHistoryPost {
   salary: number;
 }
 
-export interface PaidPayrollColumnData {
-  key: React.Key;
+export interface PaidPayrollColumnData extends RowType {
   userId: number;
   employeeName: string;
   departmentName: string;
@@ -220,13 +302,13 @@ export interface PaidPayrollColumnData {
   unpaidLeave: number;
   attendance: number;
   bonus: number;
+  overtimeCost: number;
   allowance: number;
   salary: number;
   actions: SalaryHistoryShortInfo;
 }
 
-export interface UnPaidPayrollColumnData {
-  key: React.Key;
+export interface UnPaidPayrollColumnData extends RowType {
   userId: number;
   employeeName: string;
   departmentName: string;
@@ -310,4 +392,146 @@ export interface NonContractedEmployee extends RowType {
   createdAt?: Date;
   updatedAt?: Date;
   actions: UserDetail;
+}
+
+export interface UpdateContractHistoryFormType {
+  contractName?: string;
+  userName?: string;
+  positionName?: string;
+  departmentName?: string;
+  status?: number;
+  startDay?: string;
+  endDay?: string;
+}
+
+export interface CreateContractHistoryFormType {
+  employeeName: number;
+  contractId: string;
+  startDay?: string;
+  endDay?: string;
+  note: string;
+  status: number;
+}
+
+export interface OptionStringType {
+  label: string;
+  value: string;
+}
+export interface OptionNumberType {
+  label: string;
+  value: number;
+}
+
+export interface ScheduleWorkColumnType extends RowType {
+  userId: number;
+  fullName: string;
+  gender: number;
+  address: string;
+  actions: DepartmentUserShortInfo;
+}
+
+export interface UpdateOvertimeHistoryFormType {
+  termId: number;
+  overtimeHistoryId?: number;
+  departmentName?: string;
+  overtimeId: string;
+  note?: string[];
+  startDay: Dayjs;
+  endDay: Dayjs;
+}
+
+export interface FinishOvertimeHistoryFormType {
+  termId: number;
+  overtimeHistoryId?: number;
+  userId: number;
+  overtimeId: string;
+  departmentId: string;
+  note?: string[];
+  startDay: string;
+  endDay: string;
+}
+export interface CreateOvertimeHistory {
+  userId: number;
+  overtimeId: string;
+  departmentId: string;
+  note?: string[];
+  startDay: string;
+  endDay: string;
+}
+
+export enum OvertimeType {
+  OT001 = "OT001",
+  OT002 = "OT002",
+  OT003 = "OT003",
+  OT004 = "OT004",
+
+  OT005 = "OT005",
+  OT006 = "OT006",
+  OT007 = "OT007",
+  OT008 = "OT008",
+
+  OT009 = "OT009",
+  OT010 = "OT010",
+  OT011 = "OT011",
+  OT012 = "OT012",
+
+  OT013 = "OT013",
+  OT014 = "OT014",
+  OT015 = "OT015",
+
+  OT016 = "OT016",
+  OT017 = "OT017",
+  OT018 = "OT018",
+}
+export const overtimeType = {
+  [OvertimeType.OT001]: "Trực 24/24",
+  [OvertimeType.OT002]: "Trực 24/24 (trực giao thoa tuần)",
+  [OvertimeType.OT003]: "Trực 24/24 (cuối tuần)",
+  [OvertimeType.OT004]: "Trực 24/24 (ngày lễ,tết)",
+
+  [OvertimeType.OT005]: "Trực 16/24",
+  [OvertimeType.OT006]: "Trực 16/24 (trực giao thoa tuần)",
+  [OvertimeType.OT007]: "Trực 16/24 (cuối tuần)",
+  [OvertimeType.OT008]: "Trực 16/24 (ngày lễ,tết)",
+
+  [OvertimeType.OT009]: "Trực 12/24",
+  [OvertimeType.OT010]: "Trực 12/24 (trực giao thoa tuần)",
+  [OvertimeType.OT011]: "Trực 12/24 (cuối tuần)",
+  [OvertimeType.OT012]: "Trực 12/24 (ngày lễ,tết)",
+
+  [OvertimeType.OT013]: "Trực 8/24",
+  [OvertimeType.OT014]: "Trực 8/24 (cuối tuần)",
+  [OvertimeType.OT015]: "Trực 8/24 (ngày lễ,tết)",
+
+  [OvertimeType.OT016]: "Trực 6/24",
+  [OvertimeType.OT017]: "Trực 6/24 (cuối tuần)",
+  [OvertimeType.OT018]: "Trực 6/24 (ngày lễ,tết)",
+};
+export const overtimeDurations = {
+  [OvertimeType.OT001]: 24,
+  [OvertimeType.OT002]: 24,
+  [OvertimeType.OT003]: 24,
+  [OvertimeType.OT004]: 24,
+
+  [OvertimeType.OT005]: 16,
+  [OvertimeType.OT006]: 16,
+  [OvertimeType.OT007]: 16,
+  [OvertimeType.OT008]: 16,
+
+  [OvertimeType.OT009]: 12,
+  [OvertimeType.OT010]: 12,
+  [OvertimeType.OT011]: 12,
+  [OvertimeType.OT012]: 12,
+
+  [OvertimeType.OT013]: 8,
+  [OvertimeType.OT014]: 8,
+  [OvertimeType.OT015]: 8,
+
+  [OvertimeType.OT016]: 6,
+  [OvertimeType.OT017]: 6,
+  [OvertimeType.OT018]: 6,
+};
+
+export interface OvertimeIdsObject {
+  overtimeId: string;
 }
